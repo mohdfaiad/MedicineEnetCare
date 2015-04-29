@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENetCareMVC.Web", "ENetCareMVC.Web\ENetCareMVC.Web.csproj", "{1C587AF0-0B62-4FD1-908C-40C340F3E782}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENetCareMVC.UnitTest", "ENetCareMVC.UnitTest\ENetCareMVC.UnitTest.csproj", "{F3FBD61E-E227-43E9-BAB0-9E31ADF3D56E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENetCareMVC.Repository", "ENetCareMVC.Repository\ENetCareMVC.Repository.csproj", "{1571D244-DF99-4EEC-AF54-A74259E33FF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENetCareMVC.BusinessService", "ENetCareMVC.BusinessService\ENetCareMVC.BusinessService.csproj", "{514F67AE-956C-4032-A9E1-E535405B0A39}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bin", "Bin", "{2A5CA25E-C160-4CBF-B6AD-2A7E3B13B9D7}"
+	ProjectSection(SolutionItems) = preProject
+		Bin\BarcodeLib.dll = Bin\BarcodeLib.dll
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1C587AF0-0B62-4FD1-908C-40C340F3E782}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C587AF0-0B62-4FD1-908C-40C340F3E782}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C587AF0-0B62-4FD1-908C-40C340F3E782}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C587AF0-0B62-4FD1-908C-40C340F3E782}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3FBD61E-E227-43E9-BAB0-9E31ADF3D56E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3FBD61E-E227-43E9-BAB0-9E31ADF3D56E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3FBD61E-E227-43E9-BAB0-9E31ADF3D56E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3FBD61E-E227-43E9-BAB0-9E31ADF3D56E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1571D244-DF99-4EEC-AF54-A74259E33FF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1571D244-DF99-4EEC-AF54-A74259E33FF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1571D244-DF99-4EEC-AF54-A74259E33FF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1571D244-DF99-4EEC-AF54-A74259E33FF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{514F67AE-956C-4032-A9E1-E535405B0A39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{514F67AE-956C-4032-A9E1-E535405B0A39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{514F67AE-956C-4032-A9E1-E535405B0A39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{514F67AE-956C-4032-A9E1-E535405B0A39}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
