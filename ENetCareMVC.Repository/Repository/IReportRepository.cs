@@ -1,5 +1,4 @@
 ﻿using ENetCareMVC.Repository.Data;
-using ENetCareMVC.Repository.ViewData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +10,11 @@ namespace ENetCareMVC.Repository.Repository
     public interface IReportRepository
     {
         List<DistributionCentreStock> GetDistributionCentreStock();
-        List<DistributionCentreLosses> GetDistributionCentreLosses();
+        List<DistributionCentreLoss> GetDistributionCentreLosses();
         List<DoctorActivity> GetDoctorActivity();
         List<GlobalStock> GetGlobalStock();
         List<ValueInTransit> GetValueInTransit();
-        List<ReconciledPackage> GetReconciledPackages(DistributionCentre currentLocation, StandardPackageType packageType, List<string> barCodeList);
-        List<StocktakingPackage> GetStocktaking(int CentreId);
+        //List<ReconciledPackage> GetReconciledPackages(DistributionCentre currentLocation, StandardPackageType packageType, List<string> barCodeList);
+        List<StockTaking> GetStocktaking(int CentreId);
     }
 }

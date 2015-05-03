@@ -30,8 +30,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -39,15 +50,76 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\EmployeeType.cs" />
-    <Compile Include="Data\ShelfLifeUnitType.cs" />
-    <Compile Include="Data\StandardPackageType.cs" />
+    <Compile Include="DataAccess.cs" />
+    <Compile Include="Data\Audit.cs">
+      <DependentUpon>RepositoryData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\AuditPackage.cs">
+      <DependentUpon>RepositoryData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\DistributionCentre.cs">
+      <DependentUpon>RepositoryData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Employee.cs">
+      <DependentUpon>RepositoryData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Package.cs">
+      <DependentUpon>RepositoryData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\PackageTransit.cs">
+      <DependentUpon>RepositoryData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\RepositoryData.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RepositoryData.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\RepositoryData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RepositoryData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\RepositoryData.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RepositoryData.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Data\StandardPackageType.cs">
+      <DependentUpon>RepositoryData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\EmployeeRepository.cs" />
     <Compile Include="Repository\IEmployeeRepository.cs" />
     <Compile Include="Repository\IPackageRepository.cs" />
     <Compile Include="Repository\IReportRepository.cs" />
+    <Compile Include="Repository\PackageRepository.cs" />
+    <Compile Include="Repository\PackageTransitRepository.cs" />
+    <Compile Include="Repository\ReportRepository.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="App.Config" />
+    <EntityDeploy Include="Data\RepositoryData.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>RepositoryData.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Data\RepositoryData.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RepositoryData.edmx</DependentUpon>
+      <LastGenOutput>RepositoryData.Context.cs</LastGenOutput>
+    </None>
+    <None Include="Data\RepositoryData.edmx.diagram">
+      <DependentUpon>RepositoryData.edmx</DependentUpon>
+    </None>
+    <None Include="Data\RepositoryData.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>RepositoryData.edmx</DependentUpon>
+      <LastGenOutput>RepositoryData.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

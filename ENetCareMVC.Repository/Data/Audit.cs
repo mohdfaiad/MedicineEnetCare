@@ -12,23 +12,22 @@ namespace ENetCareMVC.Repository.Data
     using System;
     using System.Collections.Generic;
     
-    public partial class StandardPackageType
+    public partial class Audit
     {
-        public StandardPackageType()
+        public Audit()
         {
-            this.Audit = new HashSet<Audit>();
-            this.Package = new HashSet<Package>();
+            this.AuditPackage = new HashSet<AuditPackage>();
         }
     
+        public int AuditId { get; set; }
+        public System.DateTime DateAudited { get; set; }
+        public int DistributionCentreId { get; set; }
+        public int EmployeeId { get; set; }
         public int PackageTypeId { get; set; }
-        public string Description { get; set; }
-        public int NumberOfMedications { get; set; }
-        public string ShelfLifeUnitType { get; set; }
-        public int ShelfLifeUnits { get; set; }
-        public bool TemperatureSensitive { get; set; }
-        public decimal Value { get; set; }
     
-        public virtual ICollection<Audit> Audit { get; set; }
-        public virtual ICollection<Package> Package { get; set; }
+        public virtual StandardPackageType StandardPackageType { get; set; }
+        public virtual ICollection<AuditPackage> AuditPackage { get; set; }
+        public virtual DistributionCentre DistributionCentre { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

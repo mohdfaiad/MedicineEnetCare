@@ -1,0 +1,681 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ENetCareMVCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Audit">
+          <Key>
+            <PropertyRef Name="AuditId" />
+          </Key>
+          <Property Name="AuditId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateAudited" Type="datetime" Nullable="false" />
+          <Property Name="DistributionCentreId" Type="int" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="PackageTypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AuditPackage">
+          <Key>
+            <PropertyRef Name="AuditPackageId" />
+            <PropertyRef Name="AuditId" />
+            <PropertyRef Name="PackageId" />
+          </Key>
+          <Property Name="AuditPackageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AuditId" Type="int" Nullable="false" />
+          <Property Name="PackageId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DistributionCentre">
+          <Key>
+            <PropertyRef Name="CentreId" />
+          </Key>
+          <Property Name="CentreId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="IsHeadOffice" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmailAddress" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="EmployeeType" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="LocationCentreId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Package">
+          <Key>
+            <PropertyRef Name="PackageId" />
+          </Key>
+          <Property Name="PackageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BarCode" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="ExpirationDate" Type="datetime" Nullable="false" />
+          <Property Name="PackageTypeId" Type="int" Nullable="false" />
+          <Property Name="CurrentLocationCentreId" Type="int" />
+          <Property Name="CurrentStatus" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="DistributedByEmployeeId" Type="int" />
+        </EntityType>
+        <EntityType Name="PackageTransit">
+          <Key>
+            <PropertyRef Name="TransitId" />
+          </Key>
+          <Property Name="TransitId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PackageId" Type="int" Nullable="false" />
+          <Property Name="SenderCentreId" Type="int" Nullable="false" />
+          <Property Name="ReceiverCentreId" Type="int" Nullable="false" />
+          <Property Name="DateSent" Type="datetime" Nullable="false" />
+          <Property Name="DateReceived" Type="datetime" />
+          <Property Name="DateCancelled" Type="datetime" />
+        </EntityType>
+        <EntityType Name="StandardPackageType">
+          <Key>
+            <PropertyRef Name="PackageTypeId" />
+          </Key>
+          <Property Name="PackageTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="NumberOfMedications" Type="int" Nullable="false" />
+          <Property Name="ShelfLifeUnitType" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="ShelfLifeUnits" Type="int" Nullable="false" />
+          <Property Name="TemperatureSensitive" Type="bit" Nullable="false" />
+          <Property Name="Value" Type="money" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Audit_PackageTypeId">
+          <End Role="StandardPackageType" Type="Self.StandardPackageType" Multiplicity="1" />
+          <End Role="Audit" Type="Self.Audit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StandardPackageType">
+              <PropertyRef Name="PackageTypeId" />
+            </Principal>
+            <Dependent Role="Audit">
+              <PropertyRef Name="PackageTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AuditId">
+          <End Role="Audit" Type="Self.Audit" Multiplicity="1" />
+          <End Role="AuditPackage" Type="Self.AuditPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Audit">
+              <PropertyRef Name="AuditId" />
+            </Principal>
+            <Dependent Role="AuditPackage">
+              <PropertyRef Name="AuditId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AuditPackageId">
+          <End Role="Package" Type="Self.Package" Multiplicity="1" />
+          <End Role="AuditPackage" Type="Self.AuditPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Package">
+              <PropertyRef Name="PackageId" />
+            </Principal>
+            <Dependent Role="AuditPackage">
+              <PropertyRef Name="PackageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DistributedByEmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Package" Type="Self.Package" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Package">
+              <PropertyRef Name="DistributedByEmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DistributionCentreId">
+          <End Role="DistributionCentre" Type="Self.DistributionCentre" Multiplicity="1" />
+          <End Role="Audit" Type="Self.Audit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCentre">
+              <PropertyRef Name="CentreId" />
+            </Principal>
+            <Dependent Role="Audit">
+              <PropertyRef Name="DistributionCentreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Audit" Type="Self.Audit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Audit">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LocationCentreId">
+          <End Role="DistributionCentre" Type="Self.DistributionCentre" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCentre">
+              <PropertyRef Name="CentreId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="LocationCentreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PackageId">
+          <End Role="Package" Type="Self.Package" Multiplicity="1" />
+          <End Role="PackageTransit" Type="Self.PackageTransit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Package">
+              <PropertyRef Name="PackageId" />
+            </Principal>
+            <Dependent Role="PackageTransit">
+              <PropertyRef Name="PackageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PackageTypeId">
+          <End Role="StandardPackageType" Type="Self.StandardPackageType" Multiplicity="1" />
+          <End Role="Package" Type="Self.Package" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StandardPackageType">
+              <PropertyRef Name="PackageTypeId" />
+            </Principal>
+            <Dependent Role="Package">
+              <PropertyRef Name="PackageTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceiverCentreId">
+          <End Role="DistributionCentre" Type="Self.DistributionCentre" Multiplicity="1" />
+          <End Role="PackageTransit" Type="Self.PackageTransit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCentre">
+              <PropertyRef Name="CentreId" />
+            </Principal>
+            <Dependent Role="PackageTransit">
+              <PropertyRef Name="ReceiverCentreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SenderCentreId">
+          <End Role="DistributionCentre" Type="Self.DistributionCentre" Multiplicity="1" />
+          <End Role="PackageTransit" Type="Self.PackageTransit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCentre">
+              <PropertyRef Name="CentreId" />
+            </Principal>
+            <Dependent Role="PackageTransit">
+              <PropertyRef Name="SenderCentreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ENetCareMVCModelStoreContainer">
+          <EntitySet Name="Audit" EntityType="Self.Audit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DistributionCentre" EntityType="Self.DistributionCentre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Package" EntityType="Self.Package" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PackageTransit" EntityType="Self.PackageTransit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StandardPackageType" EntityType="Self.StandardPackageType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AuditPackage" EntityType="Self.AuditPackage" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AuditPackage].[AuditPackageId] AS [AuditPackageId], 
+    [AuditPackage].[AuditId] AS [AuditId], 
+    [AuditPackage].[PackageId] AS [PackageId]
+    FROM [dbo].[AuditPackage] AS [AuditPackage]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Audit_PackageTypeId" Association="Self.FK_Audit_PackageTypeId">
+            <End Role="StandardPackageType" EntitySet="StandardPackageType" />
+            <End Role="Audit" EntitySet="Audit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AuditId" Association="Self.FK_AuditId">
+            <End Role="Audit" EntitySet="Audit" />
+            <End Role="AuditPackage" EntitySet="AuditPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AuditPackageId" Association="Self.FK_AuditPackageId">
+            <End Role="Package" EntitySet="Package" />
+            <End Role="AuditPackage" EntitySet="AuditPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DistributedByEmployeeId" Association="Self.FK_DistributedByEmployeeId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Package" EntitySet="Package" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DistributionCentreId" Association="Self.FK_DistributionCentreId">
+            <End Role="DistributionCentre" EntitySet="DistributionCentre" />
+            <End Role="Audit" EntitySet="Audit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeId" Association="Self.FK_EmployeeId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Audit" EntitySet="Audit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LocationCentreId" Association="Self.FK_LocationCentreId">
+            <End Role="DistributionCentre" EntitySet="DistributionCentre" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PackageId" Association="Self.FK_PackageId">
+            <End Role="Package" EntitySet="Package" />
+            <End Role="PackageTransit" EntitySet="PackageTransit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PackageTypeId" Association="Self.FK_PackageTypeId">
+            <End Role="StandardPackageType" EntitySet="StandardPackageType" />
+            <End Role="Package" EntitySet="Package" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiverCentreId" Association="Self.FK_ReceiverCentreId">
+            <End Role="DistributionCentre" EntitySet="DistributionCentre" />
+            <End Role="PackageTransit" EntitySet="PackageTransit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SenderCentreId" Association="Self.FK_SenderCentreId">
+            <End Role="DistributionCentre" EntitySet="DistributionCentre" />
+            <End Role="PackageTransit" EntitySet="PackageTransit" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ENetCareMVCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Audit">
+          <Key>
+            <PropertyRef Name="AuditId" />
+          </Key>
+          <Property Name="AuditId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateAudited" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DistributionCentreId" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="PackageTypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="StandardPackageType" Relationship="Self.FK_Audit_PackageTypeId" FromRole="Audit" ToRole="StandardPackageType" />
+          <NavigationProperty Name="AuditPackage" Relationship="Self.FK_AuditId" FromRole="Audit" ToRole="AuditPackage" />
+          <NavigationProperty Name="DistributionCentre" Relationship="Self.FK_DistributionCentreId" FromRole="Audit" ToRole="DistributionCentre" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_EmployeeId" FromRole="Audit" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="DistributionCentre">
+          <Key>
+            <PropertyRef Name="CentreId" />
+          </Key>
+          <Property Name="CentreId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsHeadOffice" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Audit" Relationship="Self.FK_DistributionCentreId" FromRole="DistributionCentre" ToRole="Audit" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_LocationCentreId" FromRole="DistributionCentre" ToRole="Employee" />
+          <NavigationProperty Name="PackageTransit" Relationship="Self.FK_ReceiverCentreId" FromRole="DistributionCentre" ToRole="PackageTransit" />
+          <NavigationProperty Name="PackageTransit1" Relationship="Self.FK_SenderCentreId" FromRole="DistributionCentre" ToRole="PackageTransit" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmailAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmployeeType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LocationCentreId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Audit" Relationship="Self.FK_EmployeeId" FromRole="Employee" ToRole="Audit" />
+          <NavigationProperty Name="DistributionCentre" Relationship="Self.FK_LocationCentreId" FromRole="Employee" ToRole="DistributionCentre" />
+          <NavigationProperty Name="Package" Relationship="Self.FK_DistributedByEmployeeId" FromRole="Employee" ToRole="Package" />
+        </EntityType>
+        <EntityType Name="Package">
+          <Key>
+            <PropertyRef Name="PackageId" />
+          </Key>
+          <Property Name="PackageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BarCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PackageTypeId" Type="Int32" Nullable="false" />
+          <Property Name="CurrentLocationCentreId" Type="Int32" />
+          <Property Name="CurrentStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DistributedByEmployeeId" Type="Int32" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_DistributedByEmployeeId" FromRole="Package" ToRole="Employee" />
+          <NavigationProperty Name="AuditPackage" Relationship="Self.FK_AuditPackageId" FromRole="Package" ToRole="AuditPackage" />
+          <NavigationProperty Name="PackageTransit" Relationship="Self.FK_PackageId" FromRole="Package" ToRole="PackageTransit" />
+          <NavigationProperty Name="StandardPackageType" Relationship="Self.FK_PackageTypeId" FromRole="Package" ToRole="StandardPackageType" />
+        </EntityType>
+        <EntityType Name="PackageTransit">
+          <Key>
+            <PropertyRef Name="TransitId" />
+          </Key>
+          <Property Name="TransitId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PackageId" Type="Int32" Nullable="false" />
+          <Property Name="SenderCentreId" Type="Int32" Nullable="false" />
+          <Property Name="ReceiverCentreId" Type="Int32" Nullable="false" />
+          <Property Name="DateSent" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateReceived" Type="DateTime" Precision="3" />
+          <Property Name="DateCancelled" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DistributionCentre" Relationship="Self.FK_ReceiverCentreId" FromRole="PackageTransit" ToRole="DistributionCentre" />
+          <NavigationProperty Name="DistributionCentre1" Relationship="Self.FK_SenderCentreId" FromRole="PackageTransit" ToRole="DistributionCentre" />
+          <NavigationProperty Name="Package" Relationship="Self.FK_PackageId" FromRole="PackageTransit" ToRole="Package" />
+        </EntityType>
+        <EntityType Name="StandardPackageType">
+          <Key>
+            <PropertyRef Name="PackageTypeId" />
+          </Key>
+          <Property Name="PackageTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NumberOfMedications" Type="Int32" Nullable="false" />
+          <Property Name="ShelfLifeUnitType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ShelfLifeUnits" Type="Int32" Nullable="false" />
+          <Property Name="TemperatureSensitive" Type="Boolean" Nullable="false" />
+          <Property Name="Value" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Audit" Relationship="Self.FK_Audit_PackageTypeId" FromRole="StandardPackageType" ToRole="Audit" />
+          <NavigationProperty Name="Package" Relationship="Self.FK_PackageTypeId" FromRole="StandardPackageType" ToRole="Package" />
+        </EntityType>
+        <EntityType Name="AuditPackage">
+          <Key>
+            <PropertyRef Name="AuditPackageId" />
+            <PropertyRef Name="AuditId" />
+            <PropertyRef Name="PackageId" />
+          </Key>
+          <Property Name="AuditPackageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AuditId" Type="Int32" Nullable="false" />
+          <Property Name="PackageId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Audit" Relationship="Self.FK_AuditId" FromRole="AuditPackage" ToRole="Audit" />
+          <NavigationProperty Name="Package" Relationship="Self.FK_AuditPackageId" FromRole="AuditPackage" ToRole="Package" />
+        </EntityType>
+        <Association Name="FK_Audit_PackageTypeId">
+          <End Role="StandardPackageType" Type="Self.StandardPackageType" Multiplicity="1" />
+          <End Role="Audit" Type="Self.Audit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StandardPackageType">
+              <PropertyRef Name="PackageTypeId" />
+            </Principal>
+            <Dependent Role="Audit">
+              <PropertyRef Name="PackageTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AuditId">
+          <End Role="Audit" Type="Self.Audit" Multiplicity="1" />
+          <End Role="AuditPackage" Type="Self.AuditPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Audit">
+              <PropertyRef Name="AuditId" />
+            </Principal>
+            <Dependent Role="AuditPackage">
+              <PropertyRef Name="AuditId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DistributionCentreId">
+          <End Role="DistributionCentre" Type="Self.DistributionCentre" Multiplicity="1" />
+          <End Role="Audit" Type="Self.Audit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCentre">
+              <PropertyRef Name="CentreId" />
+            </Principal>
+            <Dependent Role="Audit">
+              <PropertyRef Name="DistributionCentreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Audit" Type="Self.Audit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Audit">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LocationCentreId">
+          <End Role="DistributionCentre" Type="Self.DistributionCentre" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCentre">
+              <PropertyRef Name="CentreId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="LocationCentreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceiverCentreId">
+          <End Role="DistributionCentre" Type="Self.DistributionCentre" Multiplicity="1" />
+          <End Role="PackageTransit" Type="Self.PackageTransit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCentre">
+              <PropertyRef Name="CentreId" />
+            </Principal>
+            <Dependent Role="PackageTransit">
+              <PropertyRef Name="ReceiverCentreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SenderCentreId">
+          <End Role="DistributionCentre" Type="Self.DistributionCentre" Multiplicity="1" />
+          <End Role="PackageTransit" Type="Self.PackageTransit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCentre">
+              <PropertyRef Name="CentreId" />
+            </Principal>
+            <Dependent Role="PackageTransit">
+              <PropertyRef Name="SenderCentreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DistributedByEmployeeId">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Package" Type="Self.Package" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Package">
+              <PropertyRef Name="DistributedByEmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AuditPackageId">
+          <End Role="Package" Type="Self.Package" Multiplicity="1" />
+          <End Role="AuditPackage" Type="Self.AuditPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Package">
+              <PropertyRef Name="PackageId" />
+            </Principal>
+            <Dependent Role="AuditPackage">
+              <PropertyRef Name="PackageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PackageId">
+          <End Role="Package" Type="Self.Package" Multiplicity="1" />
+          <End Role="PackageTransit" Type="Self.PackageTransit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Package">
+              <PropertyRef Name="PackageId" />
+            </Principal>
+            <Dependent Role="PackageTransit">
+              <PropertyRef Name="PackageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PackageTypeId">
+          <End Role="StandardPackageType" Type="Self.StandardPackageType" Multiplicity="1" />
+          <End Role="Package" Type="Self.Package" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StandardPackageType">
+              <PropertyRef Name="PackageTypeId" />
+            </Principal>
+            <Dependent Role="Package">
+              <PropertyRef Name="PackageTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Audit" EntityType="Self.Audit" />
+          <EntitySet Name="DistributionCentre" EntityType="Self.DistributionCentre" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" />
+          <EntitySet Name="Package" EntityType="Self.Package" />
+          <EntitySet Name="PackageTransit" EntityType="Self.PackageTransit" />
+          <EntitySet Name="StandardPackageType" EntityType="Self.StandardPackageType" />
+          <EntitySet Name="AuditPackage" EntityType="Self.AuditPackage" />
+          <AssociationSet Name="FK_Audit_PackageTypeId" Association="Self.FK_Audit_PackageTypeId">
+            <End Role="StandardPackageType" EntitySet="StandardPackageType" />
+            <End Role="Audit" EntitySet="Audit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AuditId" Association="Self.FK_AuditId">
+            <End Role="Audit" EntitySet="Audit" />
+            <End Role="AuditPackage" EntitySet="AuditPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DistributionCentreId" Association="Self.FK_DistributionCentreId">
+            <End Role="DistributionCentre" EntitySet="DistributionCentre" />
+            <End Role="Audit" EntitySet="Audit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeId" Association="Self.FK_EmployeeId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Audit" EntitySet="Audit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LocationCentreId" Association="Self.FK_LocationCentreId">
+            <End Role="DistributionCentre" EntitySet="DistributionCentre" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiverCentreId" Association="Self.FK_ReceiverCentreId">
+            <End Role="DistributionCentre" EntitySet="DistributionCentre" />
+            <End Role="PackageTransit" EntitySet="PackageTransit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SenderCentreId" Association="Self.FK_SenderCentreId">
+            <End Role="DistributionCentre" EntitySet="DistributionCentre" />
+            <End Role="PackageTransit" EntitySet="PackageTransit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DistributedByEmployeeId" Association="Self.FK_DistributedByEmployeeId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Package" EntitySet="Package" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AuditPackageId" Association="Self.FK_AuditPackageId">
+            <End Role="Package" EntitySet="Package" />
+            <End Role="AuditPackage" EntitySet="AuditPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PackageId" Association="Self.FK_PackageId">
+            <End Role="Package" EntitySet="Package" />
+            <End Role="PackageTransit" EntitySet="PackageTransit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PackageTypeId" Association="Self.FK_PackageTypeId">
+            <End Role="StandardPackageType" EntitySet="StandardPackageType" />
+            <End Role="Package" EntitySet="Package" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ENetCareMVCModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Audit">
+            <EntityTypeMapping TypeName="ENetCareMVCModel.Audit">
+              <MappingFragment StoreEntitySet="Audit">
+                <ScalarProperty Name="AuditId" ColumnName="AuditId" />
+                <ScalarProperty Name="DateAudited" ColumnName="DateAudited" />
+                <ScalarProperty Name="DistributionCentreId" ColumnName="DistributionCentreId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="PackageTypeId" ColumnName="PackageTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DistributionCentre">
+            <EntityTypeMapping TypeName="ENetCareMVCModel.DistributionCentre">
+              <MappingFragment StoreEntitySet="DistributionCentre">
+                <ScalarProperty Name="CentreId" ColumnName="CentreId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="IsHeadOffice" ColumnName="IsHeadOffice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="ENetCareMVCModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="EmployeeType" ColumnName="EmployeeType" />
+                <ScalarProperty Name="LocationCentreId" ColumnName="LocationCentreId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Package">
+            <EntityTypeMapping TypeName="ENetCareMVCModel.Package">
+              <MappingFragment StoreEntitySet="Package">
+                <ScalarProperty Name="PackageId" ColumnName="PackageId" />
+                <ScalarProperty Name="BarCode" ColumnName="BarCode" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="PackageTypeId" ColumnName="PackageTypeId" />
+                <ScalarProperty Name="CurrentLocationCentreId" ColumnName="CurrentLocationCentreId" />
+                <ScalarProperty Name="CurrentStatus" ColumnName="CurrentStatus" />
+                <ScalarProperty Name="DistributedByEmployeeId" ColumnName="DistributedByEmployeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PackageTransit">
+            <EntityTypeMapping TypeName="ENetCareMVCModel.PackageTransit">
+              <MappingFragment StoreEntitySet="PackageTransit">
+                <ScalarProperty Name="TransitId" ColumnName="TransitId" />
+                <ScalarProperty Name="PackageId" ColumnName="PackageId" />
+                <ScalarProperty Name="SenderCentreId" ColumnName="SenderCentreId" />
+                <ScalarProperty Name="ReceiverCentreId" ColumnName="ReceiverCentreId" />
+                <ScalarProperty Name="DateSent" ColumnName="DateSent" />
+                <ScalarProperty Name="DateReceived" ColumnName="DateReceived" />
+                <ScalarProperty Name="DateCancelled" ColumnName="DateCancelled" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StandardPackageType">
+            <EntityTypeMapping TypeName="ENetCareMVCModel.StandardPackageType">
+              <MappingFragment StoreEntitySet="StandardPackageType">
+                <ScalarProperty Name="PackageTypeId" ColumnName="PackageTypeId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="NumberOfMedications" ColumnName="NumberOfMedications" />
+                <ScalarProperty Name="ShelfLifeUnitType" ColumnName="ShelfLifeUnitType" />
+                <ScalarProperty Name="ShelfLifeUnits" ColumnName="ShelfLifeUnits" />
+                <ScalarProperty Name="TemperatureSensitive" ColumnName="TemperatureSensitive" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AuditPackage">
+            <EntityTypeMapping TypeName="ENetCareMVCModel.AuditPackage">
+              <MappingFragment StoreEntitySet="AuditPackage">
+                <ScalarProperty Name="AuditPackageId" ColumnName="AuditPackageId" />
+                <ScalarProperty Name="AuditId" ColumnName="AuditId" />
+                <ScalarProperty Name="PackageId" ColumnName="PackageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
