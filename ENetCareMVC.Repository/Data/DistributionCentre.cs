@@ -17,9 +17,9 @@ namespace ENetCareMVC.Repository.Data
         public DistributionCentre()
         {
             this.Audit = new HashSet<Audit>();
-            this.Employee = new HashSet<Employee>();
             this.PackageTransit = new HashSet<PackageTransit>();
             this.PackageTransit1 = new HashSet<PackageTransit>();
+            this.Employee = new HashSet<Employee>();
         }
     
         public int CentreId { get; set; }
@@ -29,8 +29,8 @@ namespace ENetCareMVC.Repository.Data
         public bool IsHeadOffice { get; set; }
     
         public virtual ICollection<Audit> Audit { get; set; }
-        public virtual ICollection<Employee> Employee { get; set; }
         public virtual ICollection<PackageTransit> PackageTransit { get; set; }
         public virtual ICollection<PackageTransit> PackageTransit1 { get; set; }
+        public virtual ICollection<Employee> Employee { get; set; }
     }
 }

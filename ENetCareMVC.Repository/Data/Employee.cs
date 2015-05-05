@@ -22,10 +22,10 @@ namespace ENetCareMVC.Repository.Data
     
         public int EmployeeId { get; set; }
         public string UserName { get; set; }
-        public string Password { get; set; }
+        public System.Guid UserId { get; set; }
         public string FullName { get; set; }
         public string EmailAddress { get; set; }
-        public string EmployeeType { get; set; }
+        public EmployeeType EmployeeType { get; set; }
         public int LocationCentreId { get; set; }
     
         public virtual ICollection<Audit> Audit { get; set; }

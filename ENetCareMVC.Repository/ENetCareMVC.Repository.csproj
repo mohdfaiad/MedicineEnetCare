@@ -63,6 +63,9 @@
     <Compile Include="Data\Employee.cs">
       <DependentUpon>RepositoryData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\EmployeeType.cs">
+      <DependentUpon>RepositoryData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Package.cs">
       <DependentUpon>RepositoryData.tt</DependentUpon>
     </Compile>

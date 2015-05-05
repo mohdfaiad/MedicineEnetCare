@@ -28,9 +28,9 @@ namespace ENetCareMVC.Repository.Data
         public string CurrentStatus { get; set; }
         public Nullable<int> DistributedByEmployeeId { get; set; }
     
-        public virtual Employee Employee { get; set; }
         public virtual ICollection<AuditPackage> AuditPackage { get; set; }
         public virtual ICollection<PackageTransit> PackageTransit { get; set; }
         public virtual StandardPackageType StandardPackageType { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

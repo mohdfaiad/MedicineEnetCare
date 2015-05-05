@@ -27,10 +27,10 @@ namespace ENetCareMVC.Repository.Data
     
         public virtual DbSet<Audit> Audit { get; set; }
         public virtual DbSet<DistributionCentre> DistributionCentre { get; set; }
-        public virtual DbSet<Employee> Employee { get; set; }
         public virtual DbSet<Package> Package { get; set; }
         public virtual DbSet<PackageTransit> PackageTransit { get; set; }
         public virtual DbSet<StandardPackageType> StandardPackageType { get; set; }
         public virtual DbSet<AuditPackage> AuditPackage { get; set; }
+        public virtual DbSet<Employee> Employee { get; set; }
     }
 }

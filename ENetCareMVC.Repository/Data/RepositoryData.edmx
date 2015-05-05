@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ENetCareMVCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ENetCareMVCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Audit">
           <Key>
             <PropertyRef Name="AuditId" />
@@ -43,10 +43,10 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
           </Key>
           <Property Name="EmployeeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="UserId" Type="uniqueidentifier" Nullable="false" />
           <Property Name="FullName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="EmailAddress" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="EmployeeType" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="EmployeeType" Type="int" Nullable="false" />
           <Property Name="LocationCentreId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Package">
@@ -276,8 +276,7 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
             <End Role="PackageTransit" EntitySet="PackageTransit" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ENetCareMVCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -293,7 +292,7 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
           <NavigationProperty Name="StandardPackageType" Relationship="Self.FK_Audit_PackageTypeId" FromRole="Audit" ToRole="StandardPackageType" />
           <NavigationProperty Name="AuditPackage" Relationship="Self.FK_AuditId" FromRole="Audit" ToRole="AuditPackage" />
           <NavigationProperty Name="DistributionCentre" Relationship="Self.FK_DistributionCentreId" FromRole="Audit" ToRole="DistributionCentre" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK_EmployeeId" FromRole="Audit" ToRole="Employee" />
+          <NavigationProperty Name="Employee" Relationship="ENetCareMVCModel.FK_EmployeeId" FromRole="Audit" ToRole="Employee" />
         </EntityType>
         <EntityType Name="DistributionCentre">
           <Key>
@@ -305,24 +304,9 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
           <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IsHeadOffice" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Audit" Relationship="Self.FK_DistributionCentreId" FromRole="DistributionCentre" ToRole="Audit" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK_LocationCentreId" FromRole="DistributionCentre" ToRole="Employee" />
           <NavigationProperty Name="PackageTransit" Relationship="Self.FK_ReceiverCentreId" FromRole="DistributionCentre" ToRole="PackageTransit" />
           <NavigationProperty Name="PackageTransit1" Relationship="Self.FK_SenderCentreId" FromRole="DistributionCentre" ToRole="PackageTransit" />
-        </EntityType>
-        <EntityType Name="Employee">
-          <Key>
-            <PropertyRef Name="EmployeeId" />
-          </Key>
-          <Property Name="EmployeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="EmailAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="EmployeeType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LocationCentreId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Audit" Relationship="Self.FK_EmployeeId" FromRole="Employee" ToRole="Audit" />
-          <NavigationProperty Name="DistributionCentre" Relationship="Self.FK_LocationCentreId" FromRole="Employee" ToRole="DistributionCentre" />
-          <NavigationProperty Name="Package" Relationship="Self.FK_DistributedByEmployeeId" FromRole="Employee" ToRole="Package" />
+          <NavigationProperty Name="Employee" Relationship="ENetCareMVCModel.FK_LocationCentreId" FromRole="DistributionCentre" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Package">
           <Key>
@@ -335,10 +319,10 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
           <Property Name="CurrentLocationCentreId" Type="Int32" />
           <Property Name="CurrentStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DistributedByEmployeeId" Type="Int32" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK_DistributedByEmployeeId" FromRole="Package" ToRole="Employee" />
           <NavigationProperty Name="AuditPackage" Relationship="Self.FK_AuditPackageId" FromRole="Package" ToRole="AuditPackage" />
           <NavigationProperty Name="PackageTransit" Relationship="Self.FK_PackageId" FromRole="Package" ToRole="PackageTransit" />
           <NavigationProperty Name="StandardPackageType" Relationship="Self.FK_PackageTypeId" FromRole="Package" ToRole="StandardPackageType" />
+          <NavigationProperty Name="Employee" Relationship="ENetCareMVCModel.FK_DistributedByEmployeeId" FromRole="Package" ToRole="Employee" />
         </EntityType>
         <EntityType Name="PackageTransit">
           <Key>
@@ -417,30 +401,6 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_EmployeeId">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="Audit" Type="Self.Audit" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="Audit">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_LocationCentreId">
-          <End Role="DistributionCentre" Type="Self.DistributionCentre" Multiplicity="1" />
-          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DistributionCentre">
-              <PropertyRef Name="CentreId" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="LocationCentreId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ReceiverCentreId">
           <End Role="DistributionCentre" Type="Self.DistributionCentre" Multiplicity="1" />
           <End Role="PackageTransit" Type="Self.PackageTransit" Multiplicity="*" />
@@ -462,18 +422,6 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
             </Principal>
             <Dependent Role="PackageTransit">
               <PropertyRef Name="SenderCentreId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DistributedByEmployeeId">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
-          <End Role="Package" Type="Self.Package" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeId" />
-            </Principal>
-            <Dependent Role="Package">
-              <PropertyRef Name="DistributedByEmployeeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -516,7 +464,6 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Audit" EntityType="Self.Audit" />
           <EntitySet Name="DistributionCentre" EntityType="Self.DistributionCentre" />
-          <EntitySet Name="Employee" EntityType="Self.Employee" />
           <EntitySet Name="Package" EntityType="Self.Package" />
           <EntitySet Name="PackageTransit" EntityType="Self.PackageTransit" />
           <EntitySet Name="StandardPackageType" EntityType="Self.StandardPackageType" />
@@ -533,14 +480,6 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
             <End Role="DistributionCentre" EntitySet="DistributionCentre" />
             <End Role="Audit" EntitySet="Audit" />
           </AssociationSet>
-          <AssociationSet Name="FK_EmployeeId" Association="Self.FK_EmployeeId">
-            <End Role="Employee" EntitySet="Employee" />
-            <End Role="Audit" EntitySet="Audit" />
-          </AssociationSet>
-          <AssociationSet Name="FK_LocationCentreId" Association="Self.FK_LocationCentreId">
-            <End Role="DistributionCentre" EntitySet="DistributionCentre" />
-            <End Role="Employee" EntitySet="Employee" />
-          </AssociationSet>
           <AssociationSet Name="FK_ReceiverCentreId" Association="Self.FK_ReceiverCentreId">
             <End Role="DistributionCentre" EntitySet="DistributionCentre" />
             <End Role="PackageTransit" EntitySet="PackageTransit" />
@@ -548,10 +487,6 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
           <AssociationSet Name="FK_SenderCentreId" Association="Self.FK_SenderCentreId">
             <End Role="DistributionCentre" EntitySet="DistributionCentre" />
             <End Role="PackageTransit" EntitySet="PackageTransit" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DistributedByEmployeeId" Association="Self.FK_DistributedByEmployeeId">
-            <End Role="Employee" EntitySet="Employee" />
-            <End Role="Package" EntitySet="Package" />
           </AssociationSet>
           <AssociationSet Name="FK_AuditPackageId" Association="Self.FK_AuditPackageId">
             <End Role="Package" EntitySet="Package" />
@@ -565,7 +500,76 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
             <End Role="StandardPackageType" EntitySet="StandardPackageType" />
             <End Role="Package" EntitySet="Package" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="Employee" EntityType="ENetCareMVCModel.Employee" />
+          <AssociationSet Name="FK_EmployeeId" Association="ENetCareMVCModel.FK_EmployeeId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Audit" EntitySet="Audit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LocationCentreId" Association="ENetCareMVCModel.FK_LocationCentreId">
+            <End Role="DistributionCentre" EntitySet="DistributionCentre" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DistributedByEmployeeId" Association="ENetCareMVCModel.FK_DistributedByEmployeeId">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Package" EntitySet="Package" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Guid" Nullable="false" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeType" Type="ENetCareMVCModel.EmployeeType" Nullable="false" />
+          <Property Name="LocationCentreId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Audit" Relationship="ENetCareMVCModel.FK_EmployeeId" FromRole="Employee" ToRole="Audit" />
+          <NavigationProperty Name="Location" Relationship="ENetCareMVCModel.FK_LocationCentreId" FromRole="Employee" ToRole="DistributionCentre" />
+          <NavigationProperty Name="Package" Relationship="ENetCareMVCModel.FK_DistributedByEmployeeId" FromRole="Employee" ToRole="Package" />
+        </EntityType>
+        <Association Name="FK_EmployeeId">
+          <End Type="ENetCareMVCModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="ENetCareMVCModel.Audit" Role="Audit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Audit">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LocationCentreId">
+          <End Type="ENetCareMVCModel.DistributionCentre" Role="DistributionCentre" Multiplicity="1" />
+          <End Type="ENetCareMVCModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCentre">
+              <PropertyRef Name="CentreId" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="LocationCentreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DistributedByEmployeeId">
+          <End Type="ENetCareMVCModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="ENetCareMVCModel.Package" Role="Package" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Package">
+              <PropertyRef Name="DistributedByEmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EnumType Name="EmployeeType">
+          <Member Name="Agent" Value="1" />
+          <Member Name="Doctor" Value="2" />
+          <Member Name="Manager" Value="3" />
+        </EnumType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -591,19 +595,6 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="IsHeadOffice" ColumnName="IsHeadOffice" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Employee">
-            <EntityTypeMapping TypeName="ENetCareMVCModel.Employee">
-              <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
-                <ScalarProperty Name="EmployeeType" ColumnName="EmployeeType" />
-                <ScalarProperty Name="LocationCentreId" ColumnName="LocationCentreId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -652,6 +643,19 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
                 <ScalarProperty Name="AuditPackageId" ColumnName="AuditPackageId" />
                 <ScalarProperty Name="AuditId" ColumnName="AuditId" />
                 <ScalarProperty Name="PackageId" ColumnName="PackageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="ENetCareMVCModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="LocationCentreId" ColumnName="LocationCentreId" />
+                <ScalarProperty Name="EmployeeType" ColumnName="EmployeeType" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
