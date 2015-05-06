@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BarCodeListExtension.cs" />
     <Compile Include="DataAccess.cs" />
     <Compile Include="Data\Audit.cs">
       <DependentUpon>RepositoryData.tt</DependentUpon>
@@ -60,18 +61,34 @@
     <Compile Include="Data\DistributionCentre.cs">
       <DependentUpon>RepositoryData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\DistributionCentreLosses.cs">
+      <DependentUpon>RepositoryData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\DistributionCentreStock.cs">
+      <DependentUpon>RepositoryData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\DoctorActivity.cs">
+      <DependentUpon>RepositoryData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Employee.cs">
       <DependentUpon>RepositoryData.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\EmployeeType.cs">
       <DependentUpon>RepositoryData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\GlobalStock.cs">
+      <DependentUpon>RepositoryData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\Package.cs">
+      <DependentUpon>RepositoryData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\PackageStatus.cs">
       <DependentUpon>RepositoryData.tt</DependentUpon>
     </Compile>
     <Compile Include="Data\PackageTransit.cs">
       <DependentUpon>RepositoryData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\ReconciledPackage.cs" />
     <Compile Include="Data\RepositoryData.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -87,9 +104,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RepositoryData.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Data\Result.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data\ShelfLifeUnitType.cs">
+      <DependentUpon>RepositoryData.tt</DependentUpon>
+    </Compile>
     <Compile Include="Data\StandardPackageType.cs">
       <DependentUpon>RepositoryData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\StockTaking.cs">
+      <DependentUpon>RepositoryData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Data\ValueInTransit.cs">
+      <DependentUpon>RepositoryData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MockDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\EmployeeRepository.cs" />
     <Compile Include="Repository\IEmployeeRepository.cs" />
@@ -98,6 +128,7 @@
     <Compile Include="Repository\PackageRepository.cs" />
     <Compile Include="Repository\PackageTransitRepository.cs" />
     <Compile Include="Repository\ReportRepository.cs" />
+    <Compile Include="ViewDataAccess.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace ENetCare.Repository.Repository
+namespace ENetCareMVC.Repository.Repository
 {
     public class ReportRepository : IReportRepository
     {
@@ -39,9 +39,9 @@ namespace ENetCare.Repository.Repository
         /// Repository for Distribution Centre Losses Report
         /// </summary>
         /// <returns></returns>
-        public List<DistributionCentreLoss> GetDistributionCentreLosses()
+        public List<DistributionCentreLosses> GetDistributionCentreLosses()
         {
-            List<DistributionCentreLoss> centreList = null;
+            List<DistributionCentreLosses> centreList = null;
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();

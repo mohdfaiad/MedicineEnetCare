@@ -10,10 +10,15 @@
 namespace ENetCareMVC.Repository.Data
 {
     using System;
+    using System.Collections.Generic;
     
-    public enum ShelfLifeUnitType : int
+    public partial class DoctorActivity
     {
-        Month = 1,
-        Day = 2
+        public int DoctorId { get; set; }
+        public string DoctorName { get; set; }
+        public int PackageTypeId { get; set; }
+        public string PackageTypeDescription { get; set; }
+        public Nullable<int> PackageCount { get; set; }
+        public Nullable<decimal> TotalPackageValue { get; set; }
     }
 }

@@ -16,7 +16,7 @@
           <Property Name="PackageTypeId" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'C:\USERS\BEN ROGERS\DOCUMENTS\VISUAL STUDIO 2013\PROJECTS\ENETCAREMVC\ENETCAREMVC.WEB\APP_DATA\ENETCAREMVC.MDF.dbo.AuditPackage' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="AuditPackage">
           <Key>
             <PropertyRef Name="AuditPackageId" />
@@ -58,7 +58,7 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
           <Property Name="ExpirationDate" Type="datetime" Nullable="false" />
           <Property Name="PackageTypeId" Type="int" Nullable="false" />
           <Property Name="CurrentLocationCentreId" Type="int" />
-          <Property Name="CurrentStatus" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="CurrentStatus" Type="int" Nullable="false" />
           <Property Name="DistributedByEmployeeId" Type="int" />
         </EntityType>
         <EntityType Name="PackageTransit">
@@ -80,10 +80,105 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
           <Property Name="PackageTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="NumberOfMedications" Type="int" Nullable="false" />
-          <Property Name="ShelfLifeUnitType" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="ShelfLifeUnitType" Type="int" Nullable="false" />
           <Property Name="ShelfLifeUnits" Type="int" Nullable="false" />
           <Property Name="TemperatureSensitive" Type="bit" Nullable="false" />
           <Property Name="Value" Type="money" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\BEN ROGERS\DOCUMENTS\VISUAL STUDIO 2013\PROJECTS\ENETCAREMVC\ENETCAREMVC.WEB\APP_DATA\ENETCAREMVC.MDF.dbo.DistributionCentreLosses' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="DistributionCentreLosses">
+          <Key>
+            <PropertyRef Name="DistributionCenterName" />
+          </Key>
+          <Property Name="DistributionCentreId" Type="int" />
+          <Property Name="DistributionCenterName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LossRatioNumerator" Type="int" />
+          <Property Name="LossRatioDenominator" Type="int" />
+          <Property Name="TotalLossDiscardedValue" Type="money" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\BEN ROGERS\DOCUMENTS\VISUAL STUDIO 2013\PROJECTS\ENETCAREMVC\ENETCAREMVC.WEB\APP_DATA\ENETCAREMVC.MDF.dbo.DistributionCentreStock' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="DistributionCentreStock">
+          <Key>
+            <PropertyRef Name="PackageTypeId" />
+            <PropertyRef Name="PackageTypeDescription" />
+            <PropertyRef Name="CostPerPackage" />
+            <PropertyRef Name="DistributionCentreId" />
+            <PropertyRef Name="DistributionCenterName" />
+          </Key>
+          <Property Name="PackageTypeId" Type="int" Nullable="false" />
+          <Property Name="PackageTypeDescription" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="CostPerPackage" Type="money" Nullable="false" />
+          <Property Name="DistributionCentreId" Type="int" Nullable="false" />
+          <Property Name="DistributionCenterName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NumberOfPackages" Type="int" />
+          <Property Name="TotalValue" Type="money" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\BEN ROGERS\DOCUMENTS\VISUAL STUDIO 2013\PROJECTS\ENETCAREMVC\ENETCAREMVC.WEB\APP_DATA\ENETCAREMVC.MDF.dbo.DoctorActivity' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="DoctorActivity">
+          <Key>
+            <PropertyRef Name="DoctorId" />
+            <PropertyRef Name="DoctorName" />
+            <PropertyRef Name="PackageTypeId" />
+            <PropertyRef Name="PackageTypeDescription" />
+          </Key>
+          <Property Name="DoctorId" Type="int" Nullable="false" />
+          <Property Name="DoctorName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PackageTypeId" Type="int" Nullable="false" />
+          <Property Name="PackageTypeDescription" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="PackageCount" Type="int" />
+          <Property Name="TotalPackageValue" Type="money" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\BEN ROGERS\DOCUMENTS\VISUAL STUDIO 2013\PROJECTS\ENETCAREMVC\ENETCAREMVC.WEB\APP_DATA\ENETCAREMVC.MDF.dbo.GlobalStock' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="GlobalStock">
+          <Key>
+            <PropertyRef Name="PackageTypeId" />
+            <PropertyRef Name="PackageTypeDescription" />
+            <PropertyRef Name="CostPerPackage" />
+          </Key>
+          <Property Name="PackageTypeId" Type="int" Nullable="false" />
+          <Property Name="PackageTypeDescription" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="CostPerPackage" Type="money" Nullable="false" />
+          <Property Name="NumberOfPackages" Type="int" />
+          <Property Name="TotalValue" Type="money" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\BEN ROGERS\DOCUMENTS\VISUAL STUDIO 2013\PROJECTS\ENETCAREMVC\ENETCAREMVC.WEB\APP_DATA\ENETCAREMVC.MDF.dbo.StockTaking' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="StockTaking">
+          <Key>
+            <PropertyRef Name="PackageId" />
+            <PropertyRef Name="BarCode" />
+            <PropertyRef Name="PackageTypeId" />
+            <PropertyRef Name="PackageTypeDescription" />
+            <PropertyRef Name="CostPerPackage" />
+            <PropertyRef Name="ExpirationDate" />
+          </Key>
+          <Property Name="PackageId" Type="int" Nullable="false" />
+          <Property Name="BarCode" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="PackageTypeId" Type="int" Nullable="false" />
+          <Property Name="PackageTypeDescription" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="CostPerPackage" Type="money" Nullable="false" />
+          <Property Name="CurrentLocationCentreId" Type="int" />
+          <Property Name="ExpirationDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\BEN ROGERS\DOCUMENTS\VISUAL STUDIO 2013\PROJECTS\ENETCAREMVC\ENETCAREMVC.WEB\APP_DATA\ENETCAREMVC.MDF.dbo.ValueInTransit' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ValueInTransit">
+          <Key>
+            <PropertyRef Name="SenderDistributionCentreId" />
+            <PropertyRef Name="SenderDistributionCentreName" />
+            <PropertyRef Name="ReceiverDistributionCentreId" />
+            <PropertyRef Name="RecieverDistributionCentreName" />
+          </Key>
+          <Property Name="SenderDistributionCentreId" Type="int" Nullable="false" />
+          <Property Name="SenderDistributionCentreName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ReceiverDistributionCentreId" Type="int" Nullable="false" />
+          <Property Name="RecieverDistributionCentreName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TotalPackages" Type="int" />
+          <Property Name="TotalValue" Type="money" />
         </EntityType>
         <Association Name="FK_Audit_PackageTypeId">
           <End Role="StandardPackageType" Type="Self.StandardPackageType" Multiplicity="1" />
@@ -118,6 +213,18 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
             </Principal>
             <Dependent Role="AuditPackage">
               <PropertyRef Name="PackageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CurrentLocationCentreId">
+          <End Role="DistributionCentre" Type="Self.DistributionCentre" Multiplicity="0..1" />
+          <End Role="Package" Type="Self.Package" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCentre">
+              <PropertyRef Name="CentreId" />
+            </Principal>
+            <Dependent Role="Package">
+              <PropertyRef Name="CurrentLocationCentreId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -231,6 +338,66 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
     [AuditPackage].[PackageId] AS [PackageId]
     FROM [dbo].[AuditPackage] AS [AuditPackage]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="DistributionCentreLosses" EntityType="Self.DistributionCentreLosses" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [DistributionCentreLosses].[DistributionCentreId] AS [DistributionCentreId], 
+    [DistributionCentreLosses].[DistributionCenterName] AS [DistributionCenterName], 
+    [DistributionCentreLosses].[LossRatioNumerator] AS [LossRatioNumerator], 
+    [DistributionCentreLosses].[LossRatioDenominator] AS [LossRatioDenominator], 
+    [DistributionCentreLosses].[TotalLossDiscardedValue] AS [TotalLossDiscardedValue]
+    FROM [dbo].[DistributionCentreLosses] AS [DistributionCentreLosses]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="DistributionCentreStock" EntityType="Self.DistributionCentreStock" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [DistributionCentreStock].[PackageTypeId] AS [PackageTypeId], 
+    [DistributionCentreStock].[PackageTypeDescription] AS [PackageTypeDescription], 
+    [DistributionCentreStock].[CostPerPackage] AS [CostPerPackage], 
+    [DistributionCentreStock].[DistributionCentreId] AS [DistributionCentreId], 
+    [DistributionCentreStock].[DistributionCenterName] AS [DistributionCenterName], 
+    [DistributionCentreStock].[NumberOfPackages] AS [NumberOfPackages], 
+    [DistributionCentreStock].[TotalValue] AS [TotalValue]
+    FROM [dbo].[DistributionCentreStock] AS [DistributionCentreStock]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="DoctorActivity" EntityType="Self.DoctorActivity" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [DoctorActivity].[DoctorId] AS [DoctorId], 
+    [DoctorActivity].[DoctorName] AS [DoctorName], 
+    [DoctorActivity].[PackageTypeId] AS [PackageTypeId], 
+    [DoctorActivity].[PackageTypeDescription] AS [PackageTypeDescription], 
+    [DoctorActivity].[PackageCount] AS [PackageCount], 
+    [DoctorActivity].[TotalPackageValue] AS [TotalPackageValue]
+    FROM [dbo].[DoctorActivity] AS [DoctorActivity]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="GlobalStock" EntityType="Self.GlobalStock" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [GlobalStock].[PackageTypeId] AS [PackageTypeId], 
+    [GlobalStock].[PackageTypeDescription] AS [PackageTypeDescription], 
+    [GlobalStock].[CostPerPackage] AS [CostPerPackage], 
+    [GlobalStock].[NumberOfPackages] AS [NumberOfPackages], 
+    [GlobalStock].[TotalValue] AS [TotalValue]
+    FROM [dbo].[GlobalStock] AS [GlobalStock]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="StockTaking" EntityType="Self.StockTaking" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [StockTaking].[PackageId] AS [PackageId], 
+    [StockTaking].[BarCode] AS [BarCode], 
+    [StockTaking].[PackageTypeId] AS [PackageTypeId], 
+    [StockTaking].[PackageTypeDescription] AS [PackageTypeDescription], 
+    [StockTaking].[CostPerPackage] AS [CostPerPackage], 
+    [StockTaking].[CurrentLocationCentreId] AS [CurrentLocationCentreId], 
+    [StockTaking].[ExpirationDate] AS [ExpirationDate]
+    FROM [dbo].[StockTaking] AS [StockTaking]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ValueInTransit" EntityType="Self.ValueInTransit" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ValueInTransit].[SenderDistributionCentreId] AS [SenderDistributionCentreId], 
+    [ValueInTransit].[SenderDistributionCentreName] AS [SenderDistributionCentreName], 
+    [ValueInTransit].[ReceiverDistributionCentreId] AS [ReceiverDistributionCentreId], 
+    [ValueInTransit].[RecieverDistributionCentreName] AS [RecieverDistributionCentreName], 
+    [ValueInTransit].[TotalPackages] AS [TotalPackages], 
+    [ValueInTransit].[TotalValue] AS [TotalValue]
+    FROM [dbo].[ValueInTransit] AS [ValueInTransit]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Audit_PackageTypeId" Association="Self.FK_Audit_PackageTypeId">
             <End Role="StandardPackageType" EntitySet="StandardPackageType" />
             <End Role="Audit" EntitySet="Audit" />
@@ -242,6 +409,10 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
           <AssociationSet Name="FK_AuditPackageId" Association="Self.FK_AuditPackageId">
             <End Role="Package" EntitySet="Package" />
             <End Role="AuditPackage" EntitySet="AuditPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CurrentLocationCentreId" Association="Self.FK_CurrentLocationCentreId">
+            <End Role="DistributionCentre" EntitySet="DistributionCentre" />
+            <End Role="Package" EntitySet="Package" />
           </AssociationSet>
           <AssociationSet Name="FK_DistributedByEmployeeId" Association="Self.FK_DistributedByEmployeeId">
             <End Role="Employee" EntitySet="Employee" />
@@ -289,10 +460,10 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
           <Property Name="DistributionCentreId" Type="Int32" Nullable="false" />
           <Property Name="EmployeeId" Type="Int32" Nullable="false" />
           <Property Name="PackageTypeId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="StandardPackageType" Relationship="Self.FK_Audit_PackageTypeId" FromRole="Audit" ToRole="StandardPackageType" />
           <NavigationProperty Name="AuditPackage" Relationship="Self.FK_AuditId" FromRole="Audit" ToRole="AuditPackage" />
           <NavigationProperty Name="DistributionCentre" Relationship="Self.FK_DistributionCentreId" FromRole="Audit" ToRole="DistributionCentre" />
           <NavigationProperty Name="Employee" Relationship="ENetCareMVCModel.FK_EmployeeId" FromRole="Audit" ToRole="Employee" />
+          <NavigationProperty Name="StandardPackageType" Relationship="ENetCareMVCModel.FK_Audit_PackageTypeId" FromRole="Audit" ToRole="StandardPackageType" />
         </EntityType>
         <EntityType Name="DistributionCentre">
           <Key>
@@ -307,22 +478,7 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
           <NavigationProperty Name="PackageTransit" Relationship="Self.FK_ReceiverCentreId" FromRole="DistributionCentre" ToRole="PackageTransit" />
           <NavigationProperty Name="PackageTransit1" Relationship="Self.FK_SenderCentreId" FromRole="DistributionCentre" ToRole="PackageTransit" />
           <NavigationProperty Name="Employee" Relationship="ENetCareMVCModel.FK_LocationCentreId" FromRole="DistributionCentre" ToRole="Employee" />
-        </EntityType>
-        <EntityType Name="Package">
-          <Key>
-            <PropertyRef Name="PackageId" />
-          </Key>
-          <Property Name="PackageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BarCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="PackageTypeId" Type="Int32" Nullable="false" />
-          <Property Name="CurrentLocationCentreId" Type="Int32" />
-          <Property Name="CurrentStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DistributedByEmployeeId" Type="Int32" />
-          <NavigationProperty Name="AuditPackage" Relationship="Self.FK_AuditPackageId" FromRole="Package" ToRole="AuditPackage" />
-          <NavigationProperty Name="PackageTransit" Relationship="Self.FK_PackageId" FromRole="Package" ToRole="PackageTransit" />
-          <NavigationProperty Name="StandardPackageType" Relationship="Self.FK_PackageTypeId" FromRole="Package" ToRole="StandardPackageType" />
-          <NavigationProperty Name="Employee" Relationship="ENetCareMVCModel.FK_DistributedByEmployeeId" FromRole="Package" ToRole="Employee" />
+          <NavigationProperty Name="Package" Relationship="ENetCareMVCModel.FK_CurrentLocationCentreId" FromRole="DistributionCentre" ToRole="Package" />
         </EntityType>
         <EntityType Name="PackageTransit">
           <Key>
@@ -335,23 +491,9 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
           <Property Name="DateSent" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateReceived" Type="DateTime" Precision="3" />
           <Property Name="DateCancelled" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="DistributionCentre" Relationship="Self.FK_ReceiverCentreId" FromRole="PackageTransit" ToRole="DistributionCentre" />
-          <NavigationProperty Name="DistributionCentre1" Relationship="Self.FK_SenderCentreId" FromRole="PackageTransit" ToRole="DistributionCentre" />
-          <NavigationProperty Name="Package" Relationship="Self.FK_PackageId" FromRole="PackageTransit" ToRole="Package" />
-        </EntityType>
-        <EntityType Name="StandardPackageType">
-          <Key>
-            <PropertyRef Name="PackageTypeId" />
-          </Key>
-          <Property Name="PackageTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="NumberOfMedications" Type="Int32" Nullable="false" />
-          <Property Name="ShelfLifeUnitType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ShelfLifeUnits" Type="Int32" Nullable="false" />
-          <Property Name="TemperatureSensitive" Type="Boolean" Nullable="false" />
-          <Property Name="Value" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <NavigationProperty Name="Audit" Relationship="Self.FK_Audit_PackageTypeId" FromRole="StandardPackageType" ToRole="Audit" />
-          <NavigationProperty Name="Package" Relationship="Self.FK_PackageTypeId" FromRole="StandardPackageType" ToRole="Package" />
+          <NavigationProperty Name="ReceiverCentre" Relationship="Self.FK_ReceiverCentreId" FromRole="PackageTransit" ToRole="DistributionCentre" />
+          <NavigationProperty Name="SenderCentre" Relationship="Self.FK_SenderCentreId" FromRole="PackageTransit" ToRole="DistributionCentre" />
+          <NavigationProperty Name="Package" Relationship="ENetCareMVCModel.FK_PackageId" FromRole="PackageTransit" ToRole="Package" />
         </EntityType>
         <EntityType Name="AuditPackage">
           <Key>
@@ -363,20 +505,8 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
           <Property Name="AuditId" Type="Int32" Nullable="false" />
           <Property Name="PackageId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Audit" Relationship="Self.FK_AuditId" FromRole="AuditPackage" ToRole="Audit" />
-          <NavigationProperty Name="Package" Relationship="Self.FK_AuditPackageId" FromRole="AuditPackage" ToRole="Package" />
+          <NavigationProperty Name="Package" Relationship="ENetCareMVCModel.FK_AuditPackageId" FromRole="AuditPackage" ToRole="Package" />
         </EntityType>
-        <Association Name="FK_Audit_PackageTypeId">
-          <End Role="StandardPackageType" Type="Self.StandardPackageType" Multiplicity="1" />
-          <End Role="Audit" Type="Self.Audit" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StandardPackageType">
-              <PropertyRef Name="PackageTypeId" />
-            </Principal>
-            <Dependent Role="Audit">
-              <PropertyRef Name="PackageTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_AuditId">
           <End Role="Audit" Type="Self.Audit" Multiplicity="1" />
           <End Role="AuditPackage" Type="Self.AuditPackage" Multiplicity="*" />
@@ -425,53 +555,11 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AuditPackageId">
-          <End Role="Package" Type="Self.Package" Multiplicity="1" />
-          <End Role="AuditPackage" Type="Self.AuditPackage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Package">
-              <PropertyRef Name="PackageId" />
-            </Principal>
-            <Dependent Role="AuditPackage">
-              <PropertyRef Name="PackageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PackageId">
-          <End Role="Package" Type="Self.Package" Multiplicity="1" />
-          <End Role="PackageTransit" Type="Self.PackageTransit" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Package">
-              <PropertyRef Name="PackageId" />
-            </Principal>
-            <Dependent Role="PackageTransit">
-              <PropertyRef Name="PackageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PackageTypeId">
-          <End Role="StandardPackageType" Type="Self.StandardPackageType" Multiplicity="1" />
-          <End Role="Package" Type="Self.Package" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StandardPackageType">
-              <PropertyRef Name="PackageTypeId" />
-            </Principal>
-            <Dependent Role="Package">
-              <PropertyRef Name="PackageTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Audit" EntityType="Self.Audit" />
           <EntitySet Name="DistributionCentre" EntityType="Self.DistributionCentre" />
-          <EntitySet Name="Package" EntityType="Self.Package" />
           <EntitySet Name="PackageTransit" EntityType="Self.PackageTransit" />
-          <EntitySet Name="StandardPackageType" EntityType="Self.StandardPackageType" />
           <EntitySet Name="AuditPackage" EntityType="Self.AuditPackage" />
-          <AssociationSet Name="FK_Audit_PackageTypeId" Association="Self.FK_Audit_PackageTypeId">
-            <End Role="StandardPackageType" EntitySet="StandardPackageType" />
-            <End Role="Audit" EntitySet="Audit" />
-          </AssociationSet>
           <AssociationSet Name="FK_AuditId" Association="Self.FK_AuditId">
             <End Role="Audit" EntitySet="Audit" />
             <End Role="AuditPackage" EntitySet="AuditPackage" />
@@ -488,18 +576,6 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
             <End Role="DistributionCentre" EntitySet="DistributionCentre" />
             <End Role="PackageTransit" EntitySet="PackageTransit" />
           </AssociationSet>
-          <AssociationSet Name="FK_AuditPackageId" Association="Self.FK_AuditPackageId">
-            <End Role="Package" EntitySet="Package" />
-            <End Role="AuditPackage" EntitySet="AuditPackage" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PackageId" Association="Self.FK_PackageId">
-            <End Role="Package" EntitySet="Package" />
-            <End Role="PackageTransit" EntitySet="PackageTransit" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PackageTypeId" Association="Self.FK_PackageTypeId">
-            <End Role="StandardPackageType" EntitySet="StandardPackageType" />
-            <End Role="Package" EntitySet="Package" />
-          </AssociationSet>
           <EntitySet Name="Employee" EntityType="ENetCareMVCModel.Employee" />
           <AssociationSet Name="FK_EmployeeId" Association="ENetCareMVCModel.FK_EmployeeId">
             <End Role="Employee" EntitySet="Employee" />
@@ -509,8 +585,36 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
             <End Role="DistributionCentre" EntitySet="DistributionCentre" />
             <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
+          <EntitySet Name="Package" EntityType="ENetCareMVCModel.Package" />
+          <EntitySet Name="StandardPackageType" EntityType="ENetCareMVCModel.StandardPackageType" />
+          <EntitySet Name="DistributionCentreLosses" EntityType="ENetCareMVCModel.DistributionCentreLosses" />
+          <EntitySet Name="DistributionCentreStock" EntityType="ENetCareMVCModel.DistributionCentreStock" />
+          <EntitySet Name="DoctorActivity" EntityType="ENetCareMVCModel.DoctorActivity" />
+          <EntitySet Name="GlobalStock" EntityType="ENetCareMVCModel.GlobalStock" />
+          <EntitySet Name="StockTaking" EntityType="ENetCareMVCModel.StockTaking" />
+          <EntitySet Name="ValueInTransit" EntityType="ENetCareMVCModel.ValueInTransit" />
+          <AssociationSet Name="FK_Audit_PackageTypeId" Association="ENetCareMVCModel.FK_Audit_PackageTypeId">
+            <End Role="StandardPackageType" EntitySet="StandardPackageType" />
+            <End Role="Audit" EntitySet="Audit" />
+          </AssociationSet>
           <AssociationSet Name="FK_DistributedByEmployeeId" Association="ENetCareMVCModel.FK_DistributedByEmployeeId">
             <End Role="Employee" EntitySet="Employee" />
+            <End Role="Package" EntitySet="Package" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AuditPackageId" Association="ENetCareMVCModel.FK_AuditPackageId">
+            <End Role="Package" EntitySet="Package" />
+            <End Role="AuditPackage" EntitySet="AuditPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PackageId" Association="ENetCareMVCModel.FK_PackageId">
+            <End Role="Package" EntitySet="Package" />
+            <End Role="PackageTransit" EntitySet="PackageTransit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PackageTypeId" Association="ENetCareMVCModel.FK_PackageTypeId">
+            <End Role="StandardPackageType" EntitySet="StandardPackageType" />
+            <End Role="Package" EntitySet="Package" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CurrentLocationCentreId" Association="ENetCareMVCModel.FK_CurrentLocationCentreId">
+            <End Role="DistributionCentre" EntitySet="DistributionCentre" />
             <End Role="Package" EntitySet="Package" />
           </AssociationSet>
           </EntityContainer>
@@ -553,6 +657,137 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EnumType Name="EmployeeType">
+          <Member Name="Agent" Value="1" />
+          <Member Name="Doctor" Value="2" />
+          <Member Name="Manager" Value="3" />
+        </EnumType>
+        <EntityType Name="Package">
+          <Key>
+            <PropertyRef Name="PackageId" />
+          </Key>
+          <Property Name="PackageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BarCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PackageTypeId" Type="Int32" Nullable="false" />
+          <Property Name="CurrentLocationCentreId" Type="Int32" />
+          <Property Name="CurrentStatus" Type="ENetCareMVCModel.PackageStatus" Nullable="false" />
+          <Property Name="DistributedByEmployeeId" Type="Int32" />
+          <NavigationProperty Name="DistributedBy" Relationship="ENetCareMVCModel.FK_DistributedByEmployeeId" FromRole="Package" ToRole="Employee" />
+          <NavigationProperty Name="AuditPackage" Relationship="ENetCareMVCModel.FK_AuditPackageId" FromRole="Package" ToRole="AuditPackage" />
+          <NavigationProperty Name="PackageTransit" Relationship="ENetCareMVCModel.FK_PackageId" FromRole="Package" ToRole="PackageTransit" />
+          <NavigationProperty Name="PackageType" Relationship="ENetCareMVCModel.FK_PackageTypeId" FromRole="Package" ToRole="StandardPackageType" />
+          <NavigationProperty Name="CurrentLocation" Relationship="ENetCareMVCModel.FK_CurrentLocationCentreId" FromRole="Package" ToRole="DistributionCentre" />
+        </EntityType>
+        <EntityType Name="StandardPackageType">
+          <Key>
+            <PropertyRef Name="PackageTypeId" />
+          </Key>
+          <Property Name="PackageTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="NumberOfMedications" Type="Int32" Nullable="false" />
+          <Property Name="ShelfLifeUnitType" Type="ENetCareMVCModel.ShelfLifeUnitType" Nullable="false" />
+          <Property Name="ShelfLifeUnits" Type="Int32" Nullable="false" />
+          <Property Name="TemperatureSensitive" Type="Boolean" Nullable="false" />
+          <Property Name="Value" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Audit" Relationship="ENetCareMVCModel.FK_Audit_PackageTypeId" FromRole="StandardPackageType" ToRole="Audit" />
+          <NavigationProperty Name="Package" Relationship="ENetCareMVCModel.FK_PackageTypeId" FromRole="StandardPackageType" ToRole="Package" />
+        </EntityType>
+        <EntityType Name="DistributionCentreLosses">
+          <Key>
+            <PropertyRef Name="DistributionCenterName" />
+          </Key>
+          <Property Name="DistributionCentreId" Type="Int32" />
+          <Property Name="DistributionCenterName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LossRatioNumerator" Type="Int32" />
+          <Property Name="LossRatioDenominator" Type="Int32" />
+          <Property Name="TotalLossDiscardedValue" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="DistributionCentreStock">
+          <Key>
+            <PropertyRef Name="PackageTypeId" />
+            <PropertyRef Name="PackageTypeDescription" />
+            <PropertyRef Name="CostPerPackage" />
+            <PropertyRef Name="DistributionCentreId" />
+            <PropertyRef Name="DistributionCenterName" />
+          </Key>
+          <Property Name="PackageTypeId" Type="Int32" Nullable="false" />
+          <Property Name="PackageTypeDescription" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CostPerPackage" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DistributionCentreId" Type="Int32" Nullable="false" />
+          <Property Name="DistributionCenterName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NumberOfPackages" Type="Int32" />
+          <Property Name="TotalValue" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="DoctorActivity">
+          <Key>
+            <PropertyRef Name="DoctorId" />
+            <PropertyRef Name="DoctorName" />
+            <PropertyRef Name="PackageTypeId" />
+            <PropertyRef Name="PackageTypeDescription" />
+          </Key>
+          <Property Name="DoctorId" Type="Int32" Nullable="false" />
+          <Property Name="DoctorName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PackageTypeId" Type="Int32" Nullable="false" />
+          <Property Name="PackageTypeDescription" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="PackageCount" Type="Int32" />
+          <Property Name="TotalPackageValue" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="GlobalStock">
+          <Key>
+            <PropertyRef Name="PackageTypeId" />
+            <PropertyRef Name="PackageTypeDescription" />
+            <PropertyRef Name="CostPerPackage" />
+          </Key>
+          <Property Name="PackageTypeId" Type="Int32" Nullable="false" />
+          <Property Name="PackageTypeDescription" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CostPerPackage" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="NumberOfPackages" Type="Int32" />
+          <Property Name="TotalValue" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="StockTaking">
+          <Key>
+            <PropertyRef Name="PackageId" />
+            <PropertyRef Name="BarCode" />
+            <PropertyRef Name="PackageTypeId" />
+            <PropertyRef Name="PackageTypeDescription" />
+            <PropertyRef Name="CostPerPackage" />
+            <PropertyRef Name="ExpirationDate" />
+          </Key>
+          <Property Name="PackageId" Type="Int32" Nullable="false" />
+          <Property Name="BarCode" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="PackageTypeId" Type="Int32" Nullable="false" />
+          <Property Name="PackageTypeDescription" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CostPerPackage" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="CurrentLocationCentreId" Type="Int32" />
+          <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="ValueInTransit">
+          <Key>
+            <PropertyRef Name="SenderDistributionCentreId" />
+            <PropertyRef Name="SenderDistributionCentreName" />
+            <PropertyRef Name="ReceiverDistributionCentreId" />
+            <PropertyRef Name="RecieverDistributionCentreName" />
+          </Key>
+          <Property Name="SenderDistributionCentreId" Type="Int32" Nullable="false" />
+          <Property Name="SenderDistributionCentreName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReceiverDistributionCentreId" Type="Int32" Nullable="false" />
+          <Property Name="RecieverDistributionCentreName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TotalPackages" Type="Int32" />
+          <Property Name="TotalValue" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <Association Name="FK_Audit_PackageTypeId">
+          <End Type="ENetCareMVCModel.StandardPackageType" Role="StandardPackageType" Multiplicity="1" />
+          <End Type="ENetCareMVCModel.Audit" Role="Audit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StandardPackageType">
+              <PropertyRef Name="PackageTypeId" />
+            </Principal>
+            <Dependent Role="Audit">
+              <PropertyRef Name="PackageTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DistributedByEmployeeId">
           <End Type="ENetCareMVCModel.Employee" Role="Employee" Multiplicity="0..1" />
           <End Type="ENetCareMVCModel.Package" Role="Package" Multiplicity="*" />
@@ -565,11 +800,65 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EnumType Name="EmployeeType">
-          <Member Name="Agent" Value="1" />
-          <Member Name="Doctor" Value="2" />
-          <Member Name="Manager" Value="3" />
+        <Association Name="FK_AuditPackageId">
+          <End Type="ENetCareMVCModel.Package" Role="Package" Multiplicity="1" />
+          <End Type="ENetCareMVCModel.AuditPackage" Role="AuditPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Package">
+              <PropertyRef Name="PackageId" />
+            </Principal>
+            <Dependent Role="AuditPackage">
+              <PropertyRef Name="PackageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PackageId">
+          <End Type="ENetCareMVCModel.Package" Role="Package" Multiplicity="1" />
+          <End Type="ENetCareMVCModel.PackageTransit" Role="PackageTransit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Package">
+              <PropertyRef Name="PackageId" />
+            </Principal>
+            <Dependent Role="PackageTransit">
+              <PropertyRef Name="PackageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PackageTypeId">
+          <End Type="ENetCareMVCModel.StandardPackageType" Role="StandardPackageType" Multiplicity="1" />
+          <End Type="ENetCareMVCModel.Package" Role="Package" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StandardPackageType">
+              <PropertyRef Name="PackageTypeId" />
+            </Principal>
+            <Dependent Role="Package">
+              <PropertyRef Name="PackageTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EnumType Name="PackageStatus">
+          <Member Name="InTransit" Value="1" />
+          <Member Name="InStock" Value="2" />
+          <Member Name="Discarded" Value="3" />
+          <Member Name="Distributed" Value="4" />
+          <Member Name="Lost" Value="5" />
         </EnumType>
+        <EnumType Name="ShelfLifeUnitType">
+          <Member Name="Month" Value="1" />
+          <Member Name="Day" Value="2" />
+        </EnumType>
+        <Association Name="FK_CurrentLocationCentreId">
+          <End Type="ENetCareMVCModel.DistributionCentre" Role="DistributionCentre" Multiplicity="0..1" />
+          <End Type="ENetCareMVCModel.Package" Role="Package" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCentre">
+              <PropertyRef Name="CentreId" />
+            </Principal>
+            <Dependent Role="Package">
+              <PropertyRef Name="CurrentLocationCentreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -598,19 +887,6 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Package">
-            <EntityTypeMapping TypeName="ENetCareMVCModel.Package">
-              <MappingFragment StoreEntitySet="Package">
-                <ScalarProperty Name="PackageId" ColumnName="PackageId" />
-                <ScalarProperty Name="BarCode" ColumnName="BarCode" />
-                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-                <ScalarProperty Name="PackageTypeId" ColumnName="PackageTypeId" />
-                <ScalarProperty Name="CurrentLocationCentreId" ColumnName="CurrentLocationCentreId" />
-                <ScalarProperty Name="CurrentStatus" ColumnName="CurrentStatus" />
-                <ScalarProperty Name="DistributedByEmployeeId" ColumnName="DistributedByEmployeeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PackageTransit">
             <EntityTypeMapping TypeName="ENetCareMVCModel.PackageTransit">
               <MappingFragment StoreEntitySet="PackageTransit">
@@ -621,19 +897,6 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
                 <ScalarProperty Name="DateSent" ColumnName="DateSent" />
                 <ScalarProperty Name="DateReceived" ColumnName="DateReceived" />
                 <ScalarProperty Name="DateCancelled" ColumnName="DateCancelled" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StandardPackageType">
-            <EntityTypeMapping TypeName="ENetCareMVCModel.StandardPackageType">
-              <MappingFragment StoreEntitySet="StandardPackageType">
-                <ScalarProperty Name="PackageTypeId" ColumnName="PackageTypeId" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="NumberOfMedications" ColumnName="NumberOfMedications" />
-                <ScalarProperty Name="ShelfLifeUnitType" ColumnName="ShelfLifeUnitType" />
-                <ScalarProperty Name="ShelfLifeUnits" ColumnName="ShelfLifeUnits" />
-                <ScalarProperty Name="TemperatureSensitive" ColumnName="TemperatureSensitive" />
-                <ScalarProperty Name="Value" ColumnName="Value" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -656,6 +919,104 @@ warning 6002: The table/view 'ENetCareMVC.dbo.AuditPackage' does not have a prim
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Package">
+            <EntityTypeMapping TypeName="ENetCareMVCModel.Package">
+              <MappingFragment StoreEntitySet="Package">
+                <ScalarProperty Name="DistributedByEmployeeId" ColumnName="DistributedByEmployeeId" />
+                <ScalarProperty Name="CurrentStatus" ColumnName="CurrentStatus" />
+                <ScalarProperty Name="CurrentLocationCentreId" ColumnName="CurrentLocationCentreId" />
+                <ScalarProperty Name="PackageTypeId" ColumnName="PackageTypeId" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="BarCode" ColumnName="BarCode" />
+                <ScalarProperty Name="PackageId" ColumnName="PackageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StandardPackageType">
+            <EntityTypeMapping TypeName="ENetCareMVCModel.StandardPackageType">
+              <MappingFragment StoreEntitySet="StandardPackageType">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="TemperatureSensitive" ColumnName="TemperatureSensitive" />
+                <ScalarProperty Name="ShelfLifeUnits" ColumnName="ShelfLifeUnits" />
+                <ScalarProperty Name="ShelfLifeUnitType" ColumnName="ShelfLifeUnitType" />
+                <ScalarProperty Name="NumberOfMedications" ColumnName="NumberOfMedications" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PackageTypeId" ColumnName="PackageTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DistributionCentreLosses">
+            <EntityTypeMapping TypeName="ENetCareMVCModel.DistributionCentreLosses">
+              <MappingFragment StoreEntitySet="DistributionCentreLosses">
+                <ScalarProperty Name="TotalLossDiscardedValue" ColumnName="TotalLossDiscardedValue" />
+                <ScalarProperty Name="LossRatioDenominator" ColumnName="LossRatioDenominator" />
+                <ScalarProperty Name="LossRatioNumerator" ColumnName="LossRatioNumerator" />
+                <ScalarProperty Name="DistributionCenterName" ColumnName="DistributionCenterName" />
+                <ScalarProperty Name="DistributionCentreId" ColumnName="DistributionCentreId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DistributionCentreStock">
+            <EntityTypeMapping TypeName="ENetCareMVCModel.DistributionCentreStock">
+              <MappingFragment StoreEntitySet="DistributionCentreStock">
+                <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+                <ScalarProperty Name="NumberOfPackages" ColumnName="NumberOfPackages" />
+                <ScalarProperty Name="DistributionCenterName" ColumnName="DistributionCenterName" />
+                <ScalarProperty Name="DistributionCentreId" ColumnName="DistributionCentreId" />
+                <ScalarProperty Name="CostPerPackage" ColumnName="CostPerPackage" />
+                <ScalarProperty Name="PackageTypeDescription" ColumnName="PackageTypeDescription" />
+                <ScalarProperty Name="PackageTypeId" ColumnName="PackageTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DoctorActivity">
+            <EntityTypeMapping TypeName="ENetCareMVCModel.DoctorActivity">
+              <MappingFragment StoreEntitySet="DoctorActivity">
+                <ScalarProperty Name="TotalPackageValue" ColumnName="TotalPackageValue" />
+                <ScalarProperty Name="PackageCount" ColumnName="PackageCount" />
+                <ScalarProperty Name="PackageTypeDescription" ColumnName="PackageTypeDescription" />
+                <ScalarProperty Name="PackageTypeId" ColumnName="PackageTypeId" />
+                <ScalarProperty Name="DoctorName" ColumnName="DoctorName" />
+                <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GlobalStock">
+            <EntityTypeMapping TypeName="ENetCareMVCModel.GlobalStock">
+              <MappingFragment StoreEntitySet="GlobalStock">
+                <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+                <ScalarProperty Name="NumberOfPackages" ColumnName="NumberOfPackages" />
+                <ScalarProperty Name="CostPerPackage" ColumnName="CostPerPackage" />
+                <ScalarProperty Name="PackageTypeDescription" ColumnName="PackageTypeDescription" />
+                <ScalarProperty Name="PackageTypeId" ColumnName="PackageTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockTaking">
+            <EntityTypeMapping TypeName="ENetCareMVCModel.StockTaking">
+              <MappingFragment StoreEntitySet="StockTaking">
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="CurrentLocationCentreId" ColumnName="CurrentLocationCentreId" />
+                <ScalarProperty Name="CostPerPackage" ColumnName="CostPerPackage" />
+                <ScalarProperty Name="PackageTypeDescription" ColumnName="PackageTypeDescription" />
+                <ScalarProperty Name="PackageTypeId" ColumnName="PackageTypeId" />
+                <ScalarProperty Name="BarCode" ColumnName="BarCode" />
+                <ScalarProperty Name="PackageId" ColumnName="PackageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ValueInTransit">
+            <EntityTypeMapping TypeName="ENetCareMVCModel.ValueInTransit">
+              <MappingFragment StoreEntitySet="ValueInTransit">
+                <ScalarProperty Name="TotalValue" ColumnName="TotalValue" />
+                <ScalarProperty Name="TotalPackages" ColumnName="TotalPackages" />
+                <ScalarProperty Name="RecieverDistributionCentreName" ColumnName="RecieverDistributionCentreName" />
+                <ScalarProperty Name="ReceiverDistributionCentreId" ColumnName="ReceiverDistributionCentreId" />
+                <ScalarProperty Name="SenderDistributionCentreName" ColumnName="SenderDistributionCentreName" />
+                <ScalarProperty Name="SenderDistributionCentreId" ColumnName="SenderDistributionCentreId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

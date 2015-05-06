@@ -23,7 +23,7 @@ namespace ENetCareMVC.Repository.Data
         public int PackageTypeId { get; set; }
         public string Description { get; set; }
         public int NumberOfMedications { get; set; }
-        public string ShelfLifeUnitType { get; set; }
+        public ShelfLifeUnitType ShelfLifeUnitType { get; set; }
         public int ShelfLifeUnits { get; set; }
         public bool TemperatureSensitive { get; set; }
         public decimal Value { get; set; }

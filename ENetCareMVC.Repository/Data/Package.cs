@@ -25,12 +25,13 @@ namespace ENetCareMVC.Repository.Data
         public System.DateTime ExpirationDate { get; set; }
         public int PackageTypeId { get; set; }
         public Nullable<int> CurrentLocationCentreId { get; set; }
-        public string CurrentStatus { get; set; }
+        public PackageStatus CurrentStatus { get; set; }
         public Nullable<int> DistributedByEmployeeId { get; set; }
     
+        public virtual Employee DistributedBy { get; set; }
         public virtual ICollection<AuditPackage> AuditPackage { get; set; }
         public virtual ICollection<PackageTransit> PackageTransit { get; set; }
-        public virtual StandardPackageType StandardPackageType { get; set; }
-        public virtual Employee Employee { get; set; }
+        public virtual StandardPackageType PackageType { get; set; }
+        public virtual DistributionCentre CurrentLocation { get; set; }
     }
 }

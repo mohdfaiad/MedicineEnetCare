@@ -27,10 +27,16 @@ namespace ENetCareMVC.Repository.Data
     
         public virtual DbSet<Audit> Audit { get; set; }
         public virtual DbSet<DistributionCentre> DistributionCentre { get; set; }
-        public virtual DbSet<Package> Package { get; set; }
         public virtual DbSet<PackageTransit> PackageTransit { get; set; }
-        public virtual DbSet<StandardPackageType> StandardPackageType { get; set; }
         public virtual DbSet<AuditPackage> AuditPackage { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
+        public virtual DbSet<Package> Package { get; set; }
+        public virtual DbSet<StandardPackageType> StandardPackageType { get; set; }
+        public virtual DbSet<DistributionCentreLosses> DistributionCentreLosses { get; set; }
+        public virtual DbSet<DistributionCentreStock> DistributionCentreStock { get; set; }
+        public virtual DbSet<DoctorActivity> DoctorActivity { get; set; }
+        public virtual DbSet<GlobalStock> GlobalStock { get; set; }
+        public virtual DbSet<StockTaking> StockTaking { get; set; }
+        public virtual DbSet<ValueInTransit> ValueInTransit { get; set; }
     }
 }

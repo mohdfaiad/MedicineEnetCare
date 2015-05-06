@@ -10,10 +10,15 @@
 namespace ENetCareMVC.Repository.Data
 {
     using System;
+    using System.Collections.Generic;
     
-    public enum ShelfLifeUnitType : int
+    public partial class ValueInTransit
     {
-        Month = 1,
-        Day = 2
+        public int SenderDistributionCentreId { get; set; }
+        public string SenderDistributionCentreName { get; set; }
+        public int ReceiverDistributionCentreId { get; set; }
+        public string RecieverDistributionCentreName { get; set; }
+        public Nullable<int> TotalPackages { get; set; }
+        public Nullable<decimal> TotalValue { get; set; }
     }
 }

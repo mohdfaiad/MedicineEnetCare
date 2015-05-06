@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ENetCare.Repository.Repository
+namespace ENetCareMVC.Repository.Repository
 {
     public class EmployeeRepository : IEmployeeRepository
     {

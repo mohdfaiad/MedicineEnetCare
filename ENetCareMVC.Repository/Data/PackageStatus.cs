@@ -11,9 +11,12 @@ namespace ENetCareMVC.Repository.Data
 {
     using System;
     
-    public enum ShelfLifeUnitType : int
+    public enum PackageStatus : int
     {
-        Month = 1,
-        Day = 2
+        InTransit = 1,
+        InStock = 2,
+        Discarded = 3,
+        Distributed = 4,
+        Lost = 5
     }
 }

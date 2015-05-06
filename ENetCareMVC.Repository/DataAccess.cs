@@ -8,7 +8,7 @@ using System.Data;
 using System.Xml.Linq;
 using ENetCareMVC.Repository.Data;
 
-namespace ENetCare.Repository
+namespace ENetCareMVC.Repository
 {
     public class DataAccess
     {
@@ -97,7 +97,7 @@ namespace ENetCare.Repository
 
                 employeeRecord.UserName = employee.UserName;
                 employeeRecord.FullName = employee.FullName;
-                employeeRecord.Password = employee.Password;
+                employeeRecord.UserId = employee.UserId;
                 employeeRecord.EmailAddress = employee.EmailAddress;
                 employeeRecord.LocationCentreId = employee.LocationCentreId;
                 employeeRecord.EmployeeType = employee.EmployeeType;
@@ -225,7 +225,7 @@ namespace ENetCare.Repository
             string query = "SELECT CentreId, Name, Address, Phone, IsHeadOffice FROM DistributionCentre ORDER BY CentreId";
 
             var cmd = new SqlCommand(query);
-            cmd.Connection = connection;
+            //cmd.Connection = connection;
 
             using (SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default))
             {
@@ -400,9 +400,9 @@ namespace ENetCare.Repository
                     transit.TransitId = Convert.ToInt32(reader["transitId"]);
                     transit.Package = DataAccess.GetPackage(connection, Convert.ToInt32(reader["PackageId"]));
                     // .PackageId=Convert.ToInt32(reader["PackageId"]);
-                    transit.SenderCentre = DataAccess.GetDistributionCentre(connection, Convert.ToInt32(reader["SenderCentreId"]));
+                    transit.SenderCentre = DataAccess.GetDistributionCentre(Convert.ToInt32(reader["SenderCentreId"]));
                     //transit.SenderCentre.CentreId = Convert.ToInt32(reader["SenderCentreId"]);
-                    transit.ReceiverCentre = DataAccess.GetDistributionCentre(connection, Convert.ToInt32(reader["ReceiverCentreId"]));
+                    transit.ReceiverCentre = DataAccess.GetDistributionCentre(Convert.ToInt32(reader["ReceiverCentreId"]));
                     // .CentreId = Convert.ToInt32(reader["ReceiverCentreId"]);
                     transit.DateSent = Convert.ToDateTime(reader["DateSent"]);
                     if (reader["DateReceived"] != DBNull.Value)

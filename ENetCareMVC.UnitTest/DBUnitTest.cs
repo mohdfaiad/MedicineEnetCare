@@ -38,7 +38,7 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
         public void TestDbAccess_GetDistCentres()                           // (P. 04-04-2015) 
         {
             enetConnection.Open();
-            List<DistributionCentre> centresList = DataAccess.GetAllDistributionCentres(enetConnection);
+            List<DistributionCentre> centresList = DataAccess.GetAllDistributionCentres();
             enetConnection.Close();
             int howMany = centresList.Count();
             Debug.WriteLine(howMany + " centres found.");
@@ -49,7 +49,7 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
         public void TestDbAccess_GetEmployees()                   // (P. 04-04-2015)  
         {
             enetConnection.Open();
-            List<Employee> employeeList = DataAccess.GetAllEmployees(enetConnection);
+            List<Employee> employeeList = DataAccess.GetAllEmployees();
             enetConnection.Close();
             int howMany = employeeList.Count();
             Debug.WriteLine(howMany + " employees found.");
@@ -60,11 +60,11 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
         public void TestDb_ShowAllTables()
         {
             enetConnection.Open();
-            List<DistributionCentre> distList = DataAccess.GetAllDistributionCentres(enetConnection);
+            List<DistributionCentre> distList = DataAccess.GetAllDistributionCentres();
             Debug.WriteLine("DISTRIBUTION CENTRES : ");
             foreach (DistributionCentre centre in distList) Debug.WriteLine(centre);
 
-            List<Employee> employeeList = DataAccess.GetAllEmployees(enetConnection);
+            List<Employee> employeeList = DataAccess.GetAllEmployees();
             Debug.WriteLine("\n\n EMPLOYEES : ");
             foreach (Employee emp in employeeList) Debug.WriteLine(emp);
 
@@ -145,12 +145,12 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
         public void CheckIfItsPopulated()      // Populates Database if it hasnt been poped yet
         {                                       //               (P. 04-04-2015)
             enetConnection.Open();
-            List<Employee> employeeList = DataAccess.GetAllEmployees(enetConnection);
+            List<Employee> employeeList = DataAccess.GetAllEmployees();
             enetConnection.Close();
             if (employeeList.Count() < 8)         // if there curr are less than 8 employees
             {
-                Populator myPopulator = new Populator();
-                myPopulator.Run(enetConnection);
+                //Populator myPopulator = new Populator();
+                //myPopulator.Run(enetConnection);
                 Debug.WriteLine(" Sample Items were added to Database");
             }
         }

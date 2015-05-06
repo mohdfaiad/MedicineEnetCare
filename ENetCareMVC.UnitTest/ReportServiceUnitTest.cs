@@ -2,7 +2,6 @@
 using ENetCareMVC.Repository;
 using ENetCareMVC.Repository.Data;
 using ENetCareMVC.Repository.Repository;
-using ENetCareMVC.Repository.ViewData;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -46,7 +45,7 @@ namespace ENetCareMVC.UnitTest
             foreach (DistributionCentreLosses l in lossesList) Debug.WriteLine(l.ToString());
             Debug.WriteLine("Number of items: " + lossesList.Count());
             Assert.AreEqual<int>(1, lossesList.Count());
-            Assert.AreEqual<decimal>(15, lossesList[0].LossRatioDenominator);
+            Assert.AreEqual<int>(15, lossesList[0].LossRatioDenominator.Value);
         }
 
         [TestMethod]
@@ -54,8 +53,8 @@ namespace ENetCareMVC.UnitTest
         {
             MockReportRepository repo = new MockReportRepository();
             ReportService _reportService = new ReportService(repo);
-            List<StocktakingPackage> spList = _reportService.GetStocktaking(4);
-            foreach (StocktakingPackage p in spList) Debug.WriteLine(p.ToString());
+            List<StockTaking> spList = _reportService.GetStocktaking(4);
+            foreach (StockTaking p in spList) Debug.WriteLine(p.ToString());
             Debug.WriteLine("Number of items: " + spList.Count());
             Assert.IsTrue(spList.Count() > 0); 
         }

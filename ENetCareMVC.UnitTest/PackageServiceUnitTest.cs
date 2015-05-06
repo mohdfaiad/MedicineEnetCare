@@ -6,7 +6,7 @@ using ENetCareMVC.Repository.Data;
 using System.Diagnostics;
 using ENetCareMVC.Repository;
 using System.Configuration;
-using ENetCareMVC.Web.Membership;
+using ENetCareMVC.UnitTest;
 
 namespace ENetCare.UnitTest
 {
@@ -146,7 +146,7 @@ namespace ENetCare.UnitTest
             packageService.Receive(package1.BarCode, myReceiverCentre, DateTime.Today);
             PackageTransit finishedTransit = MockDataAccess.GetPackageTransit(newTransitId);
             Debug.WriteLine(finishedTransit.ToString());
-            Assert.IsTrue(finishedTransit.IsPastTransit() && finishedTransit.ReceiverCentre==myReceiverCentre);
+            Assert.IsTrue(finishedTransit.ReceiverCentre==myReceiverCentre);
         }
 
         [TestMethod]

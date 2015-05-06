@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace ENetCare.Repository.Repository
+namespace ENetCareMVC.Repository.Repository
 {
     public class PackageRepository : IPackageRepository
     {
@@ -67,13 +67,13 @@ namespace ENetCare.Repository.Repository
 
                 if (package.CurrentLocation != null)
                 {
-                    package.CurrentLocation = DataAccess.GetDistributionCentre(connection, package.CurrentLocation.CentreId);
+                    package.CurrentLocation = DataAccess.GetDistributionCentre(package.CurrentLocation.CentreId);
                 }
 
                 if (package.DistributedBy != null)
                 {
-                    package.DistributedBy = DataAccess.GetEmployee(connection, package.DistributedBy.EmployeeId, null);
-                    package.DistributedBy.Location = DataAccess.GetDistributionCentre(connection, package.DistributedBy.Location.CentreId);
+                    package.DistributedBy = DataAccess.GetEmployee(package.DistributedBy.EmployeeId, null);
+                    package.DistributedBy.Location = DataAccess.GetDistributionCentre(package.DistributedBy.Location.CentreId);
                 }
             }
             return package;
@@ -146,7 +146,7 @@ namespace ENetCare.Repository.Repository
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
-                List<DistributionCentre> allCentres = DataAccess.GetAllDistributionCentres(connection);
+                List<DistributionCentre> allCentres = DataAccess.GetAllDistributionCentres();
                 connection.Close();
                 foreach (DistributionCentre centre in allCentres)
                     if (centre.IsHeadOffice) return centre;

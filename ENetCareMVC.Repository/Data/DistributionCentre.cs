@@ -20,6 +20,7 @@ namespace ENetCareMVC.Repository.Data
             this.PackageTransit = new HashSet<PackageTransit>();
             this.PackageTransit1 = new HashSet<PackageTransit>();
             this.Employee = new HashSet<Employee>();
+            this.Package = new HashSet<Package>();
         }
     
         public int CentreId { get; set; }
@@ -32,5 +33,6 @@ namespace ENetCareMVC.Repository.Data
         public virtual ICollection<PackageTransit> PackageTransit { get; set; }
         public virtual ICollection<PackageTransit> PackageTransit1 { get; set; }
         public virtual ICollection<Employee> Employee { get; set; }
+        public virtual ICollection<Package> Package { get; set; }
     }
 }

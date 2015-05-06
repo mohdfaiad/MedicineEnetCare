@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ENetCareMVC.Repository.ViewData;
 using ENetCareMVC.Repository;
 using ENetCareMVC.Repository.Data;
 
@@ -27,7 +26,7 @@ namespace ENetCareMVC.UnitTest
                 PackageTypeDescription = "100 Panadol Tablets",
                 CostPerPackage = 10,
                 DistributionCentreId = 1,
-                DistributionCentreName = "North Centre",
+                DistributionCenterName = "North Centre",
                 NumberOfPackages = 2,
                 TotalValue = 20
             };
@@ -42,7 +41,7 @@ namespace ENetCareMVC.UnitTest
             var loss = new DistributionCentreLosses()
             {
                 DistributionCentreId = 1,
-                DistributionCentreName = "North Centre",
+                DistributionCenterName = "North Centre",
                 LossRatioNumerator = 5,
                 LossRatioDenominator = 15,
                 TotalLossDiscardedValue = 500
@@ -62,13 +61,13 @@ namespace ENetCareMVC.UnitTest
             throw new NotImplementedException();
         }
 
-        public List<StocktakingPackage> GetStocktaking(int CentreId)
+        public List<StockTaking> GetStocktaking(int CentreId)
         {
-            List<StocktakingPackage> sList = new List<StocktakingPackage>();
+            List<StockTaking> sList = new List<StockTaking>();
             List<Package> pList = MockDataAccess.GetAllPackages();
             foreach(Package p in pList)
                 if(p.CurrentLocation.CentreId==CentreId) {
-                    StocktakingPackage sP=new StocktakingPackage();            
+                    StockTaking sP=new StockTaking();            
                     sP.PackageTypeId=p.PackageType.PackageTypeId;
                     sP.PackageTypeDescription = p.PackageType.Description;
                     sP.CostPerPackage = p.PackageType.Value;

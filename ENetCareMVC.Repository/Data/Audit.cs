@@ -25,9 +25,9 @@ namespace ENetCareMVC.Repository.Data
         public int EmployeeId { get; set; }
         public int PackageTypeId { get; set; }
     
-        public virtual StandardPackageType StandardPackageType { get; set; }
         public virtual ICollection<AuditPackage> AuditPackage { get; set; }
         public virtual DistributionCentre DistributionCentre { get; set; }
         public virtual Employee Employee { get; set; }
+        public virtual StandardPackageType StandardPackageType { get; set; }
     }
 }

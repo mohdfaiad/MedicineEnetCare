@@ -22,8 +22,8 @@ namespace ENetCareMVC.Repository.Data
         public Nullable<System.DateTime> DateReceived { get; set; }
         public Nullable<System.DateTime> DateCancelled { get; set; }
     
-        public virtual DistributionCentre DistributionCentre { get; set; }
-        public virtual DistributionCentre DistributionCentre1 { get; set; }
+        public virtual DistributionCentre ReceiverCentre { get; set; }
+        public virtual DistributionCentre SenderCentre { get; set; }
         public virtual Package Package { get; set; }
     }
 }

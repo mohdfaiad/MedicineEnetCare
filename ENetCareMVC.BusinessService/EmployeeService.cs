@@ -48,13 +48,14 @@ namespace ENetCareMVC.BusinessService
                 return result;
             }
 
+            /*
             if (employee.Password != currentPassword)
             {
                 result.Success = false;
                 result.ErrorMessage = EmployeeResult.CurrentPasswordIsIncorrect;
                 return result;
             }
-
+            */
             if (string.IsNullOrEmpty(newPassword))
             {
                 result.Success = false;
@@ -69,7 +70,7 @@ namespace ENetCareMVC.BusinessService
                 return result;
             }
 
-            employee.Password = newPassword;
+            //employee.Password = newPassword;
 
             _employeeRepository.Update(employee);
 

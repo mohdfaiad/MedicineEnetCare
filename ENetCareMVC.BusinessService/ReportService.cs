@@ -1,6 +1,5 @@
 ﻿using ENetCareMVC.Repository.Data;
 using ENetCareMVC.Repository.Repository;
-using ENetCareMVC.Repository.ViewData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,7 +58,7 @@ namespace ENetCareMVC.BusinessService
         /// </summary>
         /// <param name="centreId"></param>
         /// <returns></returns>
-        public List<StocktakingPackage> GetStocktaking(int centreId)
+        public List<StockTaking> GetStocktaking(int centreId)
         {
             return _reportRepository.GetStocktaking(centreId);
         }
