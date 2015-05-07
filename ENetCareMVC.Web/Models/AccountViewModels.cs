@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ENetCareMVC.Repository.Data;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ENetCareMVC.Web.Models
 {
@@ -68,6 +70,35 @@ namespace ENetCareMVC.Web.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Full name")]
+        public string FullName { get; set; }
+
+        [Display(Name = "Employee Type")]
+        public EmployeeType EmployeeType { get; set; }
+
+        [Display(Name = "Location Centre")]
+        public int LocationCentreId { get; set; }
+
+        public IEnumerable<DistributionCentre> DistributionCentres { get; set; }
+    }
+
+    public class EditEmployeeViewModel
+    {
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Full name")]
+        public string FullName { get; set; }
+
+        [Display(Name = "Employee Type")]
+        public EmployeeType EmployeeType { get; set; }
+
+        [Display(Name = "Location Centre")]
+        public int LocationCentreId { get; set; }
+
+        public IEnumerable<DistributionCentre> DistributionCentres { get; set; }
     }
 
     public class ResetPasswordViewModel

@@ -180,6 +180,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\ENetCareMVC.mdf" />
+    <Content Include="App_Data\ENetCareMVCUser.mdf" />
+    <Content Include="App_Data\ENetCareMVCUser_log.ldf" />
     <Content Include="App_Data\ENetCareMVC_log.ldf" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -246,6 +248,7 @@
     <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\BootstrapMenuHelperModel.cshtml" />
+    <Content Include="Views\Account\EditEmployee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Package\" />
@@ -258,6 +261,16 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ENetCareMVC.BusinessService\ENetCareMVC.BusinessService.csproj">
+      <Project>{514f67ae-956c-4032-a9e1-e535405b0a39}</Project>
+      <Name>ENetCareMVC.BusinessService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ENetCareMVC.Repository\ENetCareMVC.Repository.csproj">
+      <Project>{1571d244-df99-4eec-af54-a74259e33ff5}</Project>
+      <Name>ENetCareMVC.Repository</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

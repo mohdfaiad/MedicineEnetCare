@@ -15,12 +15,14 @@ namespace ENetCareMVC.Web.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public string Fullname { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("ENetCareUser", throwIfV1Schema: false)
         {
         }
 

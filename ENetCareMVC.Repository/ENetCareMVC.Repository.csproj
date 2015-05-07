@@ -79,6 +79,7 @@
     <Compile Include="Data\GlobalStock.cs">
       <DependentUpon>RepositoryData.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\ManualENetCareLiveContext.cs" />
     <Compile Include="Data\Package.cs">
       <DependentUpon>RepositoryData.tt</DependentUpon>
     </Compile>

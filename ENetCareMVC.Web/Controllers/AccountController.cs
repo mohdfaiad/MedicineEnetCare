@@ -11,6 +11,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Owin;
 using ENetCareMVC.Web.Models;
+using ENetCareMVC.Repository.Data;
+using System.Configuration;
 
 namespace ENetCareMVC.Web.Controllers
 {
@@ -78,7 +80,15 @@ namespace ENetCareMVC.Web.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            string connectionString = ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString;
+            Entities context = new Entities(connectionString);            
+
+            RegisterViewModel model = new RegisterViewModel();
+
+            model.DistributionCentres = context.DistributionCentre;
+            model.EmployeeType = EmployeeType.Agent;            
+
+            return View(model);
         }
 
         //
@@ -90,9 +100,39 @@ namespace ENetCareMVC.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
-                IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+                string connectionString = ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString;
+                Entities context = new Entities(connectionString);
+
+                DistributionCentre locationCentre =
+                    context.DistributionCentre.FirstOrDefault(d => d.CentreId == model.LocationCentreId);
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    Fullname = model.FullName,                   
+                };
+                var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
+                {
+                    result = await UserManager.AddToRoleAsync(user.Id, model.EmployeeType.ToString());
+                }
+
+                int written = 0;
+                if (result.Succeeded)
+                {
+                    Employee employee = new Employee();
+                    employee.UserId = new Guid(user.Id);
+                    employee.UserName = user.UserName;
+                    employee.FullName = model.FullName;
+                    employee.LocationCentreId = model.LocationCentreId;
+                    employee.EmployeeType = model.EmployeeType;
+                    employee.EmailAddress = model.Email;
+
+                    context.Employee.Add(employee);
+                    written = context.SaveChanges();                    
+                }
+
+                if (result.Succeeded && written > 0)
                 {
                     await SignInAsync(user, isPersistent: false);
 
@@ -104,13 +144,70 @@ namespace ENetCareMVC.Web.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
-                else
+                else if (!result.Succeeded)
                 {
                     AddErrors(result);
                 }
             }
 
             // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        public ActionResult EditEmployee()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString;
+            Entities context = new Entities(connectionString);
+
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            Employee employee = context.Employee.FirstOrDefault(e => e.UserId == new Guid(user.Id));
+
+            var model = new EditEmployeeViewModel();
+
+            model.Email = employee.UserName;
+            model.FullName = employee.FullName;
+            model.EmployeeType = employee.EmployeeType;
+            model.LocationCentreId = employee.LocationCentreId;
+          
+            model.DistributionCentres = context.DistributionCentre;
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditEmployee(EditEmployeeViewModel model)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString;
+            Entities context = new Entities(connectionString);
+            
+            if (ModelState.IsValid)
+            {
+                DistributionCentre locationCentre =
+                    context.DistributionCentre.FirstOrDefault(d => d.CentreId == model.LocationCentreId);
+
+                var user = UserManager.FindById(User.Identity.GetUserId());
+                Employee employee = context.Employee.FirstOrDefault(e => e.UserId == new Guid(user.Id));
+
+                user.Fullname = model.FullName;
+
+                var result = UserManager.Update(user);
+
+                int written = 0;
+                if (result.Succeeded)
+                {
+                    employee.FullName = model.FullName;
+                    employee.LocationCentreId = model.LocationCentreId;
+
+                    written = context.SaveChanges();
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    AddErrors(result);
+                }
+            }
+
+            model.DistributionCentres = context.DistributionCentre;
             return View(model);
         }
 
