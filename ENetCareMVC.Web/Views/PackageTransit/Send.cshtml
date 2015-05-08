@@ -1,0 +1,39 @@
+﻿@model ENetCareMVC.Web.Models.PackageTransitSendViewModel
+
+@{
+    ViewBag.Title = "Send";
+}
+
+<h2>Send</h2>
+
+@using (Html.BeginForm("Send", "PackageTransit", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Send a Package.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    
+    Html.RenderPartial("_selectedBarCodesPartial", (ENetCareMVC.Web.Models.ISelectedBarCodesViewModel)Model);
+    
+    <div class="form-group">
+        @Html.LabelFor(m => m.SendDate, new {@class = "col-md-2 control-label"})
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.SendDate, new {@class = "form-control"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.DestinationCentreId, new {@class = "col-md-2 control-label"})
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.DestinationCentreId,
+                new SelectList(Model.DistributionCentres, "CentreId", "Name"))
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Save" name="action"/>
+            <input type="submit" class="btn btn-default" value="Close" name="action" />
+        </div>
+    </div>
+}

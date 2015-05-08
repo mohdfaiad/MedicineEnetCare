@@ -1,0 +1,37 @@
+﻿@model ENetCareMVC.Web.Models.ISelectedBarCodesViewModel
+
+<div class="form-group">
+    @Html.LabelFor(m => m.BarCode, new { @class = "col-md-2 control-label" })
+    <div class="col-md-10">
+        @Html.TextBoxFor(m => m.BarCode, new { @class = "form-control" })
+        <input type="submit" value="Add" name="action" />
+    </div>
+</div>
+
+<table>
+    <tr>
+        <th width="100px">Bar Code</th>
+        <th width="300px">Package Type</th>
+        <th width="100px">Expiration Date</th>
+        <th></th>
+    </tr>
+    @for (int i = 0; i < Model.SelectedPackages.Count; i++)
+    {
+        <tr>
+            <td>
+                <input id="@string.Format("SelectedPackages_{0}__PackageId", i)" name="@string.Format("SelectedPackages[{0}].PackageId", i)" type="hidden" value="@Model.SelectedPackages[i].PackageId" />
+                <input id="@string.Format("SelectedPackages_{0}__BarCode", i)" name="@string.Format("SelectedPackages[{0}].BarCode", i)" readonly="readonly" type="text" value="@Model.SelectedPackages[i].BarCode" />
+            </td>
+            <td>
+                <input id="@string.Format("SelectedPackages_{0}__PackageTypeDescription", i)" name="@string.Format("SelectedPackages[{0}].PackageTypeDescription", i)" style="width: 300px" readonly="readonly" type="text" value="@Model.SelectedPackages[i].PackageTypeDescription" />
+            </td>
+            <td>
+                <input id="@string.Format("SelectedPackages_{0}__ExpirationDate", i)" name="@string.Format("SelectedPackages[{0}].ExpirationDate", i)" readonly="readonly" type="text" value="@Model.SelectedPackages[i].ExpirationDate.ToString("d")" />
+            </td>
+            <td>
+                <input type="submit" value="@("Remove Id: " + Model.SelectedPackages[i].PackageId.ToString())" name="action" />
+            </td>
+        </tr>
+    }
+</table>
+
