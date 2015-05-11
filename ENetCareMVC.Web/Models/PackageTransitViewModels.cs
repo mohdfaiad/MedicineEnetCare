@@ -12,6 +12,7 @@ namespace ENetCareMVC.Web.Models
         public string BarCode { get; set; }
 
         [Required]
+        [Display(Name = "Send Date")]
         public DateTime SendDate { get; set; }
 
         [Required]
@@ -28,6 +29,8 @@ namespace ENetCareMVC.Web.Models
         public string BarCode { get; set; }
         public string PackageTypeDescription { get; set; }
         public DateTime ExpirationDate { get; set; }
+
+        public string ProcessResultMessage { get; set; }
     }
 
     public interface ISelectedBarCodesViewModel

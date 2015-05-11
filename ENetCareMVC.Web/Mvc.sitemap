@@ -12,6 +12,11 @@
       <mvcSiteMapNode title="Discard" controller="Package" action="Discard" />
       <mvcSiteMapNode title="Audit" controller="Package" action="Audit" />
     </mvcSiteMapNode>
+    <mvcSiteMapNode title="Account" clickable="false">
+      <mvcSiteMapNode title="Register" controller="Account" action="Register" />
+      <mvcSiteMapNode title="Login" controller="Account" action="Login" />
+      <mvcSiteMapNode title="Edit Employee" controller="Account" action="EditEmployee" />
+    </mvcSiteMapNode>
     <mvcSiteMapNode title="About" controller="Home" action="About"/>
   </mvcSiteMapNode>
 

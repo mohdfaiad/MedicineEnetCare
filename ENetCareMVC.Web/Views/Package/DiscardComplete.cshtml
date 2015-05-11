@@ -1,0 +1,12 @@
+﻿@model ENetCareMVC.Web.Models.PackageDiscardViewModel
+
+
+@{
+    ViewBag.Title = "Discard Complete";
+}
+
+<h2>Discard Complete</h2>
+
+<h4>Discard Packages Completed.</h4>
+
+Html.RenderPartial("_resultsBarCodesPartial", (ENetCareMVC.Web.Models.ISelectedBarCodesViewModel)Model);
