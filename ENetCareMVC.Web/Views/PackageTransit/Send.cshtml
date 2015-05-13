@@ -18,7 +18,12 @@
     <div class="form-group">
         @Html.LabelFor(m => m.SendDate, new {@class = "col-md-2 control-label"})
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.SendDate, new { @style = "width: 100px;", @class = "form-control" })
+            <div class='input-group input-append date' style="max-width: 100px;" id="datetimepicker1">
+                @Html.TextBoxFor(m => m.SendDate, new { @class = "form-control", @style = "width: 100px;", maxlength = 10, @readonly = "readonly" })
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
         </div>
     </div>
 
@@ -37,3 +42,9 @@
         </div>
     </div>
 }
+
+<script type="text/javascript">
+
+    $('#datetimepicker1').datetimepicker({format: 'DD-MM-YYYY'});
+
+</script>

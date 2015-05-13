@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ENetCareMVC.Web.Handlers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,6 +19,17 @@ namespace ENetCareMVC.Web
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            //routes.Add(new Route("images/barcode/{BarCode}/default.gif",
+            //    new BarCodeRouteHandler()));
+        }
+    }
+
+    public class BarCodeRouteHandler : IRouteHandler
+    {
+        public System.Web.IHttpHandler GetHttpHandler(RequestContext requestContext)
+        {
+            return new GenerateBarcodeImage();
         }
     }
 }

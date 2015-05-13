@@ -9,6 +9,7 @@ namespace ENetCareMVC.Web.Models
     public class PackageTransitSendViewModel : ISelectedBarCodesViewModel
     {
         [Required]
+        [Display(Name = "BarCode")]
         public string BarCode { get; set; }
 
         [Required]
@@ -16,6 +17,7 @@ namespace ENetCareMVC.Web.Models
         public DateTime SendDate { get; set; }
 
         [Required]
+        [Display(Name = "Distribution Centre")]
         public int DestinationCentreId { get; set; }
 
         public List<SelectedPackage> SelectedPackages { get; set; }

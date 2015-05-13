@@ -23,6 +23,7 @@ namespace ENetCareMVC.Web.Controllers
 
             var model = new PackageTransitSendViewModel();
             model.SelectedPackages = new List<SelectedPackage>();
+            model.SendDate = DateTime.Today;
 
             string connectionString = ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString;
             Entities context = new Entities(connectionString);

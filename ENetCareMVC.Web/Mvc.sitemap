@@ -5,7 +5,7 @@
 
   <mvcSiteMapNode title="Home" controller="Home" action="Index">
     <mvcSiteMapNode title="Package" clickable="false">
-      <mvcSiteMapNode title="Register" controller="Package" action="RegisterPackage" />
+      <mvcSiteMapNode title="Register" controller="Package" action="Register" />
       <mvcSiteMapNode title="Send" controller="PackageTransit" action="Send" />
       <mvcSiteMapNode title="Receive" controller="PackageTransit" action="Receive" />
       <mvcSiteMapNode title="Distribute" controller="Package" action="Distribute" />
