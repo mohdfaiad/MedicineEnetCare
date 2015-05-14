@@ -15,13 +15,13 @@ namespace ENetCareMVC.Repository
 
         Dictionary<int, Employee> mockEmployeeDb = new Dictionary<int, Employee>();
 
-        public static int InsertPackage(SqlConnection connection, Package package)
+        public static int InsertPackage(Package package)
         {            // define INSERT query with parameters 
             string query = "INSERT INTO dbo.Package (BarCode, ExpirationDate, PackageTypeId, CurrentLocationCentreId, CurrentStatus, DistributedByEmployeeId) " +
                            "VALUES (@BarCode, @ExpirationDate, @PackageTypeId, @CurrentLocationCentreId, @CurrentStatus, @DistributedByEmployeeId) " +
                            "SET @newId = SCOPE_IDENTITY();";
 
-            using (var cmd = new SqlCommand(query, connection))
+            using (var cmd = new SqlCommand(query))
             {                // define parameters and their values 
                 cmd.Parameters.Add("@BarCode", SqlDbType.VarChar, 20).Value = package.BarCode ?? string.Empty;
                 cmd.Parameters.Add("@ExpirationDate", SqlDbType.DateTime).Value = package.ExpirationDate;
@@ -44,7 +44,7 @@ namespace ENetCareMVC.Repository
             }
         }
 
-        public static void UpdatePackage(SqlConnection connection, Package package)
+        public static void UpdatePackage(Package package)
         {
             string cmdStr = "UPDATE dbo.Package SET BarCode = @BarCode, " +
                                 "CurrentLocationCentreId = @CurrentLocationCentreId, " +
@@ -52,7 +52,7 @@ namespace ENetCareMVC.Repository
                                 "DistributedByEmployeeId = @DistributedByEmployeeId " +
                                 "WHERE PackageId = @PackageId";
 
-            using (var cmd = new SqlCommand(cmdStr, connection))
+            using (var cmd = new SqlCommand(cmdStr))
             {
                 cmd.Parameters.AddWithValue("@BarCode", package.BarCode);
                 cmd.Parameters.AddWithValue("@CurrentLocationCentreId", package.CurrentLocation == null ? DBNull.Value : (object)package.CurrentLocation.CentreId);
@@ -64,13 +64,13 @@ namespace ENetCareMVC.Repository
             }
         }
 
-        public static void UpdateTransit(SqlConnection connection, PackageTransit transit)
+        public static void UpdateTransit(PackageTransit transit)
         {
             string cmdStr = "UPDATE dbo.PackageTransit SET Package = @Package, SenderCentre = @SenderId, " +
                                 "ReceiverCentre = @ReceiverCentreId, DateSent = @DateSent , " +
                                 " DateReceived = @DateReceived, DateCancelled = @DateCancelled " +
                                 "WHERE TransitId = @TransitId ";
-            using (var cmd = new SqlCommand(cmdStr, connection))
+            using (var cmd = new SqlCommand(cmdStr))
             {
                 cmd.Parameters.AddWithValue("@Package", SqlDbType.Int).Value = (int)transit.Package.PackageId;
                 cmd.Parameters.AddWithValue("@SenderCentre", SqlDbType.Int).Value = (int)transit.SenderCentre.CentreId;
@@ -106,14 +106,14 @@ namespace ENetCareMVC.Repository
             }
         }
 
-        public static Package GetPackage(SqlConnection connection, int? packageId, string barcode = null)
+        public static Package GetPackage(int? packageId, string barcode = null)
         {
             Package package = null;
 
             string query = "SELECT PackageId, BarCode, ExpirationDate, PackageTypeId, CurrentLocationCentreId, CurrentStatus, DistributedByEmployeeId FROM Package WHERE PackageId = ISNULL(@packageId, PackageId) AND BarCode = ISNULL(@barcode, BarCode)";
 
             var cmd = new SqlCommand(query);
-            cmd.Connection = connection;
+            cmd.Connection = null;
 
             cmd.Parameters.AddWithValue("@packageId", packageId.HasValue ? packageId.Value : (object)DBNull.Value);
 
@@ -184,13 +184,13 @@ namespace ENetCareMVC.Repository
             return centre;
         }
 
-        public static StandardPackageType GetStandardPackageType(SqlConnection connection, int packageTypeId)
+        public static StandardPackageType GetStandardPackageType(int packageTypeId)
         {
             StandardPackageType packageType = null;
             string query = "SELECT PackageTypeId, Description, NumberOfMedications, ShelfLifeUnitType, ShelfLifeUnits, TemperatureSensitive, Value FROM StandardPackageType WHERE PackageTypeId = @packageTypeId";
 
             var cmd = new SqlCommand(query);
-            cmd.Connection = connection;
+            cmd.Connection = null;
 
             cmd.Parameters.AddWithValue("@packageTypeId", packageTypeId);
 
@@ -246,13 +246,13 @@ namespace ENetCareMVC.Repository
             return centres;
         }
 
-        public static List<StandardPackageType> GetAllStandardPackageTypes(SqlConnection connection)
+        public static List<StandardPackageType> GetAllStandardPackageTypes()
         {
             var packageTypes = new List<StandardPackageType>();
             string query = "SELECT PackageTypeId, Description, NumberOfMedications, ShelfLifeUnitType, ShelfLifeUnits, TemperatureSensitive, Value FROM StandardPackageType ORDER BY PackageTypeId";
 
             var cmd = new SqlCommand(query);
-            cmd.Connection = connection;
+            cmd.Connection = null;
 
             using (SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default))
             {
@@ -275,7 +275,7 @@ namespace ENetCareMVC.Repository
             return packageTypes;
         }
 
-        public static List<Package> GetAllPackages(SqlConnection connection, DistributionCentre Location = null)
+        public static List<Package> GetAllPackages(DistributionCentre Location = null)
         {                                                          // Added by Pablo on 24-03-15
             Package package = null;
             string query = "SELECT PackageId, BarCode, ExpirationDate, PackageTypeId, CurrentLocationCentreId, CurrentStatus, DistributedByEmployeeId FROM Package ";
@@ -283,7 +283,7 @@ namespace ENetCareMVC.Repository
 
             var cmd = new SqlCommand(query);
             List<Package> allPackages = new List<Package>();
-            cmd.Connection = connection;
+            cmd.Connection = null;
             using (SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default))
             {
                 while (reader.Read())
@@ -323,7 +323,7 @@ namespace ENetCareMVC.Repository
             return allEmployees;
         }
         
-        public static int InsertPackageTransit(SqlConnection connection, PackageTransit packageT)
+        public static int InsertPackageTransit(PackageTransit packageT)
         {                                                                       // (p. 24/03/15 ) 
             string query = " INSERT INTO dbo.PackageTransit (PackageId , SenderCentreId,  " +
                            " ReceiverCentreId, DateSent, DateReceived, DateCancelled)  " +
@@ -331,7 +331,7 @@ namespace ENetCareMVC.Repository
                            " SET @newId = SCOPE_IDENTITY();";
             //var cmd = new SqlCommand(query);
             //cmd.Connection = connection;
-            using (var cmd = new SqlCommand(query, connection)/*SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default)*/)
+            using (var cmd = new SqlCommand(query)/*SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default)*/)
             {
                 cmd.Parameters.Add("@Package", SqlDbType.Int).Value = (int)packageT.Package.PackageId;
                 cmd.Parameters.Add("@SenderCentre", SqlDbType.Int).Value = (int)packageT.SenderCentre.CentreId;
@@ -355,7 +355,7 @@ namespace ENetCareMVC.Repository
             }
         }
 
-        public static void UpdatePackageTransit(SqlConnection connection, PackageTransit transit)
+        public static void UpdatePackageTransit(PackageTransit transit)
         {            // Define Insert Query with Parameter
             string cmdStr = "UPDATE dbo.PackageTransit " +
                            "SET PackageId = @PackageId, " +
@@ -366,7 +366,7 @@ namespace ENetCareMVC.Repository
                                 "DateCancelled = @DateCancelled " +
                             " WHERE TransitId = @TransitId";
 
-            using (var cmd = new SqlCommand(cmdStr, connection))
+            using (var cmd = new SqlCommand(cmdStr))
             {
                 cmd.Parameters.AddWithValue("@PackageId", transit.Package.PackageId);
                 cmd.Parameters.AddWithValue("@SenderCentreId", transit.SenderCentre.CentreId);
@@ -381,12 +381,12 @@ namespace ENetCareMVC.Repository
         }
 
 
-        public static List<PackageTransit> GetAllPackageTransits(SqlConnection connection)
+        public static List<PackageTransit> GetAllPackageTransits()
         {                                                       // (P. 04/04/2015)
             var allTransits = new List<PackageTransit>();
             string query = "SELECT TransitId, PackageId, SenderCentreId, ReceiverCentreId, DateSent, DateReceived, DateCancelled FROM PackageTransit ORDER BY TransitId";
             var cmd = new SqlCommand(query);
-            cmd.Connection = connection;
+            cmd.Connection = null;
 
             //Console.WriteLine(query);            //string a = Console.ReadLine();
 
@@ -398,7 +398,7 @@ namespace ENetCareMVC.Repository
                     var transit = new PackageTransit();
                     transit = new PackageTransit();
                     transit.TransitId = Convert.ToInt32(reader["transitId"]);
-                    transit.Package = DataAccess.GetPackage(connection, Convert.ToInt32(reader["PackageId"]));
+                    transit.Package = DataAccess.GetPackage(Convert.ToInt32(reader["PackageId"]));
                     // .PackageId=Convert.ToInt32(reader["PackageId"]);
                     transit.SenderCentre = DataAccess.GetDistributionCentre(Convert.ToInt32(reader["SenderCentreId"]));
                     //transit.SenderCentre.CentreId = Convert.ToInt32(reader["SenderCentreId"]);
@@ -422,7 +422,7 @@ namespace ENetCareMVC.Repository
 
 
 
-        public static PackageTransit GetPackageTransit(SqlConnection connection, Package package, DistributionCentre receiver)
+        public static PackageTransit GetPackageTransit(Package package, DistributionCentre receiver)
         {
             PackageTransit packageTransit = null;
             // Define Update Query with Parameter
@@ -434,7 +434,7 @@ namespace ENetCareMVC.Repository
                               "and DateReceived is null and DateCancelled is null";
 
             var cmd = new SqlCommand(query);
-            cmd.Connection = connection;
+            cmd.Connection = null;
 
             cmd.Parameters.AddWithValue("@PackageId", package.PackageId);
             cmd.Parameters.AddWithValue("@ReceiverCentreId", receiver == null ? DBNull.Value : (object)receiver.CentreId);
@@ -469,13 +469,13 @@ namespace ENetCareMVC.Repository
             return packageTransit;
         }
 
-        public static int InsertAudit(SqlConnection connection, Employee employee, StandardPackageType packageType)
+        public static int InsertAudit(Employee employee, StandardPackageType packageType)
         {            // define INSERT query with parameters 
             string query = "INSERT Audit (DateAudited, DistributionCentreId, EmployeeId, PackageTypeId) " +
                             "VALUES (@DateAudited, @DistributionCentreId, @EmployeeId, @PackageTypeId);  " +
                            "SET @newId = SCOPE_IDENTITY();";
 
-            using (var cmd = new SqlCommand(query, connection))
+            using (var cmd = new SqlCommand(query))
             {                // define parameters and their values 
                 cmd.Parameters.Add("@DateAudited", SqlDbType.DateTime).Value = DateTime.Today;
                 cmd.Parameters.Add("@DistributionCentreId", SqlDbType.Int).Value = employee.Location.CentreId;
@@ -494,7 +494,7 @@ namespace ENetCareMVC.Repository
             }
         }
 
-        public static void InsertAuditPackages(SqlConnection connection, int auditId, StandardPackageType packageType, XElement barCodeXml)
+        public static void InsertAuditPackages(int auditId, StandardPackageType packageType, XElement barCodeXml)
         {            // define INSERT query with parameters 
             string query = "INSERT AuditPackage (AuditId, PackageId) " +
                             "SELECT @AuditId, p.PackageId " +
@@ -502,7 +502,7 @@ namespace ENetCareMVC.Repository
                             "INNER JOIN @BarcodeList.nodes('/Root/BarCode') AS Tbl(C) ON p.BarCode = Tbl.C.value('@Text', 'varchar(20)') " +
                             "WHERE p.PackageTypeId = @PackageTypeId";
 
-            using (var cmd = new SqlCommand(query, connection))
+            using (var cmd = new SqlCommand(query))
             {                // define parameters and their values 
                 cmd.Parameters.Add("@BarCodeList", SqlDbType.Xml).Value = barCodeXml.ToString();
                 cmd.Parameters.Add("@AuditId", SqlDbType.Int).Value = auditId;
@@ -512,7 +512,7 @@ namespace ENetCareMVC.Repository
             }
         }
 
-        public static int UpdateLostFromAudit(SqlConnection connection, int auditId, DistributionCentre location, StandardPackageType packageType)
+        public static int UpdateLostFromAudit(int auditId, DistributionCentre location, StandardPackageType packageType)
         {            // define INSERT query with parameters 
 
             string query = "UPDATE Package SET CurrentStatus = 'LOST' " +
@@ -520,7 +520,7 @@ namespace ENetCareMVC.Repository
                             "LEFT OUTER JOIN AuditPackage a ON a.PackageId = p.PackageId AND a.AuditId = @AuditId " +
                             "WHERE a.PackageId IS NULL AND p.CurrentStatus = 'INSTOCK' AND p.PackageTypeId = @PackageTypeId AND p.CurrentLocationCentreId = @DistributionCentreId ";
 
-            using (var cmd = new SqlCommand(query, connection))
+            using (var cmd = new SqlCommand(query))
             {                // define parameters and their values                 
                 cmd.Parameters.Add("@DistributionCentreId", SqlDbType.Int).Value = location.CentreId;
                 cmd.Parameters.Add("@AuditId", SqlDbType.Int).Value = auditId;
@@ -532,7 +532,7 @@ namespace ENetCareMVC.Repository
             }
         }
 
-        public static int UpdateInstockFromAudit(SqlConnection connection, int auditId, DistributionCentre location, StandardPackageType packageType)
+        public static int UpdateInstockFromAudit(int auditId, DistributionCentre location, StandardPackageType packageType)
         {            // define INSERT query with parameters 
 
             string query = "UPDATE Package SET CurrentStatus = 'INSTOCK', CurrentLocationCentreId = @DistributionCentreId, DistributedByEmployeeId = null " +
@@ -540,7 +540,7 @@ namespace ENetCareMVC.Repository
                             "INNER JOIN AuditPackage a ON a.PackageId = p.PackageId AND a.AuditId = @AuditId " +
                             "WHERE p.PackageTypeId = @PackageTypeId AND " +
                                 "(p.CurrentLocationCentreId <> @DistributionCentreId OR CurrentStatus <> 'INSTOCK') ";
-            using (var cmd = new SqlCommand(query, connection))
+            using (var cmd = new SqlCommand(query))
             {                // define parameters and their values                 
                 cmd.Parameters.Add("@DistributionCentreId", SqlDbType.Int).Value = location.CentreId;
                 cmd.Parameters.Add("@AuditId", SqlDbType.Int).Value = auditId;
@@ -552,7 +552,7 @@ namespace ENetCareMVC.Repository
             }
         }
 
-        public static int UpdateTransitReceivedFromAudit(SqlConnection connection, int auditId, DistributionCentre location)
+        public static int UpdateTransitReceivedFromAudit(int auditId, DistributionCentre location)
         {            // define INSERT query with parameters 
             string query = "UPDATE PackageTransit SET DateReceived = a.DateAudited " +
                             "FROM PackageTransit pt " +
@@ -560,7 +560,7 @@ namespace ENetCareMVC.Repository
                             "INNER JOIN Audit a ON ap.AuditId = a.AuditId " +
                             "WHERE a.AuditId = @AuditId AND pt.ReceiverCentreId = @DistributionCentreId AND pt.DateReceived IS null AND pt.DateCancelled IS null ";
 
-            using (var cmd = new SqlCommand(query, connection))
+            using (var cmd = new SqlCommand(query))
             {                // define parameters and their values                 
                 cmd.Parameters.Add("@DistributionCentreId", SqlDbType.Int).Value = location.CentreId;
                 cmd.Parameters.Add("@AuditId", SqlDbType.Int).Value = auditId;
@@ -571,7 +571,7 @@ namespace ENetCareMVC.Repository
             }
         }
 
-        public static int UpdateTransitCancelledFromAudit(SqlConnection connection, int auditId, DistributionCentre location)
+        public static int UpdateTransitCancelledFromAudit(int auditId, DistributionCentre location)
         {            // define INSERT query with parameters 
             string query = "UPDATE PackageTransit SET DateCancelled = a.DateAudited " +
                             "FROM PackageTransit pt " +
@@ -579,7 +579,7 @@ namespace ENetCareMVC.Repository
                             "INNER JOIN Audit a ON ap.AuditId = a.AuditId " +
                             "WHERE a.AuditId = @AuditId AND pt.ReceiverCentreId <> @DistributionCentreId AND pt.DateReceived IS null AND pt.DateCancelled IS null ";
 
-            using (var cmd = new SqlCommand(query, connection))
+            using (var cmd = new SqlCommand(query))
             {                // define parameters and their values                 
                 cmd.Parameters.Add("@DistributionCentreId", SqlDbType.Int).Value = location.CentreId;
                 cmd.Parameters.Add("@AuditId", SqlDbType.Int).Value = auditId;
