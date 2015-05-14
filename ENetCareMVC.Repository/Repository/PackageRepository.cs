@@ -13,7 +13,7 @@ namespace ENetCareMVC.Repository.Repository
     public class PackageRepository : IPackageRepository
     {
         private string _connectionString;
-        
+
         public PackageRepository(string connectionString)
         {
             _connectionString = connectionString;
@@ -21,94 +21,70 @@ namespace ENetCareMVC.Repository.Repository
 
         public int Insert(Package package)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
 
-                return DataAccess.InsertPackage(connection, package);
-            }
+            return DataAccess.InsertPackage(package);
         }
 
         public void Update(Package package)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
 
-                DataAccess.UpdatePackage(connection, package);
-            }
-            return;
+            DataAccess.UpdatePackage(package);
         }
 
         public void UpdateTransit(PackageTransit transit)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
 
-                DataAccess.UpdatePackageTransit(connection, transit);
-            }
-            return;
+            DataAccess.UpdatePackageTransit(transit);
         }
-      
+
 
         public Package Get(int? packageId, string barcode)
         {
             Package package = null;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+
+            package = DataAccess.GetPackage(packageId, barcode);
+            if (package == null)
+                return null;
+
+            package.PackageType = DataAccess.GetStandardPackageType(package.PackageType.PackageTypeId);
+
+            if (package.CurrentLocation != null)
             {
-                connection.Open();
-
-                package = DataAccess.GetPackage(connection, packageId, barcode);
-                if (package == null)
-                    return null;
-
-                package.PackageType = DataAccess.GetStandardPackageType(connection, package.PackageType.PackageTypeId);
-
-                if (package.CurrentLocation != null)
-                {
-                    package.CurrentLocation = DataAccess.GetDistributionCentre(package.CurrentLocation.CentreId);
-                }
-
-                if (package.DistributedBy != null)
-                {
-                    package.DistributedBy = DataAccess.GetEmployee(package.DistributedBy.EmployeeId, null);
-                    package.DistributedBy.Location = DataAccess.GetDistributionCentre(package.DistributedBy.Location.CentreId);
-                }
+                package.CurrentLocation = DataAccess.GetDistributionCentre(package.CurrentLocation.CentreId);
             }
+
+            if (package.DistributedBy != null)
+            {
+                package.DistributedBy = DataAccess.GetEmployee(package.DistributedBy.EmployeeId, null);
+                package.DistributedBy.Location = DataAccess.GetDistributionCentre(package.DistributedBy.Location.CentreId);
+            }
+
             return package;
         }
 
         public Package GetPackageWidthBarCode(string barCode)                           // Added by Pablo on 24-03-15
-        { 
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
+        {
 
-                return DataAccess.GetPackage(connection, null, barCode);                
-            }
-            return null;     
+            return DataAccess.GetPackage(null, barCode);
+
+            return null;
         }
 
         public List<StandardPackageType> GetAllStandardPackageTypes()
         {
             List<StandardPackageType> packageTypes = null;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                packageTypes = DataAccess.GetAllStandardPackageTypes(connection);
-            }
+
+            packageTypes = DataAccess.GetAllStandardPackageTypes();
+
             return packageTypes;
         }
 
         public StandardPackageType GetStandardPackageType(int packageId)
         {
             StandardPackageType packageTypes = null;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                packageTypes = DataAccess.GetStandardPackageType(connection, packageId);
-            }
+
+            packageTypes = DataAccess.GetStandardPackageType(packageId);
+
             return packageTypes;
         }
 
@@ -117,96 +93,69 @@ namespace ENetCareMVC.Repository.Repository
 
         public int InsertTransit(PackageTransit packageTransit)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
 
-                return DataAccess.InsertPackageTransit(connection, packageTransit);
-            }
+
+            return DataAccess.InsertPackageTransit(packageTransit);
+
         }
 
-       
+
         public PackageTransit GetTransit(Package package, DistributionCentre receiver)
         {
             PackageTransit packageTransit = null;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
 
-                packageTransit = DataAccess.GetPackageTransit(connection, package, receiver);
-              
-                if (packageTransit == null)
-                    return null;
-            }
+            packageTransit = DataAccess.GetPackageTransit(package, receiver);
+
+            if (packageTransit == null)
+                return null;
+
             return packageTransit;
         }
 
         public DistributionCentre GetHeadOffice()
         {                                                               // (P. 05-04-2015)
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                List<DistributionCentre> allCentres = DataAccess.GetAllDistributionCentres();
-                connection.Close();
-                foreach (DistributionCentre centre in allCentres)
-                    if (centre.IsHeadOffice) return centre;
-            }   
+
+            List<DistributionCentre> allCentres = DataAccess.GetAllDistributionCentres();
+
+            foreach (DistributionCentre centre in allCentres)
+                if (centre.IsHeadOffice) return centre;
+
             return null;
         }
 
         public int InsertAudit(Employee employee, StandardPackageType packageType, List<string> barCodes)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
 
-                int auditId = DataAccess.InsertAudit(connection, employee, packageType);
+            int auditId = DataAccess.InsertAudit(employee, packageType);
 
-                XElement barCodeXml = barCodes.GetBarCodeXML();
+            XElement barCodeXml = barCodes.GetBarCodeXML();
 
-                DataAccess.InsertAuditPackages(connection, auditId, packageType, barCodeXml);
-                return auditId;
-            }
+            DataAccess.InsertAuditPackages(auditId, packageType, barCodeXml);
+            return auditId;
+
         }
 
         public int UpdateLostFromAudit(int auditId, DistributionCentre location, StandardPackageType packageType)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
 
-                return DataAccess.UpdateLostFromAudit(connection, auditId, location, packageType);
-            }
+            return DataAccess.UpdateLostFromAudit(auditId, location, packageType);
         }
 
         public int UpdateInstockFromAudit(int auditId, DistributionCentre location, StandardPackageType packageType)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-
-                return DataAccess.UpdateInstockFromAudit(connection, auditId, location, packageType);
-            }
+            return DataAccess.UpdateInstockFromAudit(auditId, location, packageType);
         }
 
         public int UpdateTransitReceivedFromAudit(int auditId, DistributionCentre location)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
 
-                return DataAccess.UpdateTransitReceivedFromAudit(connection, auditId, location);
-            }
+            return DataAccess.UpdateTransitReceivedFromAudit(auditId, location);
         }
 
         public int UpdateTransitCancelledFromAudit(int auditId, DistributionCentre location)
         {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
 
-                return DataAccess.UpdateTransitCancelledFromAudit(connection, auditId, location);
-            }
+            return DataAccess.UpdateTransitCancelledFromAudit(auditId, location);
         }
 
         // *************************************************************************
@@ -214,11 +163,7 @@ namespace ENetCareMVC.Repository.Repository
         public List<PackageTransit> GetAllPackageTransits()
         {                                                                        //   Added by Pablo on 23-03-15
             List<PackageTransit> allTransits = null;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                allTransits = DataAccess.GetAllPackageTransits(connection);
-            }
+            allTransits = DataAccess.GetAllPackageTransits();
             return allTransits;
         }
 
@@ -233,10 +178,5 @@ namespace ENetCareMVC.Repository.Repository
             }
             return myTransits;
         }
-
-          
-
-
-
     }
 }
