@@ -13,7 +13,7 @@ namespace ENetCareMVC.Web.Controllers
     public class PackageController : Controller
     {
         // GET: Package
-
+        [Authorize(Roles = "Agent, Doctor")]
         public ActionResult Register()
         {
             PackageRegisterViewModel model = new PackageRegisterViewModel();
@@ -65,6 +65,7 @@ namespace ENetCareMVC.Web.Controllers
             return View("RegisterComplete", model);
         }
 
+        [Authorize(Roles = "Agent, Doctor")]
         public ActionResult Discard()
         {
             var model = new PackageDiscardViewModel();
@@ -123,6 +124,7 @@ namespace ENetCareMVC.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize(Roles = "Doctor")]
         public ActionResult Distribute()
         {
             var model = new PackageDistributeViewModel();

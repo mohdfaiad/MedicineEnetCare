@@ -17,7 +17,8 @@ namespace ENetCareMVC.Web.Controllers
         {
             return View();
         }
-
+        
+        [Authorize(Roles = "Agent, Doctor")]
         public ActionResult Send()
         {
 
@@ -89,6 +90,7 @@ namespace ENetCareMVC.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize(Roles = "Agent, Doctor")]
         public ActionResult Receive()
         {
             PackageTransitReceiveViewModel model = new PackageTransitReceiveViewModel();

@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -11,7 +13,33 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <img src="~/Images/enetcare08small.png" width="290" height="40" align="top" />
+    
+    @{
+        string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString;
+        var context = new ENetCareMVC.Repository.Data.Entities(connectionString);
+
+        string userId = User.Identity.GetUserId();
+        ENetCareMVC.Repository.Data.Employee employee = null;
+        if (!string.IsNullOrEmpty(userId))
+        {
+            employee = context.Employee.FirstOrDefault(e => e.UserId == new Guid(userId));
+        }
+    }
+    @if (employee != null)
+    { 
+    <div style="position: absolute; top: 30px; left: 600px">
+        <table>
+            <tr><td style="text-align:right;">Username:</td><td>&nbsp;<b>@employee.UserName (@employee.EmployeeType.ToString())</b></td></tr>
+            <tr><td style="text-align:right;">Full Name:</td><td>&nbsp;<b>@employee.FullName</td></tr>
+            <tr><td style="text-align:right;">Location:</td><td>&nbsp;<b>@employee.Location.Name</b></td></tr>
+        </table>
+    </div>
+    }
+    <br />
+    <br />
+
+    <div class="navbar navbar-inverse">
         <div class="container">
             <div class="row">
                 <div class="span12">

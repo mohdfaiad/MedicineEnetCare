@@ -68,15 +68,15 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
             Debug.WriteLine("\n\n EMPLOYEES : ");
             foreach (Employee emp in employeeList) Debug.WriteLine(emp);
 
-            List<StandardPackageType> typeList = DataAccess.GetAllStandardPackageTypes(enetConnection);
+            List<StandardPackageType> typeList = DataAccess.GetAllStandardPackageTypes();
             Debug.WriteLine("\n\n STANDARD PACKAGE TYPES : ");
             foreach (StandardPackageType t in typeList) Debug.WriteLine(t);
 
-            List<Package> packageList = DataAccess.GetAllPackages(enetConnection);
+            List<Package> packageList = DataAccess.GetAllPackages();
             Debug.WriteLine("\n\n PACKAGES : ");
             foreach (Package p in packageList) Debug.WriteLine(p);
 
-            List<PackageTransit> transitList = DataAccess.GetAllPackageTransits(enetConnection);
+            List<PackageTransit> transitList = DataAccess.GetAllPackageTransits();
             Debug.WriteLine("\n\n PACKAGE TRANSITS : ");
             foreach (PackageTransit t in transitList) Debug.WriteLine(t);
             enetConnection.Close();
@@ -88,7 +88,7 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
         public void TestDbAccess_GetPackages()                            // (P. 04-04-2015)  
         {
             enetConnection.Open();
-            List<Package> packageList = DataAccess.GetAllPackages(enetConnection);
+            List<Package> packageList = DataAccess.GetAllPackages();
             enetConnection.Close();
             int howMany = packageList.Count();
             Debug.WriteLine(howMany + " packages found.");
@@ -114,7 +114,7 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
         public void TestDbAccess_GetPackageTypes()                              // (P. 04-04-2015) 
         {
             enetConnection.Open();
-            List<StandardPackageType> typeList = DataAccess.GetAllStandardPackageTypes(enetConnection);
+            List<StandardPackageType> typeList = DataAccess.GetAllStandardPackageTypes();
             enetConnection.Close();
             int howMany = typeList.Count();
             Debug.WriteLine(howMany + " packTypes found.");

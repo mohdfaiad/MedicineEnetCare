@@ -76,8 +76,7 @@ namespace ENetCareMVC.Web.Controllers
         }
 
         //
-        // GET: /Account/Register
-        [AllowAnonymous]
+        // GET: /Account/Register        
         public ActionResult Register()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString;
@@ -93,16 +92,15 @@ namespace ENetCareMVC.Web.Controllers
 
         //
         // POST: /Account/Register
-        [HttpPost]
-        [AllowAnonymous]
+        [HttpPost]       
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            string connectionString = ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString;
+            Entities context = new Entities(connectionString);
+
             if (ModelState.IsValid)
             {
-                string connectionString = ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString;
-                Entities context = new Entities(connectionString);
-
                 DistributionCentre locationCentre =
                     context.DistributionCentre.FirstOrDefault(d => d.CentreId == model.LocationCentreId);
                 var user = new ApplicationUser
@@ -151,6 +149,7 @@ namespace ENetCareMVC.Web.Controllers
             }
 
             // If we got this far, something failed, redisplay form
+            model.DistributionCentres = context.DistributionCentre;
             return View(model);
         }
 
