@@ -1,0 +1,63 @@
+﻿@model ENetCareMVC.Web.Models.AuditPromptViewModel
+
+@{
+    ViewBag.Title = "Audit Prompt";
+}
+
+<h2>Audit Prompt</h2>
+
+@using (Html.BeginForm("Prompt", "Audit", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Prompt for an Audit</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    Html.RenderPartial("_selectedBarCodesPartial", (ENetCareMVC.Web.Models.ISelectedBarCodesViewModel)Model);
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.AuditDate, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            <div class='input-group input-append date' style="max-width: 100px;" id="datetimepicker1">
+                @Html.TextBoxFor(m => m.AuditDate, new { @class = "form-control", @style = "width: 100px;", maxlength = 10, @readonly = "readonly" })
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.StandardPackageTypeId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.StandardPackageTypeId,
+                new SelectList(Model.StandardPackageTypes, "PackageTypeId", "Description"),
+                "-- Please select an item --",
+             new
+             {
+             })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.DestinationCentreId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.DestinationCentreId,
+                new SelectList(Model.DistributionCentres, "CentreId", "Name"))
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Next" name="action" />
+            <input type="submit" class="btn btn-default" value="Close" name="action" />
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+
+    $('#datetimepicker1').datetimepicker({format: 'DD-MM-YYYY'});
+
+</script>
+

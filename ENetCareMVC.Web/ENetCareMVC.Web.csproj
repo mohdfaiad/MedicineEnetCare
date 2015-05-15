@@ -171,6 +171,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AuditController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PackageController.cs" />
     <Compile Include="Controllers\PackageTransitController.cs" />
@@ -179,11 +180,13 @@
     </Compile>
     <Compile Include="Handlers\GenerateBarcodeImage.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AuditViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\PackageTransitViewModels.cs" />
     <Compile Include="Models\PackageViewModels.cs" />
     <Compile Include="MultiButtonAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SelectBarCodesOperations\AuditSelectedBarCodesOperations.cs" />
     <Compile Include="SelectBarCodesOperations\BaseSelectedBarCodesOperations.cs" />
     <Compile Include="SelectBarCodesOperations\DiscardSelectedBarCodesOperations.cs" />
     <Compile Include="SelectBarCodesOperations\DistributeSelectedBarCodesOperations.cs" />
@@ -292,6 +295,8 @@
     <Content Include="Views\Package\DistributeComplete.cshtml" />
     <Content Include="Views\Package\Register.cshtml" />
     <Content Include="Views\Package\RegisterComplete.cshtml" />
+    <Content Include="Views\Audit\Prompt.cshtml" />
+    <Content Include="Views\Audit\Display.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
