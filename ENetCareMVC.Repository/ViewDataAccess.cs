@@ -18,9 +18,14 @@ namespace ENetCareMVC.Repository
         /// </summary>
         /// <param name="connection"></param>
         /// <returns></returns>
-        public static List<DistributionCentreStock> GetDistributionCentreStock(SqlConnection connection)
+        public static List<DistributionCentreStock> GetDistributionCentreStock()
         {                                                   
             var stockList = new List<DistributionCentreStock>();
+            using (var ctx = new Entities())
+            {
+                stockList = ctx.DistributionCentreStock.ToList();
+            }
+            /*
             string query = "select PackageTypeId, PackageTypeDescription, CostPerPackage, DistributionCentreId, DistributionCenterName, NumberOfPackages, TotalValue from DistributionCentreStock order by DistributionCentreId, PackageTypeId";
             var cmd = new SqlCommand(query);
             cmd.Connection = connection;
@@ -47,6 +52,7 @@ namespace ENetCareMVC.Repository
 
                 }
             }
+             */
             return stockList;
         }
 
@@ -55,13 +61,18 @@ namespace ENetCareMVC.Repository
         /// </summary>
         /// <param name="connection"></param>
         /// <returns></returns>
-        public static List<DistributionCentreLosses> GetDistributionCentreLosses(SqlConnection connection)
+        public static List<DistributionCentreLosses> GetDistributionCentreLosses()
         {
+            List<DistributionCentreLosses> centreList = new List<DistributionCentreLosses>();
+            
+            using (var ctx = new Entities())
+            {
+                centreList = ctx.DistributionCentreLosses.ToList();
+            }
+            /*
             string query = "select DistributionCentreId, DistributionCenterName, LossRatioNumerator, LossRatioDenominator, TotalLossDiscardedValue " +
                            "from DistributionCentreLosses " +
                             "order by DistributionCentreId";
-            List<DistributionCentreLosses> centreList = new List<DistributionCentreLosses>();
-
             var cmd = new SqlCommand(query);
             cmd.Connection = connection;
             using (SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default))
@@ -83,6 +94,7 @@ namespace ENetCareMVC.Repository
                     centreList.Add(centre);
                 }
             }
+            */
             return centreList;
         }
 
@@ -91,12 +103,18 @@ namespace ENetCareMVC.Repository
         /// </summary>
         /// <param name="connection"></param>
         /// <returns></returns>
-        public static List<DoctorActivity> GetDoctorActivity(SqlConnection connection)
+        public static List<DoctorActivity> GetDoctorActivity()
         {
-            string query = "select DoctorId, DoctorName, PackageTypeId, PackageTypeDescription, PackageCount, TotalPackageValue " +
-                            "from DoctorActivity " +
-                            "order by DoctorId";
+
             List<DoctorActivity> doctors = new List<DoctorActivity>();
+            using (var ctx = new Entities())
+            {
+                doctors = ctx.DoctorActivity.ToList();
+            }
+            /*
+            string query = "select DoctorId, DoctorName, PackageTypeId, PackageTypeDescription, PackageCount, TotalPackageValue " +
+                "from DoctorActivity " +
+                "order by DoctorId";
             var cmd = new SqlCommand(query);
             cmd.Connection = connection;
             using (SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default))
@@ -119,6 +137,7 @@ namespace ENetCareMVC.Repository
                     doctors.Add(doctor);
                 }
             }
+             */
             return doctors;
         }
 
@@ -127,12 +146,18 @@ namespace ENetCareMVC.Repository
         /// </summary>
         /// <param name="connection"></param>
         /// <returns></returns>
-        public static List<GlobalStock> GetGlobalStock(SqlConnection connection)
+        public static List<GlobalStock> GetGlobalStock()
         {
-            string query = "select PackageTypeId, PackageTypeDescription, CostPerPackage, NumberOfPackages, TotalValue " +
-                            "from GlobalStock " +
-                            "order by PackageTypeId";
             List<GlobalStock> stocks = new List<GlobalStock>();
+            using (var ctx = new Entities())
+            {
+                stocks = ctx.GlobalStock.ToList();
+            }
+            /*
+            string query = "select PackageTypeId, PackageTypeDescription, CostPerPackage, NumberOfPackages, TotalValue " +
+                "from GlobalStock " +
+                "order by PackageTypeId";
+
             var cmd = new SqlCommand(query);
             cmd.Connection = connection;
             using (SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default))
@@ -153,7 +178,7 @@ namespace ENetCareMVC.Repository
                     stocks.Add(stock);
                 }
             }
-
+            */
             return stocks;
         }
 
@@ -162,13 +187,17 @@ namespace ENetCareMVC.Repository
         /// </summary>
         /// <param name="connection"></param>
         /// <returns></returns>
-        public static List<ValueInTransit> GetValueInTransit(SqlConnection connection)
+        public static List<ValueInTransit> GetValueInTransit()
         {
-            string query = "select SenderDistributionCentreId, SenderDistributionCentreName, ReceiverDistributionCentreId, RecieverDistributionCentreName, TotalPackages, TotalValue " +
-                            "from ValueInTransit " +
-                            "order by SenderDistributionCentreId, ReceiverDistributionCentreId ";
             List<ValueInTransit> valueList = new List<ValueInTransit>();
-
+            using (var ctx = new Entities())
+            {
+                valueList = ctx.ValueInTransit.ToList();
+            }
+            /*
+            string query = "select SenderDistributionCentreId, SenderDistributionCentreName, ReceiverDistributionCentreId, RecieverDistributionCentreName, TotalPackages, TotalValue " +
+                "from ValueInTransit " +
+                "order by SenderDistributionCentreId, ReceiverDistributionCentreId ";
             var cmd = new SqlCommand(query);
             cmd.Connection = connection;
             using (SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default))
@@ -191,7 +220,7 @@ namespace ENetCareMVC.Repository
                     valueList.Add(valueItem);
                 }
             }
-
+            */
             return valueList;
 
         }
@@ -260,13 +289,20 @@ namespace ENetCareMVC.Repository
         /// <param name="connection"></param>
         /// <param name="centreId"></param>
         /// <returns></returns>
-        public static List<StockTaking> GetStocktaking(SqlConnection connection, int centreId)
+        public static List<StockTaking> GetStocktaking(, int centreId)
         {
-            string query = "select PackageId, BarCode, PackageTypeId, PackageTypeDescription, CostPerPackage, ExpirationDate " +
-                            "from StockTaking " +
-                            "where CurrentLocationCentreId = @LocationCentreId " +
-                            "order by PackageTypeId, ExpirationDate";
             List<StockTaking> stocks = new List<StockTaking>();
+            using (var ctx = new Entities())
+            {
+                stocks = (from e in ctx.StockTaking
+                          where e.CurrentLocationCentreId == centreId
+                          select e).ToList();
+            }
+            /*
+            string query = "select PackageId, BarCode, PackageTypeId, PackageTypeDescription, CostPerPackage, ExpirationDate " +
+                "from StockTaking " +
+                "where CurrentLocationCentreId = @LocationCentreId " +
+                "order by PackageTypeId, ExpirationDate";
             var cmd = new SqlCommand(query);
             cmd.Connection = connection;
 
@@ -293,6 +329,7 @@ namespace ENetCareMVC.Repository
                     stocks.Add(stock);
                 }
             }
+             */
             Debug.WriteLine("ViewDataAccess returns " + stocks.Count() + " items");
             return stocks;
         }
