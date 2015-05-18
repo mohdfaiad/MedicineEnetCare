@@ -1,4 +1,6 @@
-﻿using ENetCareMVC.Repository.Data;
+﻿using ENetCareMVC.BusinessService;
+using ENetCareMVC.Repository.Data;
+using ENetCareMVC.Repository.Repository;
 using ENetCareMVC.Web.Models;
 using ENetCareMVC.Web.SelectBarCodesOperations;
 using System;
@@ -20,11 +22,11 @@ namespace ENetCareMVC.Web.Controllers
 
             model.ExpirationDate = DateTime.Today;
 
-            string connectionString = ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString;
-            Entities context = new Entities(connectionString);
+            var packageService = GetPackageService();
+            var employeeService = GetEmployeeService();
 
-            model.DistributionCentres = context.DistributionCentre;
-            model.StandardPackageTypes = context.StandardPackageType;
+            model.DistributionCentres = employeeService.GetAllDistributionCentres();
+            model.StandardPackageTypes = packageService.GetAllStandardPackageTypes();
 
             return View(model);
         }
@@ -32,23 +34,21 @@ namespace ENetCareMVC.Web.Controllers
         [HttpPost]
         public ActionResult RegisterChangePackageType(PackageRegisterViewModel model)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString;
-            Entities context = new Entities(connectionString);
+            var packageService = GetPackageService();
+            var employeeService = GetEmployeeService();
 
-            model.DistributionCentres = context.DistributionCentre;
-            model.StandardPackageTypes = context.StandardPackageType;
+            model.DistributionCentres = employeeService.GetAllDistributionCentres();
+            model.StandardPackageTypes = packageService.GetAllStandardPackageTypes();
 
-            var standardPackageType =
-                model.StandardPackageTypes.FirstOrDefault(p => p.PackageTypeId == model.StandardPackageTypeId);
-            if (standardPackageType != null)
+            if (model.StandardPackageTypeId > 0)
             {
-                if (standardPackageType.ShelfLifeUnitType == ShelfLifeUnitType.Month)
-                    model.ExpirationDate = DateTime.Today.AddMonths(standardPackageType.ShelfLifeUnits);
-                else
-                {
-                    model.ExpirationDate = DateTime.Today.AddDays(standardPackageType.ShelfLifeUnits);
-                }
+                StandardPackageType selectedPackageType = packageService.GetStandardPackageType(model.StandardPackageTypeId);
 
+                model.ExpirationDate = packageService.CalculateExpirationDate(selectedPackageType, DateTime.Today);
+            }
+            else
+            {
+                model.ExpirationDate = DateTime.Today;
             }
 
             return View("Register", model);
@@ -57,12 +57,33 @@ namespace ENetCareMVC.Web.Controllers
         [HttpPost]
         public ActionResult Register(PackageRegisterViewModel model)
         {
-            int packageId = 1;
+            var packageService = GetPackageService();
+            var employeeService = GetEmployeeService();
 
-            model.BarCode = string.Format("{0:D5}{1:ddMMyy}{2:D5}", model.StandardPackageTypeId, model.ExpirationDate,
-                packageId);
+            if (ModelState.IsValid)
+            {
+                int packageId = 1;
 
-            return View("RegisterComplete", model);
+                StandardPackageType selectedPackageType = packageService.GetStandardPackageType(model.StandardPackageTypeId);
+                DistributionCentre selectedCentre = employeeService.GetDistributionCentre(model.LocationCentreId);
+                string barCode;
+
+                Result result = packageService.Register(selectedPackageType, selectedCentre, model.ExpirationDate, out barCode);
+                if (result.Success)
+                {
+                    model.BarCode = barCode;
+                    return View("RegisterComplete", model);
+                }
+                else
+                {
+                    ModelState.AddModelError("", result.ErrorMessage);
+                }               
+            }
+
+            model.DistributionCentres = employeeService.GetAllDistributionCentres();
+            model.StandardPackageTypes = packageService.GetAllStandardPackageTypes();
+                
+            return View("Register", model);            
         }
 
         [Authorize(Roles = "Agent, Doctor")]
@@ -186,6 +207,18 @@ namespace ENetCareMVC.Web.Controllers
         public ActionResult Audit()
         {
             return View();
+        }
+
+        private PackageService GetPackageService()
+        {
+            IPackageRepository packageRepository = new PackageRepository(ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString);
+            return new PackageService(packageRepository);
+        }
+
+        private EmployeeService GetEmployeeService()
+        {
+            IEmployeeRepository repository = new EmployeeRepository(ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString);
+            return new EmployeeService(repository);
         }
     }
 }

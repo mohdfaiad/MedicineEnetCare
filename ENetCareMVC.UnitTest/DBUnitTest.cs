@@ -20,7 +20,7 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
     public class DBUnitTest
     {   
         //static string _connectionString = ConfigurationManager.ConnectionStrings["EnetCare"].ConnectionString;
-        static string _connectionString = "Data Source=.\\SQLEXPRESS;Initial Catalog=ENetCareDiff;Integrated Security=True;MultipleActiveResultSets=True";
+        static string _connectionString = "metadata=res://*;provider=System.Data.SqlClient;provider connection string='Data Source=(LocalDb)\\v11.0;AttachDbFilename=|DataDirectory|\\ENetCareMVCDiff.mdf;Initial Catalog=ENetCareMVCDiff;Integrated Security=True'";
         SqlConnection enetConnection = new SqlConnection(_connectionString);
         
  
@@ -38,7 +38,7 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
         public void TestDbAccess_GetDistCentres()                           // (P. 04-04-2015) 
         {
             enetConnection.Open();
-            List<DistributionCentre> centresList = DataAccess.GetAllDistributionCentres();
+            List<DistributionCentre> centresList = DataAccess.GetAllDistributionCentres(_connectionString);
             enetConnection.Close();
             int howMany = centresList.Count();
             Debug.WriteLine(howMany + " centres found.");
@@ -49,7 +49,7 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
         public void TestDbAccess_GetEmployees()                   // (P. 04-04-2015)  
         {
             enetConnection.Open();
-            List<Employee> employeeList = DataAccess.GetAllEmployees();
+            List<Employee> employeeList = DataAccess.GetAllEmployees(_connectionString);
             enetConnection.Close();
             int howMany = employeeList.Count();
             Debug.WriteLine(howMany + " employees found.");
@@ -60,23 +60,23 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
         public void TestDb_ShowAllTables()
         {
             enetConnection.Open();
-            List<DistributionCentre> distList = DataAccess.GetAllDistributionCentres();
+            List<DistributionCentre> distList = DataAccess.GetAllDistributionCentres(_connectionString);
             Debug.WriteLine("DISTRIBUTION CENTRES : ");
             foreach (DistributionCentre centre in distList) Debug.WriteLine(centre);
 
-            List<Employee> employeeList = DataAccess.GetAllEmployees();
+            List<Employee> employeeList = DataAccess.GetAllEmployees(_connectionString);
             Debug.WriteLine("\n\n EMPLOYEES : ");
             foreach (Employee emp in employeeList) Debug.WriteLine(emp);
 
-            List<StandardPackageType> typeList = DataAccess.GetAllStandardPackageTypes();
+            List<StandardPackageType> typeList = DataAccess.GetAllStandardPackageTypes(_connectionString);
             Debug.WriteLine("\n\n STANDARD PACKAGE TYPES : ");
             foreach (StandardPackageType t in typeList) Debug.WriteLine(t);
 
-            List<Package> packageList = DataAccess.GetAllPackages();
+            List<Package> packageList = DataAccess.GetAllPackages(_connectionString);
             Debug.WriteLine("\n\n PACKAGES : ");
             foreach (Package p in packageList) Debug.WriteLine(p);
 
-            List<PackageTransit> transitList = DataAccess.GetAllPackageTransits();
+            List<PackageTransit> transitList = DataAccess.GetAllPackageTransits(_connectionString);
             Debug.WriteLine("\n\n PACKAGE TRANSITS : ");
             foreach (PackageTransit t in transitList) Debug.WriteLine(t);
             enetConnection.Close();
@@ -88,7 +88,7 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
         public void TestDbAccess_GetPackages()                            // (P. 04-04-2015)  
         {
             enetConnection.Open();
-            List<Package> packageList = DataAccess.GetAllPackages();
+            List<Package> packageList = DataAccess.GetAllPackages(_connectionString);
             enetConnection.Close();
             int howMany = packageList.Count();
             Debug.WriteLine(howMany + " packages found.");
@@ -114,7 +114,7 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
         public void TestDbAccess_GetPackageTypes()                              // (P. 04-04-2015) 
         {
             enetConnection.Open();
-            List<StandardPackageType> typeList = DataAccess.GetAllStandardPackageTypes();
+            List<StandardPackageType> typeList = DataAccess.GetAllStandardPackageTypes(_connectionString);
             enetConnection.Close();
             int howMany = typeList.Count();
             Debug.WriteLine(howMany + " packTypes found.");
@@ -145,7 +145,7 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
         public void CheckIfItsPopulated()      // Populates Database if it hasnt been poped yet
         {                                       //               (P. 04-04-2015)
             enetConnection.Open();
-            List<Employee> employeeList = DataAccess.GetAllEmployees();
+            List<Employee> employeeList = DataAccess.GetAllEmployees(_connectionString);
             enetConnection.Close();
             if (employeeList.Count() < 8)         // if there curr are less than 8 employees
             {

@@ -19,7 +19,7 @@ namespace ENetCareMVC.Repository.Repository
         }
         public void Update(Employee employee)
         {
-            DataAccess.UpdateEmployee(employee);
+            DataAccess.UpdateEmployee(_connectionString, employee);
             return;
         }
 
@@ -27,9 +27,9 @@ namespace ENetCareMVC.Repository.Repository
         {
             Employee employee = null;
 
-            employee = DataAccess.GetEmployee(employeeId, username);
+            employee = DataAccess.GetEmployee(_connectionString, employeeId, username);
             if (employee != null)
-                employee.Location = DataAccess.GetDistributionCentre(employee.Location.CentreId);
+                employee.Location = DataAccess.GetDistributionCentre(_connectionString, employee.Location.CentreId);
 
             return employee;
         }
@@ -37,7 +37,7 @@ namespace ENetCareMVC.Repository.Repository
         public List<DistributionCentre> GetAllDistributionCentres()
         {
             List<DistributionCentre> centres = null;
-            centres = DataAccess.GetAllDistributionCentres();
+            centres = DataAccess.GetAllDistributionCentres(_connectionString);
 
             return centres;
         }
@@ -45,19 +45,19 @@ namespace ENetCareMVC.Repository.Repository
         public DistributionCentre GetDistributionCentre(int centreid)
         {
             DistributionCentre centre = null;
-            centre = DataAccess.GetDistributionCentre(centreid);
+            centre = DataAccess.GetDistributionCentre(_connectionString, centreid);
             return centre;
         }
 
         public List<Employee> getAllEmployees()
         {                                                             //  (P. 04-04-2015)
-            List<Employee> eList = DataAccess.GetAllEmployees();
+            List<Employee> eList = DataAccess.GetAllEmployees(_connectionString);
             return eList;
         }
 
         public DistributionCentre GetHeadOffice()
         {                                                               // (P. 05-04-2015)
-            List<DistributionCentre> allCentres = DataAccess.GetAllDistributionCentres();
+            List<DistributionCentre> allCentres = DataAccess.GetAllDistributionCentres(_connectionString);
             foreach (DistributionCentre centre in allCentres)
                 if (centre.IsHeadOffice) return centre;
 

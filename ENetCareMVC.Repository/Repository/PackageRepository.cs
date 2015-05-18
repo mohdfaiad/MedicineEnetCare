@@ -22,19 +22,19 @@ namespace ENetCareMVC.Repository.Repository
         public int Insert(Package package)
         {
 
-            return DataAccess.InsertPackage(package);
+            return DataAccess.InsertPackage(_connectionString, package);
         }
 
         public void Update(Package package)
         {
 
-            DataAccess.UpdatePackage(package);
+            DataAccess.UpdatePackage(_connectionString, package);
         }
 
         public void UpdateTransit(PackageTransit transit)
         {
 
-            DataAccess.UpdatePackageTransit(transit);
+            DataAccess.UpdatePackageTransit(_connectionString, transit);
         }
 
 
@@ -42,21 +42,21 @@ namespace ENetCareMVC.Repository.Repository
         {
             Package package = null;
 
-            package = DataAccess.GetPackage(packageId, barcode);
+            package = DataAccess.GetPackage(_connectionString, packageId, barcode);
             if (package == null)
                 return null;
 
-            package.PackageType = DataAccess.GetStandardPackageType(package.PackageType.PackageTypeId);
+            package.PackageType = DataAccess.GetStandardPackageType(_connectionString, package.PackageType.PackageTypeId);
 
             if (package.CurrentLocation != null)
             {
-                package.CurrentLocation = DataAccess.GetDistributionCentre(package.CurrentLocation.CentreId);
+                package.CurrentLocation = DataAccess.GetDistributionCentre(_connectionString, package.CurrentLocation.CentreId);
             }
 
             if (package.DistributedBy != null)
             {
-                package.DistributedBy = DataAccess.GetEmployee(package.DistributedBy.EmployeeId, null);
-                package.DistributedBy.Location = DataAccess.GetDistributionCentre(package.DistributedBy.Location.CentreId);
+                package.DistributedBy = DataAccess.GetEmployee(_connectionString, package.DistributedBy.EmployeeId, null);
+                package.DistributedBy.Location = DataAccess.GetDistributionCentre(_connectionString, package.DistributedBy.Location.CentreId);
             }
 
             return package;
@@ -65,7 +65,7 @@ namespace ENetCareMVC.Repository.Repository
         public Package GetPackageWidthBarCode(string barCode)                           // Added by Pablo on 24-03-15
         {
 
-            return DataAccess.GetPackage(null, barCode);
+            return DataAccess.GetPackage(_connectionString, null, barCode);
 
             return null;
         }
@@ -74,7 +74,7 @@ namespace ENetCareMVC.Repository.Repository
         {
             List<StandardPackageType> packageTypes = null;
 
-            packageTypes = DataAccess.GetAllStandardPackageTypes();
+            packageTypes = DataAccess.GetAllStandardPackageTypes(_connectionString);
 
             return packageTypes;
         }
@@ -83,7 +83,7 @@ namespace ENetCareMVC.Repository.Repository
         {
             StandardPackageType packageTypes = null;
 
-            packageTypes = DataAccess.GetStandardPackageType(packageId);
+            packageTypes = DataAccess.GetStandardPackageType(_connectionString, packageId);
 
             return packageTypes;
         }
@@ -95,7 +95,7 @@ namespace ENetCareMVC.Repository.Repository
         {
 
 
-            return DataAccess.InsertPackageTransit(packageTransit);
+            return DataAccess.InsertPackageTransit(_connectionString, packageTransit);
 
         }
 
@@ -104,7 +104,7 @@ namespace ENetCareMVC.Repository.Repository
         {
             PackageTransit packageTransit = null;
 
-            packageTransit = DataAccess.GetPackageTransit(package, receiver);
+            packageTransit = DataAccess.GetPackageTransit(_connectionString, package, receiver);
 
             if (packageTransit == null)
                 return null;
@@ -115,7 +115,7 @@ namespace ENetCareMVC.Repository.Repository
         public DistributionCentre GetHeadOffice()
         {                                                               // (P. 05-04-2015)
 
-            List<DistributionCentre> allCentres = DataAccess.GetAllDistributionCentres();
+            List<DistributionCentre> allCentres = DataAccess.GetAllDistributionCentres(_connectionString);
 
             foreach (DistributionCentre centre in allCentres)
                 if (centre.IsHeadOffice) return centre;
@@ -126,11 +126,11 @@ namespace ENetCareMVC.Repository.Repository
         public int InsertAudit(Employee employee, StandardPackageType packageType, List<string> barCodes)
         {
 
-            int auditId = DataAccess.InsertAudit(employee, packageType);
+            int auditId = DataAccess.InsertAudit(_connectionString, employee, packageType);
 
             XElement barCodeXml = barCodes.GetBarCodeXML();
 
-            DataAccess.InsertAuditPackages(auditId, packageType, barCodeXml);
+            DataAccess.InsertAuditPackages(_connectionString, auditId, packageType, barCodeXml);
             return auditId;
 
         }
@@ -138,24 +138,24 @@ namespace ENetCareMVC.Repository.Repository
         public int UpdateLostFromAudit(int auditId, DistributionCentre location, StandardPackageType packageType)
         {
 
-            return DataAccess.UpdateLostFromAudit(auditId, location, packageType);
+            return DataAccess.UpdateLostFromAudit(_connectionString, auditId, location, packageType);
         }
 
         public int UpdateInstockFromAudit(int auditId, DistributionCentre location, StandardPackageType packageType)
         {
-            return DataAccess.UpdateInstockFromAudit(auditId, location, packageType);
+            return DataAccess.UpdateInstockFromAudit(_connectionString, auditId, location, packageType);
         }
 
         public int UpdateTransitReceivedFromAudit(int auditId, DistributionCentre location)
         {
 
-            return DataAccess.UpdateTransitReceivedFromAudit(auditId, location);
+            return DataAccess.UpdateTransitReceivedFromAudit(_connectionString, auditId, location);
         }
 
         public int UpdateTransitCancelledFromAudit(int auditId, DistributionCentre location)
         {
 
-            return DataAccess.UpdateTransitCancelledFromAudit(auditId, location);
+            return DataAccess.UpdateTransitCancelledFromAudit(_connectionString, auditId, location);
         }
 
         // *************************************************************************
@@ -163,7 +163,7 @@ namespace ENetCareMVC.Repository.Repository
         public List<PackageTransit> GetAllPackageTransits()
         {                                                                        //   Added by Pablo on 23-03-15
             List<PackageTransit> allTransits = null;
-            allTransits = DataAccess.GetAllPackageTransits();
+            allTransits = DataAccess.GetAllPackageTransits(_connectionString);
             return allTransits;
         }
 

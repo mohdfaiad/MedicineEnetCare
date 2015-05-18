@@ -66,10 +66,11 @@ namespace ENetCareMVC.BusinessService
 
             Package package = new Package
             {
-                PackageType = packageType,
-                CurrentLocation = location,
+                PackageTypeId = packageType.PackageTypeId,
+                CurrentLocationCentreId = location.CentreId,
                 CurrentStatus = PackageStatus.InStock,
-                ExpirationDate = expirationDate
+                ExpirationDate = expirationDate,
+                BarCode = "Not Defined"
             };
 
             int packageId = _packageRepository.Insert(package);
@@ -114,10 +115,8 @@ namespace ENetCareMVC.BusinessService
         }
 
         private string GenerateBarCode(Package package)
-        {
-            if (package.PackageType == null) return string.Empty;
-            return string.Format("{0:D5}{1:yyMMdd}{2:D5}", package.PackageType.PackageTypeId, package.ExpirationDate, package.PackageId);
-            //return string.Format("00001{0:yyMMdd}00001", package.PackageType.PackageTypeId, package.ExpirationDate, package.PackageId);
+        {            
+            return string.Format("{0:D5}{1:yyMMdd}{2:D5}", package.PackageTypeId, package.ExpirationDate, package.PackageId);
         }
 
         /// <summary>

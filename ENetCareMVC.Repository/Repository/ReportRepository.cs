@@ -26,12 +26,8 @@ namespace ENetCareMVC.Repository.Repository
         public List<DistributionCentreStock> GetDistributionCentreStock()
         {
             List<DistributionCentreStock> stockList = null;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
 
-                stockList = ViewDataAccess.GetDistributionCentreStock(connection);
-            }
+            stockList = ViewDataAccess.GetDistributionCentreStock(_connectionString);
             return stockList;
         }
 
@@ -42,12 +38,8 @@ namespace ENetCareMVC.Repository.Repository
         public List<DistributionCentreLosses> GetDistributionCentreLosses()
         {
             List<DistributionCentreLosses> centreList = null;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-
-                centreList = ViewDataAccess.GetDistributionCentreLosses(connection);
-            }
+          
+            centreList = ViewDataAccess.GetDistributionCentreLosses(_connectionString);       
             return centreList;
         }
 
@@ -58,12 +50,8 @@ namespace ENetCareMVC.Repository.Repository
         public List<DoctorActivity> GetDoctorActivity()
         {
             List<DoctorActivity> doctors = null;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-
-                doctors = ViewDataAccess.GetDoctorActivity(connection);
-            }
+            doctors = ViewDataAccess.GetDoctorActivity(_connectionString);
+            
             return doctors;
         }
 
@@ -74,12 +62,8 @@ namespace ENetCareMVC.Repository.Repository
         public List<GlobalStock> GetGlobalStock()
         {
             List<GlobalStock> stocks = null;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-
-                stocks = ViewDataAccess.GetGlobalStock(connection);
-            }
+            stocks = ViewDataAccess.GetGlobalStock(_connectionString);
+            
             return stocks;
         }
 
@@ -90,12 +74,8 @@ namespace ENetCareMVC.Repository.Repository
         public List<ValueInTransit> GetValueInTransit()
         {
             List<ValueInTransit> valueList = null;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-
-                valueList = ViewDataAccess.GetValueInTransit(connection);
-            }
+            valueList = ViewDataAccess.GetValueInTransit(_connectionString);
+            
             return valueList;
         }
 
@@ -109,14 +89,9 @@ namespace ENetCareMVC.Repository.Repository
         public List<ReconciledPackage> GetReconciledPackages(DistributionCentre currentLocation, StandardPackageType packageType, List<string> barCodeList)
         {
             List<ReconciledPackage> packageList = null;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
+            XElement barCodeXml = barCodeList.GetBarCodeXML();
 
-                XElement barCodeXml = barCodeList.GetBarCodeXML();
-
-                packageList = ViewDataAccess.GetReconciledPackages(connection, currentLocation, packageType, barCodeXml);
-            }
+            packageList = ViewDataAccess.GetReconciledPackages(_connectionString, currentLocation, packageType, barCodeXml);            
             return packageList;
         }
 
@@ -128,11 +103,8 @@ namespace ENetCareMVC.Repository.Repository
         public List<StockTaking> GetStocktaking(int centreId)
         {
             List<StockTaking> packageList = null;
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                packageList = ViewDataAccess.GetStocktaking(connection, centreId);
-            }
+            packageList = ViewDataAccess.GetStocktaking(_connectionString, centreId);
+            
             return packageList;
         }
     }
