@@ -84,10 +84,10 @@ namespace ENetCareMVC.Repository
             Employee employee = null;
 
             using (var ctx = new Entities(connectionString))
-            {
-                var employeeRecord = (from e in ctx.Employee
+            {                   
+                var employeeRecord = (from e in ctx.Employee.Include("Location")
                                       where e.EmployeeId == (employeeId ?? e.EmployeeId) && e.UserName == (string.IsNullOrEmpty(username) ? e.UserName : username)
-                                      select e).First();
+                                      select e).FirstOrDefault();
                 
                 employee = employeeRecord;
             }

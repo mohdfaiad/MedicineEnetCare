@@ -1,4 +1,4 @@
-﻿@model ENetCareMVC.Web.Models.AuditPromptViewModel
+﻿@model List<ENetCareMVC.Repository.Data.ReconciledPackage>
 
 @{
     ViewBag.Title = "Audit Display";
@@ -6,8 +6,46 @@
 
 <h2>Audit Display</h2>
 
-<br />
-Package Type: @Model.StandardPackageTypeId
-<br />
-Distribution Centre: @Model.DestinationCentreId
+@using (Html.BeginForm("Display", "Audit", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Display results for an Audit</h4>
+    <hr />
+    <table>
+        <tr>
+            <th width="50px">Package Id</th>
+            <th width="100px">Bar Code</th>
+            <th width="300px">Current Location</th>
+            <th width="100px">Current Status</th>
+            <th width="100px">New Status</th>
+            <th></th>
+        </tr>
+        @foreach (var reconciledPackage in Model)
+        {
+            <tr>
+                <td>
+                    @reconciledPackage.PackageId                
+                </td>
+                <td>
+                    @reconciledPackage.BarCode
+                </td>
+                <td>
+                    @reconciledPackage.CurrentLocationCentreName                
+                </td>
+                <td>
+                    @reconciledPackage.CurrentStatus.ToString()                
+                </td>
+                <td>
+                    @reconciledPackage.NewStatus.ToString()                
+                </td>
+            </tr>
+        }
+    </table>
 
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Next" name="action" />
+            <input type="submit" class="btn btn-default" value="Previous" name="action" />
+        </div>
+    </div>
+}

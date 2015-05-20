@@ -28,9 +28,6 @@ namespace ENetCareMVC.Repository.Repository
             Employee employee = null;
 
             employee = DataAccess.GetEmployee(_connectionString, employeeId, username);
-            if (employee != null)
-                employee.Location = DataAccess.GetDistributionCentre(_connectionString, employee.Location.CentreId);
-
             return employee;
         }
 

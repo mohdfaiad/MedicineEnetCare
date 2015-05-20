@@ -8,8 +8,7 @@ using System.Web;
 namespace ENetCareMVC.Web.Models
 {
     public class AuditPromptViewModel : ISelectedBarCodesViewModel
-    {
-        [Required]
+    {        
         [Display(Name = "BarCode")]
         public string BarCode { get; set; }
 

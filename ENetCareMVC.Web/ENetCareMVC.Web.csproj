@@ -297,6 +297,7 @@
     <Content Include="Views\Package\RegisterComplete.cshtml" />
     <Content Include="Views\Audit\Prompt.cshtml" />
     <Content Include="Views\Audit\Display.cshtml" />
+    <Content Include="Views\Audit\Finish.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
