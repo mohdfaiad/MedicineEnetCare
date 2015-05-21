@@ -88,10 +88,9 @@ namespace ENetCareMVC.Repository.Repository
         /// <returns></returns>
         public List<ReconciledPackage> GetReconciledPackages(DistributionCentre currentLocation, StandardPackageType packageType, List<string> barCodeList)
         {
-            List<ReconciledPackage> packageList = null;
-            XElement barCodeXml = barCodeList.GetBarCodeXML();
+            List<ReconciledPackage> packageList = null;           
 
-            packageList = ViewDataAccess.GetReconciledPackages(_connectionString, currentLocation, packageType, barCodeXml);            
+            packageList = ViewDataAccess.GetReconciledPackages(_connectionString, currentLocation, packageType, barCodeList);            
             return packageList;
         }
 

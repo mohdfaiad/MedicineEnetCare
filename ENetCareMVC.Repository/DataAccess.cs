@@ -255,18 +255,12 @@ namespace ENetCareMVC.Repository
             }
         }
 
-        public static void InsertAuditPackages(string connectionString, int auditId, StandardPackageType packageType, XElement barCodeXml)
+        public static void InsertAuditPackages(string connectionString, int auditId, StandardPackageType packageType, List<string> barCodeList)
         {
             using (var ctx = new Entities(connectionString))
             {
-                var barcodes = from item in barCodeXml.Elements()
-                select new 
-                {  
-                    BarCode = item.Element("BarCode").Attribute("Text").Value
-                };
-
                 var selectedPackages = from p in ctx.Package
-                    join b in barcodes on p.BarCode equals b.BarCode
+                    join b in barCodeList on p.BarCode equals b                    
                     select p.PackageId;
                 foreach (var packageId in selectedPackages)
                 {
@@ -283,12 +277,12 @@ namespace ENetCareMVC.Repository
         {            
             using (var ctx = new Entities(connectionString))
             {
-                var lostPackages = from p in ctx.Package
+                var lostPackages = (from p in ctx.Package
                    join ap in ctx.AuditPackage on new { AuditId = auditId, p.PackageId } equals new { ap.AuditId, ap.PackageId } into ps
                    from ap in ps.DefaultIfEmpty()
                    where ap == null && p.CurrentStatus == PackageStatus.InStock && p.PackageTypeId == packageType.PackageTypeId &&
                     p.CurrentLocationCentreId == location.CentreId
-                   select p;
+                   select p).ToList();
                 int lostPackageCount = lostPackages.Count();
                 foreach (var lostPackage in lostPackages)
                 {
@@ -304,10 +298,10 @@ namespace ENetCareMVC.Repository
         {            
             using (var ctx = new Entities(connectionString))
             {
-                var receivedPackages = from p in ctx.Package
+                var receivedPackages = (from p in ctx.Package
                    join ap in ctx.AuditPackage on new { AuditId = auditId, p.PackageId } equals new { ap.AuditId, ap.PackageId }
                    where p.PackageTypeId == packageType.PackageTypeId && (p.CurrentLocationCentreId != location.CentreId || p.CurrentStatus != PackageStatus.InStock)
-                   select p;
+                   select p).ToList();
 
                 int receivedPackageCount = receivedPackages.Count();
                 foreach (var package in receivedPackages)

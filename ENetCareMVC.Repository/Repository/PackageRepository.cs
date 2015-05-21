@@ -123,14 +123,12 @@ namespace ENetCareMVC.Repository.Repository
             return null;
         }
 
-        public int InsertAudit(Employee employee, StandardPackageType packageType, List<string> barCodes)
+        public int InsertAudit(Employee employee, StandardPackageType packageType, List<string> barCodeList)
         {
 
-            int auditId = DataAccess.InsertAudit(_connectionString, employee, packageType);
+            int auditId = DataAccess.InsertAudit(_connectionString, employee, packageType);            
 
-            XElement barCodeXml = barCodes.GetBarCodeXML();
-
-            DataAccess.InsertAuditPackages(_connectionString, auditId, packageType, barCodeXml);
+            DataAccess.InsertAuditPackages(_connectionString, auditId, packageType, barCodeList);
             return auditId;
 
         }

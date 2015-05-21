@@ -388,13 +388,13 @@ namespace ENetCareMVC.BusinessService
         /// <param name="packageType"></param>
         /// <param name="barCodes"></param>
         /// <returns></returns>
-        public Result PerformAudit(Employee employee, StandardPackageType packageType, List<string> barCodes)
+        public Result PerformAudit(Employee employee, StandardPackageType packageType, List<string> barCodeList)
         {
             Result result = new Result
             {
                 Success = true
             };
-            int auditId = _packageRepository.InsertAudit(employee, packageType, barCodes);
+            int auditId = _packageRepository.InsertAudit(employee, packageType, barCodeList);
             result.Id = auditId;
 
             _packageRepository.UpdateLostFromAudit(auditId, employee.Location, packageType);

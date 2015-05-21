@@ -104,21 +104,16 @@ namespace ENetCareMVC.Repository
         /// <param name="packageType"></param>
         /// <param name="barCodeXml"></param>
         /// <returns></returns>
-        public static List<ReconciledPackage> GetReconciledPackages(string connectionString, DistributionCentre currentLocation, StandardPackageType packageType, XElement barCodeXml)
+        public static List<ReconciledPackage> GetReconciledPackages(string connectionString, DistributionCentre currentLocation, StandardPackageType packageType, List<string> barCodeList)
         {
             var reconciledPackages = new List<ReconciledPackage>();
             
             using (var ctx = new Entities(connectionString))
             {
-                var barcodes = from item in barCodeXml.Elements()
-                select new 
-                {  
-                    BarCode = item.Element("BarCode").Attribute("Text").Value
-                };
-                var receivedPackages = from p in ctx.Package
-                                       join b in barcodes on p.BarCode equals b.BarCode
+                var receivedPackages = (from p in ctx.Package.Include("CurrentLocation")
+                                       join b in barCodeList on p.BarCode equals b                                       
                                        where p.PackageTypeId == packageType.PackageTypeId && (p.CurrentLocationCentreId != currentLocation.CentreId || p.CurrentStatus != PackageStatus.InStock)
-                                       select p;
+                                       select p).ToList();
                 foreach (var package in receivedPackages)
                 {
                     var reconciledPackage = new ReconciledPackage()
@@ -132,12 +127,12 @@ namespace ENetCareMVC.Repository
                     };
                     reconciledPackages.Add(reconciledPackage);
                 }
-                var lostPackages = from p in ctx.Package
-                    join b in barcodes on p.BarCode equals b.BarCode into ps
+                var lostPackages = (from p in ctx.Package.Include("CurrentLocation")
+                    join b in barCodeList on p.BarCode equals b into ps                    
                     from b in ps.DefaultIfEmpty()
                     where p.PackageTypeId == packageType.PackageTypeId && p.CurrentLocationCentreId == currentLocation.CentreId &&
                     b == null && p.CurrentStatus == PackageStatus.InStock
-                select p;
+                select p).ToList();
                 foreach (var package in lostPackages)
                 {
                      var reconciledPackage = new ReconciledPackage()

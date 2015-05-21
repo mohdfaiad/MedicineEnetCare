@@ -20,8 +20,6 @@ warning 6002: The table/view 'C:\USERS\BEN ROGERS\DOCUMENTS\VISUAL STUDIO 2013\P
         <EntityType Name="AuditPackage">
           <Key>
             <PropertyRef Name="AuditPackageId" />
-            <PropertyRef Name="AuditId" />
-            <PropertyRef Name="PackageId" />
           </Key>
           <Property Name="AuditPackageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AuditId" Type="int" Nullable="false" />
@@ -331,13 +329,7 @@ warning 6002: The table/view 'C:\USERS\BEN ROGERS\DOCUMENTS\VISUAL STUDIO 2013\P
           <EntitySet Name="Package" EntityType="Self.Package" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PackageTransit" EntityType="Self.PackageTransit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StandardPackageType" EntityType="Self.StandardPackageType" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AuditPackage" EntityType="Self.AuditPackage" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [AuditPackage].[AuditPackageId] AS [AuditPackageId], 
-    [AuditPackage].[AuditId] AS [AuditId], 
-    [AuditPackage].[PackageId] AS [PackageId]
-    FROM [dbo].[AuditPackage] AS [AuditPackage]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="AuditPackage" EntityType="Self.AuditPackage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DistributionCentreLosses" EntityType="Self.DistributionCentreLosses" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [DistributionCentreLosses].[DistributionCentreId] AS [DistributionCentreId], 
@@ -498,8 +490,6 @@ warning 6002: The table/view 'C:\USERS\BEN ROGERS\DOCUMENTS\VISUAL STUDIO 2013\P
         <EntityType Name="AuditPackage">
           <Key>
             <PropertyRef Name="AuditPackageId" />
-            <PropertyRef Name="AuditId" />
-            <PropertyRef Name="PackageId" />
           </Key>
           <Property Name="AuditPackageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AuditId" Type="Int32" Nullable="false" />
