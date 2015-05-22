@@ -19,25 +19,35 @@ namespace ENetCareMVC.Web.Controllers
         {
             var model = new AuditPromptViewModel();
             model.SelectedPackages = new List<SelectedPackage>();
-            model.AuditDate = DateTime.Today;
-
-            var employeeService = GetEmployeeService();
+            
             var packageService = GetPackageService();
 
-            model.DistributionCentres = employeeService.GetAllDistributionCentres();
             model.StandardPackageTypes = packageService.GetAllStandardPackageTypes();
 
             return View(model);
         }
 
         [HttpPost]
+        public ActionResult AuditChangePackageType(AuditPromptViewModel model)
+        {
+            var packageService = GetPackageService();
+
+            model.StandardPackageTypes = packageService.GetAllStandardPackageTypes();
+
+            if (model.SelectedPackages == null)
+                model.SelectedPackages = new List<SelectedPackage>();
+
+            model.SelectedPackages.Clear();
+
+            return View("Prompt", model);
+        }
+
+        [HttpPost]
         [MultiButton(Path = "/Audit/Prompt", MatchFormKey = "action", MatchFormValue = "Add")]
         public ActionResult PromptAdd(AuditPromptViewModel model)
         {
-            var employeeService = GetEmployeeService();
             var packageService = GetPackageService();
 
-            model.DistributionCentres = employeeService.GetAllDistributionCentres();
             model.StandardPackageTypes = packageService.GetAllStandardPackageTypes();
 
             var operations = new AuditSelectedBarCodesOperations();
@@ -54,10 +64,8 @@ namespace ENetCareMVC.Web.Controllers
         [MultiButton(Path = "/Audit/Prompt", MatchFormKey = "action", MatchFormValue = "Remove")]
         public ActionResult PromptRemove(AuditPromptViewModel model)
         {
-            var employeeService = GetEmployeeService();
             var packageService = GetPackageService();
 
-            model.DistributionCentres = employeeService.GetAllDistributionCentres();
             model.StandardPackageTypes = packageService.GetAllStandardPackageTypes();
 
             var operations = new AuditSelectedBarCodesOperations();
@@ -72,10 +80,8 @@ namespace ENetCareMVC.Web.Controllers
         [MultiButton(Path = "/Audit/Prompt", MatchFormKey = "action", MatchFormValue = "Next")]
         public ActionResult PromptNext(AuditPromptViewModel model)
         {
-            var employeeService = GetEmployeeService();
             var packageService = GetPackageService();
 
-            model.DistributionCentres = employeeService.GetAllDistributionCentres();
             model.StandardPackageTypes = packageService.GetAllStandardPackageTypes();
             if (model.SelectedPackages == null)
                 model.SelectedPackages = new List<SelectedPackage>();

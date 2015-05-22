@@ -13,19 +13,10 @@ namespace ENetCareMVC.Web.Models
         public string BarCode { get; set; }
 
         [Required]
-        [Display(Name = "Audit Date")]
-        public DateTime AuditDate { get; set; }
-
-        [Required]
-        [Display(Name = "Distribution Centre")]
-        public int DestinationCentreId { get; set; }
-
-        [Required]
         [Display(Name = "Standard Package Type")]
         public int StandardPackageTypeId { get; set; }
         public List<SelectedPackage> SelectedPackages { get; set; }
 
-        public IEnumerable<DistributionCentre> DistributionCentres { get; set; }
         public IEnumerable<StandardPackageType> StandardPackageTypes { get; set; }
     }
 }

@@ -13,39 +13,23 @@
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
 
-    Html.RenderPartial("_selectedBarCodesPartial", (ENetCareMVC.Web.Models.ISelectedBarCodesViewModel)Model);
-
-    <div class="form-group">
-        @Html.LabelFor(m => m.AuditDate, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            <div class='input-group input-append date' style="max-width: 100px;" id="datetimepicker1">
-                @Html.TextBoxFor(m => m.AuditDate, new { @class = "form-control", @style = "width: 100px;", maxlength = 10, @readonly = "readonly" })
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div>
-        </div>
-    </div>
-
     <div class="form-group">
         @Html.LabelFor(m => m.StandardPackageTypeId, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.DropDownListFor(m => m.StandardPackageTypeId,
                 new SelectList(Model.StandardPackageTypes, "PackageTypeId", "Description"),
                 "-- Please select an item --",
-             new
-             {
-             })
+                new
+                  {
+                      onchange = @"
+                            var form = document.forms[0]; 
+                            form.action='AuditChangePackageType';
+                            form.submit();"
+                  })
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.DestinationCentreId, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(m => m.DestinationCentreId,
-                new SelectList(Model.DistributionCentres, "CentreId", "Name"))
-        </div>
-    </div>
+    Html.RenderPartial("_selectedBarCodesPartial", (ENetCareMVC.Web.Models.ISelectedBarCodesViewModel)Model);
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">

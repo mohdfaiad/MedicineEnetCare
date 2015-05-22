@@ -320,10 +320,10 @@ namespace ENetCareMVC.Repository
             using (var ctx = new Entities(connectionString))
             {
                 var audit = ctx.Audit.FirstOrDefault(a => a.AuditId == auditId);
-                var receivedTransits = from pt in ctx.PackageTransit
+                var receivedTransits = (from pt in ctx.PackageTransit
                    join ap in ctx.AuditPackage on new { AuditId = auditId, pt.PackageId } equals new { ap.AuditId, ap.PackageId }
                    where pt.ReceiverCentreId == location.CentreId && pt.DateReceived == null && pt.DateCancelled == null
-                   select pt;
+                   select pt).ToList();
 
                 int receivedTransitCount = receivedTransits.Count();
                 foreach (var transits in receivedTransits)
@@ -340,10 +340,10 @@ namespace ENetCareMVC.Repository
             using (var ctx = new Entities(connectionString))
             {
                 var audit = ctx.Audit.FirstOrDefault(a => a.AuditId == auditId);
-                var cancelledTransits = from pt in ctx.PackageTransit
+                var cancelledTransits = (from pt in ctx.PackageTransit
                    join ap in ctx.AuditPackage on new { AuditId = auditId, pt.PackageId } equals new { ap.AuditId, ap.PackageId }
                    where pt.ReceiverCentreId != location.CentreId && pt.DateReceived == null && pt.DateCancelled == null
-                   select pt;
+                   select pt).ToList();
 
                 int cancelledTransitCount = cancelledTransits.Count();
                 foreach (var transits in cancelledTransits)

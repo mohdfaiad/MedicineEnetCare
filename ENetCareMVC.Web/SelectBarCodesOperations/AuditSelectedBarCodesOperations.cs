@@ -15,7 +15,12 @@ namespace ENetCareMVC.Web.SelectBarCodesOperations
             SelectionResult result = new SelectionResult();
             result.Succeeded = true;            
 
-            if (package.PackageTypeId != StandardPackageTypeId)
+            if (StandardPackageTypeId == 0)
+            {
+                result.Succeeded = false;
+                result.ErrorMessage = "Please select a Package Type";
+            }
+            else if (package.PackageTypeId != StandardPackageTypeId)
             {
                 result.Succeeded = false;
                 result.ErrorMessage = "The package with this barcode isn't the same type as the selected package type";
