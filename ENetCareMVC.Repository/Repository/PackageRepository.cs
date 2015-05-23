@@ -43,22 +43,6 @@ namespace ENetCareMVC.Repository.Repository
             Package package = null;
 
             package = DataAccess.GetPackage(_connectionString, packageId, barcode);
-            if (package == null)
-                return null;
-
-            package.PackageType = DataAccess.GetStandardPackageType(_connectionString, package.PackageType.PackageTypeId);
-
-            if (package.CurrentLocation != null)
-            {
-                package.CurrentLocation = DataAccess.GetDistributionCentre(_connectionString, package.CurrentLocation.CentreId);
-            }
-
-            if (package.DistributedBy != null)
-            {
-                package.DistributedBy = DataAccess.GetEmployee(_connectionString, package.DistributedBy.EmployeeId, null);
-                package.DistributedBy.Location = DataAccess.GetDistributionCentre(_connectionString, package.DistributedBy.Location.CentreId);
-            }
-
             return package;
         }
 

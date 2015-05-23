@@ -69,10 +69,10 @@ namespace ENetCareMVC.Repository
 
             using (var ctx = new Entities(connectionString))
             {
-                var packageRecord = (from e in ctx.Package
+                var packageRecord = (from e in ctx.Package.Include("CurrentLocation").Include("PackageType").Include("DistributedBy")
                                      where e.PackageId == (packageId.HasValue ? packageId.Value : e.PackageId)
                                      && e.BarCode == (string.IsNullOrEmpty(barcode) ? e.BarCode : barcode)
-                                     select e).First();
+                                     select e).FirstOrDefault();
                 package = new Package();
                 package = packageRecord;
             }

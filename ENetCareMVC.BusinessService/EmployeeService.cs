@@ -125,6 +125,7 @@ namespace ENetCareMVC.BusinessService
             employee.FullName = fullName;
             employee.EmailAddress = emailAddress;
             employee.Location = locationCentre;
+            employee.LocationCentreId = locationCentre.CentreId;
             employee.EmployeeType = employeeType;
 
             _employeeRepository.Update(employee);

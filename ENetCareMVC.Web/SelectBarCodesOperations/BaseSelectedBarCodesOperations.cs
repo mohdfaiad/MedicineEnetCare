@@ -8,6 +8,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ENetCareMVC.Web.Models;
 using ENetCareMVC.Repository.Data;
+using ENetCareMVC.BusinessService;
+using ENetCareMVC.Repository.Repository;
 
 namespace ENetCareMVC.Web.SelectBarCodesOperations
 {
@@ -26,10 +28,9 @@ namespace ENetCareMVC.Web.SelectBarCodesOperations
 
             var result = new SelectionResult();
 
-            string connectionString = ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString;
-            Entities context = new Entities(connectionString);
+            var packageService = GetPackageService();
+            var package = packageService.Retrieve(model.BarCode);
 
-            var package = context.Package.FirstOrDefault(p => p.BarCode == model.BarCode);
             if (package == null)
             {
                 result.Succeeded = false;
@@ -83,10 +84,21 @@ namespace ENetCareMVC.Web.SelectBarCodesOperations
 
             var user = UserManager.FindById(userId);
 
-            string connectionString = ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString;
-            Entities context = new Entities(connectionString);
+            var employeeService = GetEmployeeService();
 
-            return context.Employee.FirstOrDefault(e => e.UserName == user.UserName);
+            return employeeService.Retrieve(user.UserName);
+        }
+
+        private PackageService GetPackageService()
+        {
+            IPackageRepository packageRepository = new PackageRepository(ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString);
+            return new PackageService(packageRepository);
+        }
+
+        private EmployeeService GetEmployeeService()
+        {
+            IEmployeeRepository repository = new EmployeeRepository(ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString);
+            return new EmployeeService(repository);
         }
     }
 }

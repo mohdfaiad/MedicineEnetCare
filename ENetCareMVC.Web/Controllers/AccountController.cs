@@ -13,6 +13,8 @@ using Owin;
 using ENetCareMVC.Web.Models;
 using ENetCareMVC.Repository.Data;
 using System.Configuration;
+using ENetCareMVC.BusinessService;
+using ENetCareMVC.Repository.Repository;
 
 namespace ENetCareMVC.Web.Controllers
 {
@@ -155,11 +157,10 @@ namespace ENetCareMVC.Web.Controllers
 
         public ActionResult EditEmployee()
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString;
-            Entities context = new Entities(connectionString);
-
             var user = UserManager.FindById(User.Identity.GetUserId());
-            Employee employee = context.Employee.FirstOrDefault(e => e.UserId == new Guid(user.Id));
+            Employee employee = GetCurrentEmployee();
+
+            var employeeService = GetEmployeeService();
 
             var model = new EditEmployeeViewModel();
 
@@ -168,7 +169,7 @@ namespace ENetCareMVC.Web.Controllers
             model.EmployeeType = employee.EmployeeType;
             model.LocationCentreId = employee.LocationCentreId;
           
-            model.DistributionCentres = context.DistributionCentre;
+            model.DistributionCentres = employeeService.GetAllDistributionCentres();
             return View(model);
         }
 
@@ -176,16 +177,16 @@ namespace ENetCareMVC.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditEmployee(EditEmployeeViewModel model)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString;
-            Entities context = new Entities(connectionString);
-            
+            var employeeService = GetEmployeeService();
+            var distributionCentres = employeeService.GetAllDistributionCentres();
+
             if (ModelState.IsValid)
             {
                 DistributionCentre locationCentre =
-                    context.DistributionCentre.FirstOrDefault(d => d.CentreId == model.LocationCentreId);
+                    distributionCentres.FirstOrDefault(d => d.CentreId == model.LocationCentreId);
 
                 var user = UserManager.FindById(User.Identity.GetUserId());
-                Employee employee = context.Employee.FirstOrDefault(e => e.UserId == new Guid(user.Id));
+                Employee employee = GetCurrentEmployee();
 
                 user.Fullname = model.FullName;
 
@@ -194,11 +195,20 @@ namespace ENetCareMVC.Web.Controllers
                 int written = 0;
                 if (result.Succeeded)
                 {
-                    employee.FullName = model.FullName;
-                    employee.LocationCentreId = model.LocationCentreId;
+                    var employeeResult = employeeService.Update(employee.UserName,
+                        model.FullName,
+                        employee.EmailAddress,
+                        locationCentre,
+                        employee.EmployeeType);
 
-                    written = context.SaveChanges();
-                    return RedirectToAction("Index", "Home");
+                    if (employeeResult.Success)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", employeeResult.ErrorMessage);
+                    }
                 }
                 else
                 {
@@ -206,7 +216,7 @@ namespace ENetCareMVC.Web.Controllers
                 }
             }
 
-            model.DistributionCentres = context.DistributionCentre;
+            model.DistributionCentres = distributionCentres;
             return View(model);
         }
 
@@ -621,6 +631,23 @@ namespace ENetCareMVC.Web.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+        }
+
+        private EmployeeService GetEmployeeService()
+        {
+            IEmployeeRepository repository = new EmployeeRepository(ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString);
+            return new EmployeeService(repository);
+        }
+
+        private Employee GetCurrentEmployee()
+        {
+            string username = User.Identity.Name;
+            if (string.IsNullOrEmpty(username))
+                return null;
+
+            var employeeService = GetEmployeeService();
+
+            return employeeService.Retrieve(username);
         }
 
         private class ChallengeResult : HttpUnauthorizedResult
