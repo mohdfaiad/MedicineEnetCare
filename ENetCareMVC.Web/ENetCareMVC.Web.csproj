@@ -172,6 +172,9 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AuditController.cs" />
+    <Compile Include="Controllers\ErrorController.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PackageController.cs" />
     <Compile Include="Controllers\PackageTransitController.cs" />
@@ -298,8 +301,12 @@
     <Content Include="Views\Audit\Prompt.cshtml" />
     <Content Include="Views\Audit\Display.cshtml" />
     <Content Include="Views\Audit\Finish.cshtml" />
+    <Content Include="Views\Error\Generic.cshtml" />
+    <Content Include="Views\Error\MissingResource.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Log\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
