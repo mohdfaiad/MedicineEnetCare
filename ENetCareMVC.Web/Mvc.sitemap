@@ -13,6 +13,13 @@
       <mvcSiteMapNode title="Audit" controller="Audit" action="Prompt" />
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Report" clickable="false">
+      
+      <mvcSiteMapNode title="Centre Losses"     controller="Report" action="DistributionCentreLosses" />
+      <mvcSiteMapNode title="Doctor activity"   controller="Report" action="DoctorActivity" />
+      <mvcSiteMapNode title="Global stock"      controller="Report" action="GlobalStock" />
+      <mvcSiteMapNode title="Stock Take"        controller="Report" action="Stocktaking" />
+      <mvcSiteMapNode title="Value in transit"  controller="Report" action="ValueInTransit" />
+      
       <mvcSiteMapNode title="A" controller="Report" action="ReportA" />
       <mvcSiteMapNode title="B" controller="Report" action="ReportB" />
       <mvcSiteMapNode title="C" controller="Report" action="ReportC" />

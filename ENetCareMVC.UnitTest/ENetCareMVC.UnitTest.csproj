@@ -117,7 +117,7 @@
       <Name>ENetCareMVC.Repository</Name>
     </ProjectReference>
     <ProjectReference Include="..\ENetCareMVC.Web\ENetCareMVC.Web.csproj">
-      <Project>{1C587AF0-0B62-4FD1-908C-40C340F3E782}</Project>
+      <Project>{1c587af0-0b62-4fd1-908c-40c340f3e782}</Project>
       <Name>ENetCareMVC.Web</Name>
     </ProjectReference>
   </ItemGroup>

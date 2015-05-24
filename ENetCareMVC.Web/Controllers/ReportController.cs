@@ -1,5 +1,6 @@
 ﻿
 using ENetCareMVC.BusinessService;
+using ENetCareMVC.Repository;
 using ENetCareMVC.Repository.Data;
 using ENetCareMVC.Repository.Repository;
 using System;
@@ -14,9 +15,9 @@ namespace ENetCareMVC.Web.Controllers
 
     public class ReportController : Controller
     {
-        private string myConnection = ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString;
-        // private string myConnection = ConfigurationManager.ConnectionStrings["ENetCareMVC"].ConnectionString;
-        //ConfigurationManager.ConnectionStrings;  //"";
+        static string myConnection = ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString;
+        static IReportRepository repRepository = new ReportRepository(myConnection);
+        static ReportService reportService = new ReportService(repRepository);
 
         public ActionResult Index()
         {
@@ -26,10 +27,9 @@ namespace ENetCareMVC.Web.Controllers
 
         public ActionResult ReportA()
         {
-            IReportRepository repRepository = new ReportRepository(myConnection);
-            ReportService repService = new ReportService(repRepository);
-            List<DistributionCentreLosses> losses = repService.GetDistributionCentreLosses();
-            return View(losses);
+            List<DistributionCentreLosses> losses = reportService.GetDistributionCentreLosses();
+            List<DistributionCentreLosses> mockedLosses = getMockedLosses();
+            return View(mockedLosses);
         }
 
         public ActionResult ReportB()
@@ -50,6 +50,61 @@ namespace ENetCareMVC.Web.Controllers
         public ActionResult ReportE()
         {
             return View();
+        }
+
+        public ActionResult DistributionCentreLosses()
+        {
+            return View();
+        }
+
+        public ActionResult DoctorActivity()
+        {
+            return View();
+        }
+
+        public ActionResult GlobalStock()
+        {
+            return View();
+        }
+
+        public ActionResult Stocktaking()
+        {
+            return View();
+        }
+
+        public ActionResult ValueInTransit()
+        {
+            return View();
+        }
+
+        public List<DistributionCentreLosses> getMockedLosses()
+        {
+            //List<Package> packagesList = MockDataAccess.GetAllPackages();
+            List<DistributionCentreLosses> lossesList = new List<DistributionCentreLosses>();
+
+         
+            DistributionCentreLosses l1 = new DistributionCentreLosses();
+            DistributionCentreLosses l2 = new DistributionCentreLosses();
+            DistributionCentreLosses l3 = new DistributionCentreLosses();
+            l1.DistributionCenterName = "CentreA";
+            l1.DistributionCentreId = 1;
+            l1.LossRatioDenominator = 75;
+            l1.LossRatioNumerator = 12;
+            l1.TotalLossDiscardedValue = 445;
+            l2.DistributionCenterName = "CentreB";
+            l2.DistributionCentreId = 2;
+            l2.LossRatioDenominator = 275;
+            l2.LossRatioNumerator = 18;
+            l2.TotalLossDiscardedValue = 1445;
+            l3.DistributionCenterName = "CentreC";
+            l3.DistributionCentreId = 3;
+            l3.LossRatioDenominator = 175;
+            l3.LossRatioNumerator = 22;
+            l3.TotalLossDiscardedValue = 335;
+
+            lossesList.Add(l1); lossesList.Add(l2); lossesList.Add(l3);
+            return lossesList;
+            
         }
 
     }
