@@ -40,7 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BarcodeLib">
-      <HintPath>..\..\ENetCare\Bin\BarcodeLib.dll</HintPath>
+      <HintPath>..\Bin\BarcodeLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MvcSiteMapProvider">
@@ -175,6 +175,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PackageController.cs" />
     <Compile Include="Controllers\PackageTransitController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -298,6 +299,9 @@
     <Content Include="Views\Audit\Prompt.cshtml" />
     <Content Include="Views\Audit\Display.cshtml" />
     <Content Include="Views\Audit\Finish.cshtml" />
+    <Content Include="Views\Report\ReportA.cshtml" />
+    <Content Include="Views\Report\ReportB.cshtml" />
+    <Content Include="Views\Report\ReportC.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
