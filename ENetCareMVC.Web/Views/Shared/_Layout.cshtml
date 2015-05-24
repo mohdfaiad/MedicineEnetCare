@@ -16,15 +16,16 @@
     <img src="~/Images/enetcare08small.png" width="290" height="40" align="top" />
     
     @{
-        string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString;
-        var context = new ENetCareMVC.Repository.Data.Entities(connectionString);
-
-        string userId = User.Identity.GetUserId();
+        ENetCareMVC.Repository.Repository.IEmployeeRepository repository = new ENetCareMVC.Repository.Repository.EmployeeRepository(System.Configuration.ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString);
+        var employeeService = new ENetCareMVC.BusinessService.EmployeeService(repository);
+        
         ENetCareMVC.Repository.Data.Employee employee = null;
-        if (!string.IsNullOrEmpty(userId))
+
+        string username = User.Identity.Name;
+        if (!string.IsNullOrEmpty(username))
         {
-            employee = context.Employee.FirstOrDefault(e => e.UserId == new Guid(userId));
-        }
+            employee = employeeService.Retrieve(username);
+        } 
     }
     @if (employee != null)
     { 

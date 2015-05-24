@@ -1,0 +1,29 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Generic</title>
+</head>
+<body>
+@using (Html.BeginForm("Generic", "Error", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+{
+    <div>
+        <h1>An error occurred</h1>
+        <p>
+            An unknown error occurred, please try again or contact client service.
+        </p>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Close" name="action" />
+        </div>
+    </div>
+}
+</body>
+</html>

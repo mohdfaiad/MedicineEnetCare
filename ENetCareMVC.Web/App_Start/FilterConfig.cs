@@ -7,7 +7,7 @@ namespace ENetCareMVC.Web
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            //filters.Add(new HandleErrorAttribute());
             // By default, all actions require a logged in user
             filters.Add(new AuthorizeAttribute());
 
