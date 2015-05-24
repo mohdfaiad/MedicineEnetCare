@@ -1,0 +1,22 @@
+﻿@model List<ENetCareMVC.Repository.Data.DistributionCentreLosses>
+@{
+    ViewBag.Title = "ReportA";
+}
+
+<h2>ReportA</h2>
+
+<table>
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        var rowObj = Model[i];
+
+        <tr>
+            <td>@rowObj.DistributionCenterName</td>
+            <td>@rowObj.TotalLossDiscardedValue</td>
+        </tr>
+    }
+
+    
+</table>
+
+<br /><br />number of rows: @Model.Count();

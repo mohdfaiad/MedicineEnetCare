@@ -12,6 +12,13 @@
       <mvcSiteMapNode title="Discard" controller="Package" action="Discard" />
       <mvcSiteMapNode title="Audit" controller="Audit" action="Prompt" />
     </mvcSiteMapNode>
+    <mvcSiteMapNode title="Report" clickable="false">
+      <mvcSiteMapNode title="A" controller="Report" action="ReportA" />
+      <mvcSiteMapNode title="B" controller="Report" action="ReportB" />
+      <mvcSiteMapNode title="C" controller="Report" action="ReportC" />
+      <mvcSiteMapNode title="D" controller="Report" action="ReportD" />
+      <mvcSiteMapNode title="E" controller="Report" action="ReportE" />
+    </mvcSiteMapNode>
     <mvcSiteMapNode title="Account" clickable="false">
       <mvcSiteMapNode title="Register" controller="Account" action="Register" />
       <mvcSiteMapNode title="Login" controller="Account" action="Login" />
