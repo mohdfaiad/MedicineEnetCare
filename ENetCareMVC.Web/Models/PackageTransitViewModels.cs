@@ -28,11 +28,14 @@ namespace ENetCareMVC.Web.Models
     public class SelectedPackage
     {
         public int PackageId { get; set; }
+        
         public string BarCode { get; set; }
         public string PackageTypeDescription { get; set; }
         public DateTime ExpirationDate { get; set; }
 
         public string ProcessResultMessage { get; set; }
+
+        public int PackageTypeId { get; set; }
     }
 
     public interface ISelectedBarCodesViewModel

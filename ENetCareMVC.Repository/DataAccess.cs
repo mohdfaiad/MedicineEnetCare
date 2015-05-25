@@ -113,19 +113,15 @@ namespace ENetCareMVC.Repository
         }
 
         public static StandardPackageType GetStandardPackageType(string connectionString, int packageTypeId)
-        {
-            StandardPackageType packageType = null;
+        {        
 
             using (var ctx = new Entities(connectionString))
             {
-                var packageTypeRecord = (from e in ctx.StandardPackageType
-                                     where e.PackageTypeId == packageTypeId
-                                     select e).First();
+                var packageTypeRecord = ctx.StandardPackageType.Where(pt => pt.PackageTypeId == packageTypeId);
 
-                packageType = packageTypeRecord;
+                var packageType = packageTypeRecord.FirstOrDefault();
+                return packageType;
             }
-
-            return packageType;
         }
 
         public static List<DistributionCentre> GetAllDistributionCentres(string connectionString)

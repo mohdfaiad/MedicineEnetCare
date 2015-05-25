@@ -184,17 +184,36 @@ namespace ENetCareMVC.Web.Controllers
         [MultiButton(Path = "/Package/Distribute", MatchFormKey = "action", MatchFormValue = "Save")]
         public ActionResult DistributeSave(PackageDistributeViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                foreach (var package in model.SelectedPackages)
-                    package.ProcessResultMessage = "Succeeded";
+            var packageService = GetPackageService();
+            var employeeService = GetEmployeeService();
 
-                return View("DistributeComplete", model);
+            DistributionCentre selectedCentre = employeeService.GetDistributionCentre(model.LocationCentreId);
+
+            if (ModelState.IsValid)
+            {           
+                foreach (var package in model.SelectedPackages)
+                {
+                    StandardPackageType spt = packageService.GetStandardPackageType(package.PackageTypeId);
+
+                    Result result = packageService.Distribute(package.BarCode, selectedCentre, employeeService.Retrieve("ihab@enetcare.com"), model.ExpirationDate, spt, package.PackageId);
+                    if (result.Success)
+                    {
+                        return View("DistributeComplete", model);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", result.ErrorMessage);
+                    } 
+                    
+                    package.ProcessResultMessage = "Succeeded";
+                }
             }
             else
             {
                 return View("Distribute", model);
             }
+
+            return View("Distribute", model);
         }
 
         [HttpPost]
