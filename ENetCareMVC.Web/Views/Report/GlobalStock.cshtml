@@ -1,12 +1,43 @@
-﻿
+﻿@model List<ENetCareMVC.Repository.Data.GlobalStock>
 @{
+    string headerStyle = "width:200px; font-size:14px;", rowStyle = "";
+    double grandTotal = 0;
     ViewBag.Title = "GlobalStock";
 }
 
-<h2>Global Stock Report</h2><br/><br/>
 
 
+
+
+<h2>Global Stock Report</h2><br /><br />
 <table>
+    <tr>
+        <td style='@headerStyle'><b> Type Id           </b></td>
+        <td style='@headerStyle'><b> Type Description  </b></td>
+        <td style='@headerStyle'><b> Cost per Package  </b></td>
+        <td style='@headerStyle'><b> Nmber of Packages </b></td>
+        <td style='@headerStyle'><b> Total Value       </b></td>
+    </tr>
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        var rowObj = Model[i];
+        grandTotal = +(double)rowObj.TotalValue;
+        if (i % 2 == 0) { rowStyle = "background-color:#F2F0F0"; } else { rowStyle = ""; }
+        <tr>
+            <td style='@rowStyle'> @rowObj.PackageTypeId           </td>
+            <td style='@rowStyle'> @rowObj.PackageTypeDescription  </td>
+            <td style='@rowStyle'> @rowObj.CostPerPackage          </td>
+            <td style='@rowStyle'> @rowObj.NumberOfPackages        </td>
+            <td style='@rowStyle'> @rowObj.TotalValue              </td>
+        </tr>
+    }
+    <tr>    <td></td>    <td></td>        <td></td>    <td></td>  <td></td> </tr>
+    <tr>    <td></td>    <td></td>        <td></td>    <td>Total:</td>  <td>@grandTotal</td> </tr>
+</table><br /><br /><br />
 
 
-</table>
+
+@* <br /><br />number of rows: @Model.Count(); *@
+
+
+
