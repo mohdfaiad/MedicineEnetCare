@@ -1,24 +1,37 @@
 ﻿@model List<ENetCareMVC.Repository.Data.DistributionCentreLosses>
-@{  string style1 = "width:120px; font-size:14px;"; }
-@{  ViewBag.Title = "Distribution Centre Losses";   }
-@helper  getStyle(int row) { if ((row % 2) == 0) { WriteLiteral("background-color:#F2F0F0;"); } else { WriteLiteral(""); } }
+@{
+    string headerStyle = "width:200px; font-size:14px;", rowStyle="";
+    double grandTotal = 0, ratio=0; 
+    ViewBag.Title = "Distribution Centre Losses";
+}
+
+
+
+
 
 <h2>Distribution Centre Losses Report</h2><br/><br/>
-
-
 <table>
-<tr><td></td>    <td style='@style1' ><b>Centre Name</b></td>    <td style='@style1' ><b>Losses Value</b></td></tr>
+<tr><td style='@headerStyle'><b> Centre Id </b></td>    <td style='@headerStyle'><b>Centre Name</b></td>  <td style='@headerStyle'><b>Loss Ratio</b></td>  <td style='@headerStyle' ><b>Total Value</b></td></tr>
     @for (int i = 0; i < Model.Count; i++)
     {
         var rowObj = Model[i];
+        
+        ratio = (double)(rowObj.LossRatioNumerator / rowObj.LossRatioDenominator);
+        grandTotal = +(double)rowObj.TotalLossDiscardedValue;
+        if (i%2 == 0) { rowStyle = "background-color:#F2F0F0"; } else { rowStyle = ""; }
+        
         <tr>
-            <td style='@getStyle(i)' >  </td>
-            <td style='@getStyle(i)' > @rowObj.DistributionCenterName</td>
-            <td style='@getStyle(i)' > @rowObj.TotalLossDiscardedValue</td>
+            <td style='@rowStyle' > @rowObj.DistributionCentreId     </td>
+            <td style='@rowStyle' > @rowObj.DistributionCenterName   </td>
+            <td style='@rowStyle'>  @ratio                           </td>
+            <td style='@rowStyle' > @rowObj.TotalLossDiscardedValue  </td>
         </tr>
     }
-    <tr><td></td>    <td>Total</td>    <td></td></tr>
-</table>
+    <tr>    <td></td>    <td></td>    <td></td>  <td></td> </tr>
+    <tr>    <td></td>    <td></td>    <td>Total:</td>  <td>@grandTotal</td> </tr>
+</table><br/><br/><br/>
+
+
 
 @* <br /><br />number of rows: @Model.Count(); *@
 
