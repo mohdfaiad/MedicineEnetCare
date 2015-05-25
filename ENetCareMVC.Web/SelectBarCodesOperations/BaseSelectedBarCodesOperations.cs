@@ -54,7 +54,8 @@ namespace ENetCareMVC.Web.SelectBarCodesOperations
                     ExpirationDate = package.ExpirationDate,
                     PackageId = package.PackageId,
                     PackageTypeDescription = package.PackageType.Description,
-                    PackageTypeId = package.PackageTypeId
+                    PackageTypeId = package.PackageTypeId,
+                    CentreId = package.CurrentLocation.CentreId
                 };
 
                 model.SelectedPackages.Add(selectedPackage);

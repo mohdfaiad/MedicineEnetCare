@@ -41,14 +41,6 @@ namespace ENetCareMVC.Web.Models
         [Required]
         public string BarCode { get; set; }
 
-        [Required]
-        [Display(Name = "Location Centre")]
-        public int LocationCentreId { get; set; }
-
-        [Required]
-        [Display(Name = "Expiration Date")]
-        public DateTime ExpirationDate { get; set; }
-
         public List<SelectedPackage> SelectedPackages { get; set; }
     }
 

@@ -187,15 +187,18 @@ namespace ENetCareMVC.Web.Controllers
             var packageService = GetPackageService();
             var employeeService = GetEmployeeService();
 
-            DistributionCentre selectedCentre = employeeService.GetDistributionCentre(model.LocationCentreId);
+            string userId = HttpContext.User.Identity.Name;
+
+            Employee employee = employeeService.Retrieve(userId);
 
             if (ModelState.IsValid)
             {           
                 foreach (var package in model.SelectedPackages)
                 {
+                    DistributionCentre selectedCentre = employeeService.GetDistributionCentre(package.CentreId);
                     StandardPackageType spt = packageService.GetStandardPackageType(package.PackageTypeId);
 
-                    Result result = packageService.Distribute(package.BarCode, selectedCentre, employeeService.Retrieve("ihab@enetcare.com"), model.ExpirationDate, spt, package.PackageId);
+                    Result result = packageService.Distribute(package.BarCode, selectedCentre, employee, package.ExpirationDate, spt, package.PackageId);
                     if (result.Success)
                     {
                         return View("DistributeComplete", model);
@@ -207,10 +210,6 @@ namespace ENetCareMVC.Web.Controllers
                     
                     package.ProcessResultMessage = "Succeeded";
                 }
-            }
-            else
-            {
-                return View("Distribute", model);
             }
 
             return View("Distribute", model);

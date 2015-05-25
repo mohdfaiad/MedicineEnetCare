@@ -325,8 +325,9 @@ namespace ENetCareMVC.BusinessService
                 CurrentLocation = distributionCentre,
                 CurrentStatus = PackageStatus.Distributed,
                 PackageId = packageId,
+                DistributedBy = package.DistributedBy,
                 ExpirationDate = expirationDate,
-                DistributedBy = employee,
+                DistributedByEmployeeId = employee.EmployeeId,
                 BarCode = barCode
             };
 

@@ -30,17 +30,14 @@ namespace ENetCareMVC.Repository
         {
             using (var ctx = new Entities(connectionString))
             {
-                var packageRecord = (from e in ctx.Package
-                                      where e.PackageId == package.PackageId                                      
-                                      select e).First();
+                var packageRecord = ctx.Package.Where(p => p.PackageId == package.PackageId);
 
-                packageRecord.BarCode = package.BarCode;
-                packageRecord.CurrentLocationCentreId = package.CurrentLocationCentreId;
-                packageRecord.CurrentStatus = package.CurrentStatus;
-                packageRecord.DistributedByEmployeeId = package.DistributedByEmployeeId;
-                packageRecord.ExpirationDate = package.ExpirationDate;
-                packageRecord.PackageTypeId = package.PackageTypeId;
-
+                packageRecord.FirstOrDefault<Package>().BarCode = package.BarCode;
+                packageRecord.FirstOrDefault<Package>().ExpirationDate = package.ExpirationDate;
+                packageRecord.FirstOrDefault<Package>().CurrentLocationCentreId = package.CurrentLocation.CentreId;
+                packageRecord.FirstOrDefault<Package>().CurrentStatus = package.CurrentStatus;
+                packageRecord.FirstOrDefault<Package>().DistributedByEmployeeId = package.DistributedByEmployeeId;
+                
                 ctx.SaveChanges();
             }
         }

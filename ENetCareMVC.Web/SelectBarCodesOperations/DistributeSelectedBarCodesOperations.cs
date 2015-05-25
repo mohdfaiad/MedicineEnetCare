@@ -25,6 +25,11 @@ namespace ENetCareMVC.Web.SelectBarCodesOperations
                 result.Succeeded = false;
                 result.ErrorMessage = "Package has expired";
             }
+            else if (package.CurrentLocation.CentreId != employee.LocationCentreId)
+            {
+                result.Succeeded = false;
+                result.ErrorMessage = "Package is not in the same distribution centre as the logged in user";
+            }
 
             return result;
         }

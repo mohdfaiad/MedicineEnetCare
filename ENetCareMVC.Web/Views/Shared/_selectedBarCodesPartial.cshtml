@@ -20,6 +20,8 @@
         {
             <tr>
                 <td>
+                    <input id="@string.Format("SelectedPackages_{0}__CentreId", i)" name="@string.Format("SelectedPackages[{0}].CentreId", i)" type="hidden" value="@Model.SelectedPackages[i].CentreId" />
+                    <input id="@string.Format("SelectedPackages_{0}__PackageTypeId", i)" name="@string.Format("SelectedPackages[{0}].PackageTypeId", i)" type="hidden" value="@Model.SelectedPackages[i].PackageTypeId" />
                     <input id="@string.Format("SelectedPackages_{0}__PackageId", i)" name="@string.Format("SelectedPackages[{0}].PackageId", i)" type="hidden" value="@Model.SelectedPackages[i].PackageId" />
                     <input id="@string.Format("SelectedPackages_{0}__BarCode", i)" name="@string.Format("SelectedPackages[{0}].BarCode", i)" readonly="readonly" type="text" value="@Model.SelectedPackages[i].BarCode" />
                 </td>
