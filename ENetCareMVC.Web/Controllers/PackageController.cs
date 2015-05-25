@@ -188,8 +188,11 @@ namespace ENetCareMVC.Web.Controllers
             var employeeService = GetEmployeeService();
 
             string userId = HttpContext.User.Identity.Name;
+            int totalPackages = model.SelectedPackages.Count;
+            int counter = 0;
 
             Employee employee = employeeService.Retrieve(userId);
+            Result result = new Result();
 
             if (ModelState.IsValid)
             {           
@@ -198,17 +201,22 @@ namespace ENetCareMVC.Web.Controllers
                     DistributionCentre selectedCentre = employeeService.GetDistributionCentre(package.CentreId);
                     StandardPackageType spt = packageService.GetStandardPackageType(package.PackageTypeId);
 
-                    Result result = packageService.Distribute(package.BarCode, selectedCentre, employee, package.ExpirationDate, spt, package.PackageId);
+                    result = packageService.Distribute(package.BarCode, selectedCentre, employee, package.ExpirationDate, spt, package.PackageId);
                     if (result.Success)
                     {
+                        counter++;
+                    }
+
+                    if (counter == totalPackages)
+                    {
+                        package.ProcessResultMessage = "Succeeded";
                         return View("DistributeComplete", model);
                     }
-                    else
-                    {
-                        ModelState.AddModelError("", result.ErrorMessage);
-                    } 
-                    
-                    package.ProcessResultMessage = "Succeeded";
+                }
+
+                if (counter < totalPackages)
+                {
+                    ModelState.AddModelError("", result.ErrorMessage);
                 }
             }
 

@@ -323,6 +323,7 @@ namespace ENetCareMVC.BusinessService
             {
                 PackageType = packageType,
                 CurrentLocation = distributionCentre,
+                CurrentLocationCentreId = distributionCentre.CentreId,
                 CurrentStatus = PackageStatus.Distributed,
                 PackageId = packageId,
                 DistributedBy = package.DistributedBy,

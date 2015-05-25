@@ -34,7 +34,7 @@ namespace ENetCareMVC.Repository
 
                 packageRecord.FirstOrDefault<Package>().BarCode = package.BarCode;
                 packageRecord.FirstOrDefault<Package>().ExpirationDate = package.ExpirationDate;
-                packageRecord.FirstOrDefault<Package>().CurrentLocationCentreId = package.CurrentLocation.CentreId;
+                packageRecord.FirstOrDefault<Package>().CurrentLocationCentreId = package.CurrentLocationCentreId;
                 packageRecord.FirstOrDefault<Package>().CurrentStatus = package.CurrentStatus;
                 packageRecord.FirstOrDefault<Package>().DistributedByEmployeeId = package.DistributedByEmployeeId;
                 

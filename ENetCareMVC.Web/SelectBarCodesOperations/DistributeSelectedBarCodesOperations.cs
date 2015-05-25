@@ -28,7 +28,7 @@ namespace ENetCareMVC.Web.SelectBarCodesOperations
             else if (package.CurrentLocation.CentreId != employee.LocationCentreId)
             {
                 result.Succeeded = false;
-                result.ErrorMessage = "Package is not in the same distribution centre as the logged in user";
+                result.ErrorMessage = "Cannot distribute a package that is located in a different Distribution centre";
             }
 
             return result;
