@@ -1,15 +1,22 @@
-﻿@model List<ENetCareMVC.Repository.Data.StockTaking>
+﻿@model ENetCareMVC.Web.Models.StocktakingReportViewModel
 @{
     string headerStyle = "width:200px; font-size:14px;", rowStyle = "";
-    double grandTotal = 0;
+    decimal grandTotal = 0;
     ViewBag.Title = "Stocktaking";
 }
 
+<h2>Stocktaking Report</h2>
 
+<div class="form-group">
+    <div class="col-md-2">
+        Distribution Centre:
+    </div>
+    <div class="col-md-10">
+        @Model.SelectedCentre.Name
+    </div>
+</div>
 
-
-
-<h2>Stocktaking Report</h2><br /><br />
+<br /><br />
 <table>
     <tr>
         <td style='@headerStyle'><b> Package Id       </b></td>
@@ -19,22 +26,33 @@
         <td style='@headerStyle'><b> Expiration Date  </b></td>
         <td style='@headerStyle'><b> Cost per Package </b></td>
     </tr>
-    @for (int i = 0; i < Model.Count; i++)
+    @for (int i = 0; i < Model.StocktakingList.Count; i++)
     {
-        var rowObj = Model[i];
-        grandTotal = +(double)rowObj.CostPerPackage;
+        var rowObj = Model.StocktakingList[i];
+        grandTotal += rowObj.CostPerPackage;
         if (i % 2 == 0) { rowStyle = "background-color:#F2F0F0"; } else { rowStyle = ""; }
+
+        string colour = "black";
+        if (Model.StocktakingList[i].ExpirationDate <= DateTime.Today)
+        {
+            colour = "red";
+        }
+        else if (Model.StocktakingList[i].ExpirationDate <= DateTime.Today.AddDays(7))
+        {
+            colour = "orange";
+        }
+        
         <tr>
-            <td style='@rowStyle'> @rowObj.PackageId              </td>
-            <td style='@rowStyle'> @rowObj.BarCode                </td>
-            <td style='@rowStyle'> @rowObj.PackageId              </td>
-            <td style='@rowStyle'> @rowObj.PackageTypeDescription </td>
-            <td style='@rowStyle'> @rowObj.ExpirationDate         </td>
-            <td style='@rowStyle'> @rowObj.CostPerPackage         </td>
+            <td style='@rowStyle;color:@colour'> @rowObj.PackageId              </td>
+            <td style='@rowStyle;color:@colour'> @rowObj.BarCode                </td>
+            <td style='@rowStyle;color:@colour'> @rowObj.PackageTypeId          </td>
+            <td style='@rowStyle;color:@colour'> @rowObj.PackageTypeDescription </td>
+            <td style='@rowStyle;color:@colour'> @rowObj.ExpirationDate.ToString("d")  </td>
+            <td style='@rowStyle;color:@colour;text-align:right'> @rowObj.CostPerPackage         </td>
         </tr>
     }
     <tr>    <td></td>    <td></td>     <td></td>   <td></td>    <td></td>  <td></td> </tr>
-    <tr>    <td></td>    <td></td>     <td></td>   <td></td>    <td>Total:</td>  <td>@grandTotal</td> </tr>
+    <tr>    <td></td>    <td></td>     <td></td>   <td></td>    <td>Total:</td>  <td style='text-align:right'>@grandTotal</td> </tr>
 </table><br /><br /><br />
 
 

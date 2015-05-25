@@ -3,6 +3,7 @@ using ENetCareMVC.BusinessService;
 using ENetCareMVC.Repository;
 using ENetCareMVC.Repository.Data;
 using ENetCareMVC.Repository.Repository;
+using ENetCareMVC.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -45,10 +46,15 @@ namespace ENetCareMVC.Web.Controllers
 
         public ActionResult Stocktaking()
         {
-            int centreId = 8;       // * * * * * * * CENTRE ID NEEDED HERE * * * * * * * 
-            List<StockTaking> stocktakingList = reportService.GetStocktaking(centreId);
-            //List<Stocktaking> mockedStocktakingList = getMockedStocktaking();
-            return View(stocktakingList);
+            var employee = GetCurrentEmployee();
+                        
+            List<StockTaking> stocktakingList = reportService.GetStocktaking(employee.LocationCentreId);
+            var model = new StocktakingReportViewModel()
+            {
+                SelectedCentre = employee.Location,
+                StocktakingList = stocktakingList
+            };
+            return View(model);
         }
 
         public ActionResult ValueInTransit()
@@ -101,7 +107,28 @@ namespace ENetCareMVC.Web.Controllers
         }
 
 
+        private EmployeeService GetEmployeeService()
+        {
+            IEmployeeRepository repository = new EmployeeRepository(ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString);
+            return new EmployeeService(repository);
+        }
 
+        private ReportService GetReportService()
+        {
+            IReportRepository repository = new ReportRepository(ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString);
+            return new ReportService(repository);
+        }
+
+        private Employee GetCurrentEmployee()
+        {
+            string username = User.Identity.Name;
+            if (string.IsNullOrEmpty(username))
+                return null;
+
+            var employeeService = GetEmployeeService();
+
+            return employeeService.Retrieve(username);
+        }
 
     }
 }
