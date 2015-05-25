@@ -129,8 +129,6 @@ namespace ENetCareMVC.Web.Controllers
             var employeeService = GetEmployeeService();
 
             string userId = HttpContext.User.Identity.Name;
-            int totalPackages = model.SelectedPackages.Count;
-            int counter = 0;
 
             Employee employee = employeeService.Retrieve(userId);
             Result result = new Result();
@@ -145,20 +143,16 @@ namespace ENetCareMVC.Web.Controllers
                     result = packageService.Discard(package.BarCode, selectedCentre, employee, package.ExpirationDate, spt, package.PackageId);
                     if (result.Success)
                     {
-                        counter++;
-                    }
-
-                    if (counter == totalPackages)
-                    {
                         package.ProcessResultMessage = "Succeeded";
-                        return View("DiscardComplete", model);
                     }
+                    else
+                    {
+                        package.ProcessResultMessage = result.ErrorMessage;
+                    }
+
                 }
 
-                if (counter < totalPackages)
-                {
-                    ModelState.AddModelError("", result.ErrorMessage);
-                }
+                return View("DiscardComplete", model);
             }
 
             return View("Discard", model);
@@ -166,7 +160,7 @@ namespace ENetCareMVC.Web.Controllers
 
         [HttpPost]
         [MultiButton(Path = "/Package/Discard", MatchFormKey = "action", MatchFormValue = "Close")]
-        public ActionResult ReceiveClose(PackageDiscardViewModel model)
+        public ActionResult DiscardClose(PackageDiscardViewModel model)
         {
             return RedirectToAction("Index", "Home");
         }
@@ -213,9 +207,7 @@ namespace ENetCareMVC.Web.Controllers
             var packageService = GetPackageService();
             var employeeService = GetEmployeeService();
 
-            string userId = HttpContext.User.Identity.Name;
-            int totalPackages = model.SelectedPackages.Count;
-            int counter = 0;
+            string userId = HttpContext.User.Identity.Name;                        
 
             Employee employee = employeeService.Retrieve(userId);
             Result result = new Result();
@@ -230,20 +222,15 @@ namespace ENetCareMVC.Web.Controllers
                     result = packageService.Distribute(package.BarCode, selectedCentre, employee, package.ExpirationDate, spt, package.PackageId);
                     if (result.Success)
                     {
-                        counter++;
-                    }
-
-                    if (counter == totalPackages)
-                    {
                         package.ProcessResultMessage = "Succeeded";
-                        return View("DistributeComplete", model);
+                    }
+                    else
+                    {
+                        package.ProcessResultMessage = result.ErrorMessage;
                     }
                 }
 
-                if (counter < totalPackages)
-                {
-                    ModelState.AddModelError("", result.ErrorMessage);
-                }
+                return View("DistributeComplete", model);
             }
 
             return View("Distribute", model);
