@@ -19,64 +19,43 @@ namespace ENetCareMVC.Web.Controllers
         static IReportRepository repRepository = new ReportRepository(myConnection);
         static ReportService reportService = new ReportService(repRepository);
 
-        public ActionResult Index()
-        {
-            return View();
-        }
 
 
-        public ActionResult ReportA()
-        {
-            List<DistributionCentreLosses> losses = reportService.GetDistributionCentreLosses();
-            List<DistributionCentreLosses> mockedLosses = getMockedLosses();
-            return View(mockedLosses);
-        }
-
-        public ActionResult ReportB()
-        {
-            return View();
-        }
-
-        public ActionResult ReportC()
-        {
-            return View();
-        }
-
-        public ActionResult ReportD()
-        {
-            return View();
-        }
-
-        public ActionResult ReportE()
-        {
-            return View();
-        }
-
+  
         public ActionResult CentreLosses()
         {
-            List<DistributionCentreLosses> losses = reportService.GetDistributionCentreLosses();
-            List<DistributionCentreLosses> mockedLosses = getMockedLosses();
-            return View(mockedLosses);
+            List<DistributionCentreLosses> lossesList = reportService.GetDistributionCentreLosses();
+            List<DistributionCentreLosses> mockedLossesList = getMockedLosses();
+            return View(mockedLossesList);
         }
 
         public ActionResult DoctorActivity()
         {
-            return View();
+            List<DoctorActivity> activityList = reportService.GetDoctorActivity();
+            //List<DoctorActivity> mockedActivityList = getMockedActivity();
+            return View(activityList);
         }
 
         public ActionResult GlobalStock()
         {
-            return View();
+            List<GlobalStock> stockList = reportService.GetGlobalStock();
+            //List<GlobalStock> mockedStockList = getMockedStock();
+            return View(stockList);
         }
 
         public ActionResult Stocktaking()
         {
-            return View();
+            int centreId = 8;       // * * * * * * * CENTRE ID NEEDED HERE * * * * * * * 
+            List<StockTaking> stocktakingList = reportService.GetStocktaking(centreId);
+            //List<Stocktaking> mockedStocktakingList = getMockedStocktaking();
+            return View(stocktakingList);
         }
 
         public ActionResult ValueInTransit()
         {
-            return View();
+            List<ValueInTransit> valueList = reportService.GetValueInTransit();
+            //List<ValueInTransit> mockedValueList = getMockedValueInTransit();
+            return View(valueList);
         }
 
         public List<DistributionCentreLosses> getMockedLosses()
@@ -108,6 +87,21 @@ namespace ENetCareMVC.Web.Controllers
             return lossesList;
             
         }
+
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult ReportA()
+        {
+            List<DistributionCentreLosses> losses = reportService.GetDistributionCentreLosses();
+            List<DistributionCentreLosses> mockedLosses = getMockedLosses();
+            return View(mockedLosses);
+        }
+
+
+
 
     }
 }
