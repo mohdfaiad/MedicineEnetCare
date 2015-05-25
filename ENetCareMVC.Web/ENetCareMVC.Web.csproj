@@ -302,6 +302,11 @@
     <Content Include="Views\Report\ReportA.cshtml" />
     <Content Include="Views\Report\ReportB.cshtml" />
     <Content Include="Views\Report\ReportC.cshtml" />
+    <Content Include="Views\Report\CentreLosses.cshtml" />
+    <Content Include="Views\Report\DoctorActivity.cshtml" />
+    <Content Include="Views\Report\GlobalStock.cshtml" />
+    <Content Include="Views\Report\Stocktaking.cshtml" />
+    <Content Include="Views\Report\ValueInTransit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

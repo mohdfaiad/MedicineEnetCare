@@ -52,9 +52,11 @@ namespace ENetCareMVC.Web.Controllers
             return View();
         }
 
-        public ActionResult DistributionCentreLosses()
+        public ActionResult CentreLosses()
         {
-            return View();
+            List<DistributionCentreLosses> losses = reportService.GetDistributionCentreLosses();
+            List<DistributionCentreLosses> mockedLosses = getMockedLosses();
+            return View(mockedLosses);
         }
 
         public ActionResult DoctorActivity()

@@ -1,6 +1,6 @@
 ﻿@model List<ENetCareMVC.Repository.Data.DistributionCentreLosses>
 
-@{string style1 = "style='width:88px; font-size:17;'";}
+@{string style1 = "style='width:120px; font-size:17px;'";}
 
 @{
     ViewBag.Title = "ReportA";
@@ -13,16 +13,16 @@
 <table>
     @for (int i = 0; i < Model.Count; i++)
     {
+        string style2 = "style='background-color:lightgray;'";
         var rowObj = Model[i];
-
         <tr>
-            <td>  </td>
-            <td>@rowObj.DistributionCenterName</td>
-            <td>@rowObj.TotalLossDiscardedValue</td>
+            <td @style2>  </td>
+            <td @style2>@rowObj.DistributionCenterName</td>
+            <td @style2>@rowObj.TotalLossDiscardedValue</td>
         </tr>
     }
 
-<tr><td></td>    <td>Total</td>    <td></td></tr>
+    <tr><td></td>    <td>Total</td>    <td></td></tr>
 </table>
 
 <br /><br />number of rows: @Model.Count();
