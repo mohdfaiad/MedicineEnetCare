@@ -1,6 +1,6 @@
 ﻿@model List<ENetCareMVC.Repository.Data.StockTaking>
 @{
-    string headerStyle = "width:200px; font-size:14px;", rowStyle = "";
+    string headerStyle = "width:160px; font-size:14px;", rowStyle = "";
     double grandTotal = 0;
     ViewBag.Title = "Stocktaking";
 }
@@ -24,10 +24,14 @@
         var rowObj = Model[i];
         grandTotal = +(double)rowObj.CostPerPackage;
         if (i % 2 == 0) { rowStyle = "background-color:#F2F0F0"; } else { rowStyle = ""; }
+        int daysLeft =   (rowObj.ExpirationDate - DateTime.Today).Days;
+        if (daysLeft < 8) { rowStyle = rowStyle + " text-color:orange;"; }
+        if (daysLeft < 1) { rowStyle = rowStyle + " text-color:red;";    }   
+        
         <tr>
             <td style='@rowStyle'> @rowObj.PackageId              </td>
             <td style='@rowStyle'> @rowObj.BarCode                </td>
-            <td style='@rowStyle'> @rowObj.PackageId              </td>
+            <td style='@rowStyle'> @rowObj.PackageTypeId          </td>
             <td style='@rowStyle'> @rowObj.PackageTypeDescription </td>
             <td style='@rowStyle'> @rowObj.ExpirationDate         </td>
             <td style='@rowStyle'> @rowObj.CostPerPackage         </td>
