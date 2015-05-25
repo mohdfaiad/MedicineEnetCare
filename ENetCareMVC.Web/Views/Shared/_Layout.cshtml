@@ -13,7 +13,7 @@
 
 </head>
 <body>
-    <img src="~/Images/enetcare08small.png" width="290" height="40" align="top" />
+    <img style="position: absolute; top: 5px; left: 60px" src="~/Images/enetcare08small.png" width="573" height="78" align="top" />  @*  290 x 40 *@
     
     @{
         ENetCareMVC.Repository.Repository.IEmployeeRepository repository = new ENetCareMVC.Repository.Repository.EmployeeRepository(System.Configuration.ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString);
@@ -29,7 +29,7 @@
     }
     @if (employee != null)
     { 
-    <div style="position: absolute; top: 30px; left: 600px">
+    <div style="position: absolute; top: 20px; left: 680px">
         <table>
             <tr><td style="text-align:right;">Username:</td><td>&nbsp;<b>@employee.UserName (@employee.EmployeeType.ToString())</b></td></tr>
             <tr><td style="text-align:right;">Full Name:</td><td>&nbsp;<b>@employee.FullName</td></tr>
@@ -55,7 +55,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - ENet Care Management System</p>
         </footer>
     </div>
 
