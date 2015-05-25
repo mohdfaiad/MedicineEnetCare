@@ -311,6 +311,7 @@
     <Content Include="Views\Report\ValueInTransit.cshtml" />
     <Content Include="Views\Error\Generic.cshtml" />
     <Content Include="Views\Error\MissingResource.cshtml" />
+    <Content Include="Views\Report\DistributionCentreStock.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Log\" />

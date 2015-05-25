@@ -39,9 +39,16 @@ namespace ENetCareMVC.Web.Controllers
 
         public ActionResult GlobalStock()
         {
-            List<GlobalStock> stockList = reportService.GetGlobalStock();
-            //List<GlobalStock> mockedStockList = getMockedStock();
-            return View(stockList);
+            List<GlobalStock> globalStockList = reportService.GetGlobalStock();
+            //List<GlobalStock> mockedGlobalStockList = getMockedGlobalStock();
+            return View(globalStockList);
+        }
+
+        public ActionResult DistributionCentreStock()
+        {
+            List<DistributionCentreStock> centreStockList = reportService.GetDistributionCentreStock();
+            //List<GlobalStock> mockedCentreStockList = getMockedCentreStock();
+            return View(centreStockList);
         }
 
         public ActionResult Stocktaking()
