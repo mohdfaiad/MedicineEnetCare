@@ -368,6 +368,7 @@ namespace ENetCareMVC.BusinessService
             {
                 PackageType = packageType,
                 CurrentLocation = distributionCentre,
+                CurrentLocationCentreId = distributionCentre.CentreId,
                 CurrentStatus = PackageStatus.Discarded,
                 PackageId = packageId,
                 ExpirationDate = expirationDate,

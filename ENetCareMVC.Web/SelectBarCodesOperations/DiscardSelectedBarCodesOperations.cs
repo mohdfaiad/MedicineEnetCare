@@ -23,7 +23,12 @@ namespace ENetCareMVC.Web.SelectBarCodesOperations
             else if (package.ExpirationDate > DateTime.Today)
             {
                 result.Succeeded = false;
-                result.ErrorMessage = "Package has not been expired";
+                result.ErrorMessage = "That package has not expired yet, it will expire on " + package.ExpirationDate;
+            }
+            else if (package.CurrentLocationCentreId != employee.LocationCentreId)
+            {
+                result.Succeeded = false;
+                result.ErrorMessage = "That package is not in the same distribution centre as the logged in user.";
             }
 
             return result;

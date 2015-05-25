@@ -125,17 +125,43 @@ namespace ENetCareMVC.Web.Controllers
         [MultiButton(Path = "/Package/Discard", MatchFormKey = "action", MatchFormValue = "Save")]
         public ActionResult DiscardSave(PackageDiscardViewModel model)
         {
+            var packageService = GetPackageService();
+            var employeeService = GetEmployeeService();
+
+            string userId = HttpContext.User.Identity.Name;
+            int totalPackages = model.SelectedPackages.Count;
+            int counter = 0;
+
+            Employee employee = employeeService.Retrieve(userId);
+            Result result = new Result();
+
             if (ModelState.IsValid)
             {
                 foreach (var package in model.SelectedPackages)
-                    package.ProcessResultMessage = "Succeeded";
+                {
+                    DistributionCentre selectedCentre = employeeService.GetDistributionCentre(package.CentreId);
+                    StandardPackageType spt = packageService.GetStandardPackageType(package.PackageTypeId);
 
-                return View("DiscardComplete", model);
+                    result = packageService.Discard(package.BarCode, selectedCentre, employee, package.ExpirationDate, spt, package.PackageId);
+                    if (result.Success)
+                    {
+                        counter++;
+                    }
+
+                    if (counter == totalPackages)
+                    {
+                        package.ProcessResultMessage = "Succeeded";
+                        return View("DiscardComplete", model);
+                    }
+                }
+
+                if (counter < totalPackages)
+                {
+                    ModelState.AddModelError("", result.ErrorMessage);
+                }
             }
-            else
-            {
-                return View("Discard", model);
-            }
+
+            return View("Discard", model);
         }
 
         [HttpPost]
