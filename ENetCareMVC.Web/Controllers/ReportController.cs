@@ -26,15 +26,15 @@ namespace ENetCareMVC.Web.Controllers
         public ActionResult CentreLosses()
         {
             List<DistributionCentreLosses> lossesList = reportService.GetDistributionCentreLosses();    // real db
-            List<DistributionCentreLosses> mockedLossesList = MockDataAccess.getMockedLosses();         // mocked
-            return View(mockedLossesList);
+            //List<DistributionCentreLosses> mockedLossesList = MockDataAccess.getMockedLosses();         // mocked
+            return View(lossesList);
         }
 
         public ActionResult DoctorActivity()
         {
-            //List<DoctorActivity> activityList = reportService.GetDoctorActivity();            // real db
-            List<DoctorActivity> mockedActivityList = MockDataAccess.getMockedActivity();       // mocked
-            return View(mockedActivityList);
+            List<DoctorActivity> activityList = reportService.GetDoctorActivity();            // real db
+            //List<DoctorActivity> mockedActivityList = MockDataAccess.getMockedActivity();       // mocked
+            return View(activityList);
         }
 
         public ActionResult GlobalStock()
@@ -46,9 +46,16 @@ namespace ENetCareMVC.Web.Controllers
 
         public ActionResult DistributionCentreStock()
         {
-            //List<DistributionCentreStock> centreStockList = reportService.GetDistributionCentreStock();               // real db
-            List<DistributionCentreStock> mockedCentreStockList = MockDataAccess.getMockedDistributionCentreStock();    // mocked
-            return View(mockedCentreStockList);
+            List<DistributionCentreStock> centreStockList = reportService.GetDistributionCentreStock();               // real db
+            //List<DistributionCentreStock> mockedCentreStockList = MockDataAccess.getMockedDistributionCentreStock();    // mocked
+            return View(centreStockList);
+        }
+
+        public ActionResult ValueInTransit()
+        {
+            List<ValueInTransit> valueList = reportService.GetValueInTransit();                       // real db
+            //List<ValueInTransit> mockedValueList = MockDataAccess.getMockedValueInTransit();        // mocked
+            return View(valueList);
         }
 
         public ActionResult Stocktaking()
@@ -62,22 +69,6 @@ namespace ENetCareMVC.Web.Controllers
             };
             return View(model);                                
         }
-
-        public ActionResult StocktakingTwo()
-        {
-            //List<StockTaking> stockList = reportService.GetStocktaking();               // real db
-            List<StockTaking> mockedStockList = MockDataAccess.getMockedStocktaking();    // mocked
-            return View(mockedStockList);
-        }
-
-        public ActionResult ValueInTransit()
-        {
-            List<ValueInTransit> valueList = reportService.GetValueInTransit();                       // real db
-            //List<ValueInTransit> mockedValueList = MockDataAccess.getMockedValueInTransit();        // mocked
-            return View(valueList);
-        }
-
-     
 
         private EmployeeService GetEmployeeService()
         {
@@ -99,5 +90,38 @@ namespace ENetCareMVC.Web.Controllers
             return employeeService.Retrieve(username);
         }
 
+
+        // **********************************************************************
+
+        public ActionResult CentreLossesTwo()
+        {
+            return View(MockDataAccess.getMockedLosses());
+        }
+
+        public ActionResult DoctorActivityTwo()
+        {
+            return View(MockDataAccess.getMockedActivity());
+        }
+
+        public ActionResult GlobalStockTwo()
+        {
+            return View(MockDataAccess.getMockedGlobalStock());
+        }
+
+        public ActionResult DistributionCentreStockTwo()
+        {
+            return View(MockDataAccess.getMockedDistributionCentreStock());
+        }
+        public ActionResult StocktakingTwo()
+        {
+            return View(MockDataAccess.getMockedStocktaking());
+        }
+
+        public ActionResult ValueInTransitTwo()
+        {
+            return View(MockDataAccess.getMockedValueInTransit());
+        }
+
+     
     }
 }

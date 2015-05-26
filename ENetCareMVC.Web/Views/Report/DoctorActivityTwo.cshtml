@@ -2,7 +2,7 @@
 @{
     string headerStyle = "width:160px; font-size:14px;", rowStyle = "";
     double grandTotal = 0;
-    ViewBag.Title = "DoctorsActivity";
+    ViewBag.Title = "DoctorsActivityTwo";
 }
 
 
@@ -11,8 +11,14 @@
 
 <h2>Doctor's Activity Report</h2><br /><br />
 <table>
-    <tr><td style='@headerStyle'><b> Doctor Id </b></td>    <td style='@headerStyle'><b>Doctor Name</b></td>  <td style='@headerStyle'><b>Package Type Id</b></td>
-        <td style='@headerStyle'><b> Description</b></td>    <td style='@headerStyle'><b>Package Count</b></td>  <td style='@headerStyle'><b>Total Value</b></td></tr>
+    <tr>
+        <td style='@headerStyle'><b> Doctor Id </b></td>
+        <td style='@headerStyle'><b>Doctor Name</b></td>
+        <td style='@headerStyle'><b>Package Type Id</b></td>
+        <td style='@headerStyle'><b> Description</b></td>
+        <td style='@headerStyle'><b>Package Count</b></td>
+        <td style='@headerStyle'><b>Total Value</b></td>
+    </tr>
     @for (int i = 0; i < Model.Count; i++)
     {
         var rowObj = Model[i];
