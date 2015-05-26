@@ -301,9 +301,6 @@
     <Content Include="Views\Audit\Prompt.cshtml" />
     <Content Include="Views\Audit\Display.cshtml" />
     <Content Include="Views\Audit\Finish.cshtml" />
-    <Content Include="Views\Report\ReportA.cshtml" />
-    <Content Include="Views\Report\ReportB.cshtml" />
-    <Content Include="Views\Report\ReportC.cshtml" />
     <Content Include="Views\Report\CentreLosses.cshtml" />
     <Content Include="Views\Report\DoctorActivity.cshtml" />
     <Content Include="Views\Report\GlobalStock.cshtml" />
@@ -313,6 +310,11 @@
     <Content Include="Views\Error\MissingResource.cshtml" />
     <Content Include="Views\Report\DistributionCentreStock.cshtml" />
     <Content Include="Views\Report\StocktakingTwo.cshtml" />
+    <Content Include="Views\Report\CentreLossesTwo.cshtml" />
+    <Content Include="Views\Report\DistributionCentreStockTwo.cshtml" />
+    <Content Include="Views\Report\DoctorActivityTwo.cshtml" />
+    <Content Include="Views\Report\GlobalStockTwo.cshtml" />
+    <Content Include="Views\Report\ValueInTransitTwo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Log\" />

@@ -20,35 +20,30 @@ namespace ENetCareMVC.Web.Controllers
         static IReportRepository repRepository = new ReportRepository(myConnection);
         static ReportService reportService = new ReportService(repRepository);
 
-
-
   
         public ActionResult CentreLosses()
         {
-            List<DistributionCentreLosses> lossesList = reportService.GetDistributionCentreLosses();    // real db
-            List<DistributionCentreLosses> mockedLossesList = MockDataAccess.getMockedLosses();         // mocked
-            return View(mockedLossesList);
+            return View(reportService.GetDistributionCentreLosses());
         }
 
         public ActionResult DoctorActivity()
         {
-            //List<DoctorActivity> activityList = reportService.GetDoctorActivity();            // real db
-            List<DoctorActivity> mockedActivityList = MockDataAccess.getMockedActivity();       // mocked
-            return View(mockedActivityList);
+             return View(reportService.GetDoctorActivity());
         }
 
         public ActionResult GlobalStock()
         {
-            List<GlobalStock> globalStockList = reportService.GetGlobalStock();                  // real db 
-            //List<GlobalStock> mockedGlobalStockList = MockDataAccess.getMockedGlobalStock();   // mocked
-            return View(globalStockList);
+              return View(reportService.GetGlobalStock());
         }
 
         public ActionResult DistributionCentreStock()
         {
-            //List<DistributionCentreStock> centreStockList = reportService.GetDistributionCentreStock();               // real db
-            List<DistributionCentreStock> mockedCentreStockList = MockDataAccess.getMockedDistributionCentreStock();    // mocked
-            return View(mockedCentreStockList);
+             return View(reportService.GetDistributionCentreStock());
+        }
+
+        public ActionResult ValueInTransit()
+        {
+            return View(reportService.GetValueInTransit());
         }
 
         public ActionResult Stocktaking()
@@ -62,22 +57,6 @@ namespace ENetCareMVC.Web.Controllers
             };
             return View(model);                                
         }
-
-        public ActionResult StocktakingTwo()
-        {
-            //List<StockTaking> stockList = reportService.GetStocktaking();               // real db
-            List<StockTaking> mockedStockList = MockDataAccess.getMockedStocktaking();    // mocked
-            return View(mockedStockList);
-        }
-
-        public ActionResult ValueInTransit()
-        {
-            List<ValueInTransit> valueList = reportService.GetValueInTransit();                       // real db
-            //List<ValueInTransit> mockedValueList = MockDataAccess.getMockedValueInTransit();        // mocked
-            return View(valueList);
-        }
-
-     
 
         private EmployeeService GetEmployeeService()
         {
@@ -99,5 +78,38 @@ namespace ENetCareMVC.Web.Controllers
             return employeeService.Retrieve(username);
         }
 
+
+        // **********************************************************************
+
+        public ActionResult CentreLossesTwo()
+        {
+            return View(MockDataAccess.getMockedLosses());
+        }
+
+        public ActionResult DoctorActivityTwo()
+        {
+            return View(MockDataAccess.getMockedActivity());
+        }
+
+        public ActionResult GlobalStockTwo()
+        {
+            return View(MockDataAccess.getMockedGlobalStock());
+        }
+
+        public ActionResult DistributionCentreStockTwo()
+        {
+            return View(MockDataAccess.getMockedDistributionCentreStock());
+        }
+        public ActionResult StocktakingTwo()
+        {
+            return View(MockDataAccess.getMockedStocktaking());
+        }
+
+        public ActionResult ValueInTransitTwo()
+        {
+            return View(MockDataAccess.getMockedValueInTransit());
+        }
+
+     
     }
 }

@@ -389,6 +389,51 @@ namespace ENetCareMVC.Repository
             return stockList;
         }
 
+        public static List<ValueInTransit> getMockedValueInTransit()
+        {
+            List<ValueInTransit> transitList = new List<ValueInTransit>();
+            ValueInTransit v1 = new ValueInTransit();
+            v1.ReceiverDistributionCentreId = 1;
+            v1.RecieverDistributionCentreName = "Centre D";
+            v1.SenderDistributionCentreId = 2;
+            v1.SenderDistributionCentreName = "Cantre A";
+            v1.TotalPackages = 8;
+            v1.TotalValue = 45;
+
+            ValueInTransit v2 = new ValueInTransit();
+            v2.ReceiverDistributionCentreId = 2;
+            v2.RecieverDistributionCentreName = "Centre B";
+            v2.SenderDistributionCentreId = 3;
+            v2.SenderDistributionCentreName = "Cantre C";
+            v2.TotalPackages = 7;
+            v2.TotalValue = 65;
+
+            transitList.Add(v1); transitList.Add(v2);
+            return transitList;
+        }
+
+        public static List<GlobalStock> getMockedGlobalStock()
+        {
+            List<GlobalStock> stockList = new List<GlobalStock>();
+            
+            GlobalStock g1 = new GlobalStock();
+            g1.CostPerPackage = 56;
+            g1.NumberOfPackages = 9;
+            g1.PackageTypeDescription = "blah blah blah";
+            g1.PackageTypeId = 2;
+            g1.TotalValue = 70;
+
+            GlobalStock g2 = new GlobalStock();
+            g2.CostPerPackage = 16;
+            g2.NumberOfPackages = 2;
+            g2.PackageTypeDescription = " blah blah";
+            g2.PackageTypeId = 1;
+            g2.TotalValue = 50;
+
+            stockList.Add(g1); stockList.Add(g2);
+            return stockList;
+        }
+
 
     }
 }

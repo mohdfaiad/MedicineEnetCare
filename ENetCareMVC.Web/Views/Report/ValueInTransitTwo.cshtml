@@ -1,0 +1,45 @@
+﻿@model List<ENetCareMVC.Repository.Data.ValueInTransit>
+@{
+    string headerStyle = "width:160px; font-size:14px;", rowStyle = "";
+    double grandTotal = 0;
+    ViewBag.Title = "ValueInTransitTwo";
+}
+
+
+
+
+
+<h2>Value in Transit Report</h2><br /><br />
+<table>
+    <tr>
+        <td style='@headerStyle'><b> Sender Id     </b></td>
+        <td style='@headerStyle'><b> Sender Name   </b></td>
+        <td style='@headerStyle'><b> Receiver Id   </b></td>
+        <td style='@headerStyle'><b> Receiver Name </b></td>
+        <td style='@headerStyle'><b> Packages      </b></td>
+        <td style='@headerStyle'><b> Total Value   </b></td>
+    </tr>
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        var rowObj = Model[i];
+        grandTotal += (double)rowObj.TotalValue;
+        if (i % 2 == 0) { rowStyle = "background-color:#F2F0F0"; } else { rowStyle = ""; }
+        <tr>
+            <td style='@rowStyle'> @rowObj.SenderDistributionCentreId     </td>
+            <td style='@rowStyle'> @rowObj.SenderDistributionCentreName   </td>
+            <td style='@rowStyle'> @rowObj.ReceiverDistributionCentreId   </td>
+            <td style='@rowStyle'> @rowObj.RecieverDistributionCentreName </td>
+            <td style='@rowStyle'> @rowObj.TotalPackages                  </td>
+            <td style='@rowStyle'> @rowObj.TotalValue  </td>
+        </tr>
+    }
+    <tr>    <td></td>    <td></td>     <td></td>   <td></td>    <td></td>  <td></td> </tr>
+    <tr>    <td></td>    <td></td>     <td></td>   <td></td>    <td>Total:</td>  <td>@grandTotal</td> </tr>
+</table><br /><br /><br />
+
+
+
+@* <br /><br />number of rows: @Model.Count(); *@
+
+
+
