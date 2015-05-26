@@ -20,42 +20,30 @@ namespace ENetCareMVC.Web.Controllers
         static IReportRepository repRepository = new ReportRepository(myConnection);
         static ReportService reportService = new ReportService(repRepository);
 
-
-
   
         public ActionResult CentreLosses()
         {
-            List<DistributionCentreLosses> lossesList = reportService.GetDistributionCentreLosses();    // real db
-            //List<DistributionCentreLosses> mockedLossesList = MockDataAccess.getMockedLosses();         // mocked
-            return View(lossesList);
+            return View(reportService.GetDistributionCentreLosses());
         }
 
         public ActionResult DoctorActivity()
         {
-            List<DoctorActivity> activityList = reportService.GetDoctorActivity();            // real db
-            //List<DoctorActivity> mockedActivityList = MockDataAccess.getMockedActivity();       // mocked
-            return View(activityList);
+             return View(reportService.GetDoctorActivity());
         }
 
         public ActionResult GlobalStock()
         {
-            List<GlobalStock> globalStockList = reportService.GetGlobalStock();                  // real db 
-            //List<GlobalStock> mockedGlobalStockList = MockDataAccess.getMockedGlobalStock();   // mocked
-            return View(globalStockList);
+              return View(reportService.GetGlobalStock());
         }
 
         public ActionResult DistributionCentreStock()
         {
-            List<DistributionCentreStock> centreStockList = reportService.GetDistributionCentreStock();               // real db
-            //List<DistributionCentreStock> mockedCentreStockList = MockDataAccess.getMockedDistributionCentreStock();    // mocked
-            return View(centreStockList);
+             return View(reportService.GetDistributionCentreStock());
         }
 
         public ActionResult ValueInTransit()
         {
-            List<ValueInTransit> valueList = reportService.GetValueInTransit();                       // real db
-            //List<ValueInTransit> mockedValueList = MockDataAccess.getMockedValueInTransit();        // mocked
-            return View(valueList);
+            return View(reportService.GetValueInTransit());
         }
 
         public ActionResult Stocktaking()
