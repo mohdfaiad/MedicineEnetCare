@@ -220,10 +220,10 @@ namespace ENetCareMVC.Repository
             {
                 var packageTransitRecord = (from e in ctx.PackageTransit
                                             where e.PackageId == package.PackageId
-                                            && e.ReceiverCentreId == (receiver == null ? e.ReceiverCentreId : receiver.CentreId)
+                                            && e.ReceiverCentreId == receiver.CentreId
                                             && e.DateReceived == null
                                             && e.DateCancelled == null
-                                            select e).First();
+                                            select e).FirstOrDefault();
                 
                 packageTransit = packageTransitRecord;
             }

@@ -115,7 +115,7 @@ namespace ENetCareMVC.BusinessService
         }
 
         private string GenerateBarCode(Package package)
-        {            
+        {
             return string.Format("{0:D5}{1:yyMMdd}{2:D5}", package.PackageTypeId, package.ExpirationDate, package.PackageId);
         }
 
@@ -132,9 +132,9 @@ namespace ENetCareMVC.BusinessService
         /// <param name="sendDate"></param>
         /// <returns> Result </returns>
         public Result Send(Package package, DistributionCentre senderCentre, DistributionCentre receiverCentre, DateTime sendDate)
-        {                                                          
+        {
             Result sendResult = new Result();
-            
+
             if (package == null)                                                  // Case: not found
             {
                 sendResult.ErrorMessage = PackageResult.BarCodeNotFound;
@@ -171,7 +171,7 @@ namespace ENetCareMVC.BusinessService
                 sendResult.Success = false;
                 return sendResult;
             }
-            
+
             // System.DateTime.Now.AddDays(-1) -> to get yesterday. might send the package on the same day
             //timeCompare DateTime.Compare(t1,t2) 
             //Less than zero t1 is earlier than t2. | Zero t1 is the same as t2. | Greater than zero t1 is later than t2. 
@@ -182,25 +182,25 @@ namespace ENetCareMVC.BusinessService
                 sendResult.Success = false;
                 return sendResult;
             }
-            
+
             //Update the package
             package.CurrentStatus = PackageStatus.InTransit;        // Proceed to set it as intransit
-            package.CurrentLocation = null;                         // Remove current location 
+            package.CurrentLocationCentreId = null;                         // Remove current location 
             _packageRepository.Update(package);                     // Update package
             sendResult.Success = true;
-            
+
             //Create new PackageTransit
             PackageTransit packageTransit = new PackageTransit
-            {
-                Package = package,
+            {                
+                PackageId = package.PackageId,
                 DateSent = sendDate,
                 DateReceived = null,
-                DateCancelled = null,
-                SenderCentre = senderCentre,
-                ReceiverCentre = receiverCentre,
+                DateCancelled = null,                
+                SenderCentreId = senderCentre.CentreId,                
+                ReceiverCentreId = receiverCentre.CentreId
             };
             int TransitId = _packageRepository.InsertTransit(packageTransit);
-            
+
             return sendResult;
         }
 
@@ -223,8 +223,14 @@ namespace ENetCareMVC.BusinessService
                 receiveResult.Success = false;
                 return receiveResult;
             }
+            if (package.CurrentLocation != null && package.CurrentLocation.CentreId == receiverCentre.CentreId)
+            {
+                receiveResult.Success = false;
+                receiveResult.ErrorMessage = TransitResult.PackageAlreadyAtDestination;
+                return receiveResult;
+            }
 
-            PackageTransit activeTransit = _packageRepository.GetTransit(package, null);
+            PackageTransit activeTransit = _packageRepository.GetTransit(package, receiverCentre);
 
             // If there is an active transit set Date Received or Date Cancelled and update
             // Even if there is no transit record the receive should still work
@@ -236,8 +242,8 @@ namespace ENetCareMVC.BusinessService
                     receiveResult.ErrorMessage = PackageResult.ReceiveDateCannotBeEarlierThanSend;
                     return receiveResult;
                 }
-                
-                if (activeTransit.ReceiverCentre.CentreId == receiverCentre.CentreId)
+
+                if (activeTransit.ReceiverCentreId == receiverCentre.CentreId)
                     activeTransit.DateReceived = date;
                 else
                     activeTransit.DateCancelled = date; // something went wrong with the transit so just cancel it
@@ -246,8 +252,8 @@ namespace ENetCareMVC.BusinessService
             }
 
             package.CurrentStatus = PackageStatus.InStock;          // set packagestatus
-            package.CurrentLocation = receiverCentre;               // set package location
-            package.DistributedBy = null;                           // set distributed by employee to null
+            package.CurrentLocationCentreId = receiverCentre.CentreId;               // set package location
+            package.DistributedByEmployeeId = null;                           // set distributed by employee to null
             _packageRepository.Update(package);                     // update packages DB
             receiveResult.Success = true;
             receiveResult.Id = package.PackageId;
@@ -312,7 +318,7 @@ namespace ENetCareMVC.BusinessService
             }
 
             Package package = _packageRepository.GetPackageWidthBarCode(barCode);
-            if(package.CurrentStatus==PackageStatus.Distributed)
+            if (package.CurrentStatus == PackageStatus.Distributed)
             {
                 result.Success = false;
                 result.ErrorMessage = PackageResult.PackageAlreadyDistributed;
@@ -323,12 +329,10 @@ namespace ENetCareMVC.BusinessService
             {
                 PackageType = packageType,
                 CurrentLocation = distributionCentre,
-                CurrentLocationCentreId = distributionCentre.CentreId,
                 CurrentStatus = PackageStatus.Distributed,
                 PackageId = packageId,
-                DistributedBy = package.DistributedBy,
                 ExpirationDate = expirationDate,
-                DistributedByEmployeeId = employee.EmployeeId,
+                DistributedBy = employee,
                 BarCode = barCode
             };
 
@@ -368,7 +372,6 @@ namespace ENetCareMVC.BusinessService
             {
                 PackageType = packageType,
                 CurrentLocation = distributionCentre,
-                CurrentLocationCentreId = distributionCentre.CentreId,
                 CurrentStatus = PackageStatus.Discarded,
                 PackageId = packageId,
                 ExpirationDate = expirationDate,

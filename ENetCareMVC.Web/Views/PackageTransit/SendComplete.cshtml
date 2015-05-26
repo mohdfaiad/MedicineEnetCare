@@ -1,4 +1,4 @@
-﻿@model ENetMVCPlay.Models.PackageSendViewModel
+﻿@model ENetCareMVC.Web.Models.PackageTransitSendViewModel
 
 @{
     ViewBag.Title = "SendComplete";
@@ -6,31 +6,7 @@
 
 <h2>Send Complete</h2>
 
-<table>
-    <tr>
-        <th width="50px">Package Id</th>
-        <th width="100px">Bar Code</th>
-        <th width="300px">Package Type</th>
-        <th width="100px">Expiration Date</th>
-        <th></th>
-    </tr>
-    @for (int i = 0; i < Model.SelectedPackages.Count; i++)
-    {
-        <tr>
-            <td>
-                @Model.SelectedPackages[i].PackageId
-            </td>
-            <td>
-                @Model.SelectedPackages[i].BarCode
-            </td>
-            <td>
-                @Model.SelectedPackages[i].PackageTypeDescription
-            </td>
-            <td>
-                @Model.SelectedPackages[i].ExpirationDate.ToString("d")
-            </td>
-        </tr>
-    }
-</table>
+@{ Html.RenderPartial("_resultsBarCodesPartial", (ENetCareMVC.Web.Models.ISelectedBarCodesViewModel)Model);}
+
 
 

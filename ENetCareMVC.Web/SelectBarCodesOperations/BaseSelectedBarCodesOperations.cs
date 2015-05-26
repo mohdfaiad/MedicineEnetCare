@@ -55,7 +55,7 @@ namespace ENetCareMVC.Web.SelectBarCodesOperations
                     PackageId = package.PackageId,
                     PackageTypeDescription = package.PackageType.Description,
                     PackageTypeId = package.PackageTypeId,
-                    CentreId = package.CurrentLocation.CentreId
+                    CentreId = package.CurrentLocation == null ? 0 : package.CurrentLocation.CentreId
                 };
 
                 model.SelectedPackages.Add(selectedPackage);
