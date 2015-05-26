@@ -16,7 +16,7 @@
       <mvcSiteMapNode title="Centre losses"     controller="Report" action="CentreLosses" />
       <mvcSiteMapNode title="Doctor activity"   controller="Report" action="DoctorActivity" />
       <mvcSiteMapNode title="Global stock"      controller="Report" action="GlobalStock" />
-      <mvcSiteMapNode title="Centre stock"      controller="Report" action="DistributionCentrelStock" />
+      <mvcSiteMapNode title="Centre stock"      controller="Report" action="DistributionCentreStock" />
       <mvcSiteMapNode title="Stock take"        controller="Report" action="Stocktaking" />
       <mvcSiteMapNode title="Value in transit"  controller="Report" action="ValueInTransit" />      
     </mvcSiteMapNode>

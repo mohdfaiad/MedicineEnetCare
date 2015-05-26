@@ -17,7 +17,7 @@
         var rowObj = Model[i];
         
         ratio = (double)(rowObj.LossRatioNumerator / rowObj.LossRatioDenominator);
-        grandTotal = +(double)rowObj.TotalLossDiscardedValue;
+        grandTotal += (double)rowObj.TotalLossDiscardedValue;
         if (i%2 == 0) { rowStyle = "background-color:#F2F0F0"; } else { rowStyle = ""; }
         
         <tr>

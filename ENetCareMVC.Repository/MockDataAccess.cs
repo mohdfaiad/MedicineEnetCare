@@ -239,6 +239,103 @@ namespace ENetCareMVC.Repository
         }
 
 
+// ******************************************************
+
+
+        public static List<DistributionCentreLosses> getMockedLosses()
+        {
+            //List<Package> packagesList = MockDataAccess.GetAllPackages();
+            List<DistributionCentreLosses> lossesList = new List<DistributionCentreLosses>();
+
+            DistributionCentreLosses l1 = new DistributionCentreLosses();
+            l1.DistributionCenterName = "CentreA";
+            l1.DistributionCentreId = 1;
+            l1.LossRatioDenominator = 75;
+            l1.LossRatioNumerator = 12;
+            l1.TotalLossDiscardedValue = 445;
+
+            DistributionCentreLosses l2 = new DistributionCentreLosses();
+            l2.DistributionCenterName = "CentreB";
+            l2.DistributionCentreId = 2;
+            l2.LossRatioDenominator = 275;
+            l2.LossRatioNumerator = 18;
+            l2.TotalLossDiscardedValue = 1445;
+
+            DistributionCentreLosses l3 = new DistributionCentreLosses();
+            l3.DistributionCenterName = "CentreC";
+            l3.DistributionCentreId = 3;
+            l3.LossRatioDenominator = 175;
+            l3.LossRatioNumerator = 22;
+            l3.TotalLossDiscardedValue = 335;
+
+            lossesList.Add(l1); lossesList.Add(l2); lossesList.Add(l3);
+            return lossesList;
+
+        }
+
+        public static List<DistributionCentreStock> getMockedDistributionCentreStock()
+        {
+            List<DistributionCentreStock> stockList = new List<DistributionCentreStock>();
+            DistributionCentreStock s1 = new DistributionCentreStock();
+            s1.DistributionCenterName = "CentreA";
+            s1.DistributionCentreId = 1;
+            s1.CostPerPackage = 44;
+            s1.NumberOfPackages = 5;
+            s1.PackageTypeId = 4;
+            s1.TotalValue = 145;
+
+            DistributionCentreStock s2 = new DistributionCentreStock();
+            s2.DistributionCenterName = "CentreB";
+            s2.DistributionCentreId = 2;
+            s2.CostPerPackage = 34;
+            s2.NumberOfPackages = 15;
+            s2.PackageTypeId = 3;
+            s2.TotalValue = 245;
+
+            DistributionCentreStock s3 = new DistributionCentreStock();
+            s3.DistributionCenterName = "CentreC";
+            s3.DistributionCentreId = 3;
+            s3.CostPerPackage = 14;
+            s3.NumberOfPackages = 12;
+            s3.PackageTypeId = 1;
+            s3.TotalValue = 45;
+
+            stockList.Add(s1); stockList.Add(s2); stockList.Add(s3);
+            return stockList;
+        }
+
+        public static List<DoctorActivity> getMockedActivity()
+        {
+            List<DoctorActivity> activityList = new List<DoctorActivity>();
+
+            DoctorActivity d1 = new DoctorActivity();
+            d1.DoctorId = 1;
+            d1.DoctorName = "Dr. Newells";
+            d1.PackageCount = 11;
+            d1.PackageTypeDescription = "blah blah blah";
+            d1.PackageTypeId = 1;
+            d1.TotalPackageValue = 145;
+
+            DoctorActivity d2 = new DoctorActivity();
+            d2.DoctorId = 2;
+            d2.DoctorName = "Dr. Mad";
+            d2.PackageCount = 13;
+            d2.PackageTypeDescription = "blah blah ";
+            d2.PackageTypeId = 4;
+            d2.TotalPackageValue = 35;
+
+            DoctorActivity d3 = new DoctorActivity();
+            d3.DoctorId = 3;
+            d3.DoctorName = "Dr. Hell";
+            d3.PackageCount = 23;
+            d3.PackageTypeDescription = "blah blah ...";
+            d3.PackageTypeId = 5;
+            d3.TotalPackageValue = 245;
+
+            activityList.Add(d1); activityList.Add(d2); activityList.Add(d3);
+            return activityList;
+        }
+
 
     }
 }
