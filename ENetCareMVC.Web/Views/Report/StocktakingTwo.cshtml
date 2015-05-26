@@ -1,0 +1,53 @@
+﻿@model List<ENetCareMVC.Repository.Data.StockTaking>
+@{
+    string headerStyle = "width:160px; font-size:14px;", rowStyle = "";
+    double grandTotal = 0;
+    ViewBag.Title = "StocktakingTwo";
+}
+
+<h2>Stocktaking Report</h2>
+
+@*
+<div class="form-group">
+    <div class="col-md-2">        Distribution Centre:           </div>
+    <div class="col-md-10">       @Model.SelectedCentre.Name     </div>
+</div>
+*@
+
+<br /><br />
+<table>
+    <tr>
+        <td style='@headerStyle'><b> Package Id       </b></td>
+        <td style='@headerStyle'><b> Barcode          </b></td>
+        <td style='@headerStyle'><b> Package Type Id  </b></td>
+        <td style='@headerStyle'><b> Type Description </b></td>
+        <td style='@headerStyle'><b> Expiration Date  </b></td>
+        <td style='@headerStyle'><b> Cost per Package </b></td>
+    </tr>
+    
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        var rowObj = Model[i];
+        grandTotal = grandTotal + (double)rowObj.CostPerPackage;
+        if (i%2 == 0) { rowStyle = "background-color:#F2F0F0;"; } else { rowStyle = ""; }
+        if (rowObj.ExpirationDate <= DateTime.Today) { rowStyle = rowStyle + " color:red"; }
+        else if (rowObj.ExpirationDate <= DateTime.Today.AddDays(7)) { rowStyle = rowStyle + " color:orange"; }
+        <tr>
+            <td style='@rowStyle'> @rowObj.PackageId              </td>
+            <td style='@rowStyle'> @rowObj.BarCode                </td>
+            <td style='@rowStyle'> @rowObj.PackageTypeId          </td>
+            <td style='@rowStyle'> @rowObj.PackageTypeDescription </td>
+            <td style='@rowStyle'> @rowObj.ExpirationDate.ToString("d")  </td>
+            <td style='@rowStyle'> @rowObj.CostPerPackage         </td>
+        </tr>
+    }
+    <tr>    <td></td>    <td></td>     <td></td>   <td></td>    <td></td>  <td></td> </tr>
+    <tr>    <td></td>    <td></td>     <td></td>   <td></td>    <td>Total:</td>  <td>@grandTotal</td> </tr>
+</table><br /><br /><br />
+
+
+
+@* <br /><br />number of rows: @Model.Count(); *@
+
+
+

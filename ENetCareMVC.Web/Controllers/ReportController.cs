@@ -54,14 +54,20 @@ namespace ENetCareMVC.Web.Controllers
         public ActionResult Stocktaking()
         {
             var employee = GetCurrentEmployee();
-                        
             List<StockTaking> stocktakingList = reportService.GetStocktaking(employee.LocationCentreId);
             var model = new StocktakingReportViewModel()
             {
                 SelectedCentre = employee.Location,
                 StocktakingList = stocktakingList
             };
-            return View(model);
+            return View(model);                                
+        }
+
+        public ActionResult StocktakingTwo()
+        {
+            //List<StockTaking> stockList = reportService.GetStocktaking();               // real db
+            List<StockTaking> mockedStockList = MockDataAccess.getMockedStocktaking();    // mocked
+            return View(mockedStockList);
         }
 
         public ActionResult ValueInTransit()

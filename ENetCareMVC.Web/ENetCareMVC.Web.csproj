@@ -312,6 +312,7 @@
     <Content Include="Views\Error\Generic.cshtml" />
     <Content Include="Views\Error\MissingResource.cshtml" />
     <Content Include="Views\Report\DistributionCentreStock.cshtml" />
+    <Content Include="Views\Report\StocktakingTwo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Log\" />

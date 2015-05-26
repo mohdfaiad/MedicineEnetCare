@@ -336,6 +336,59 @@ namespace ENetCareMVC.Repository
             return activityList;
         }
 
+        public static List<StockTaking> getMockedStocktaking()
+        {
+            List<StockTaking> stockList = new List<StockTaking>();
+
+            StockTaking s1 = new StockTaking();
+            s1.PackageId = 2;
+            s1.PackageTypeId = 2;
+            s1.PackageTypeDescription = "some type";
+            s1.BarCode = "3454534567567575";
+            s1.CostPerPackage = 45;
+            s1.CurrentLocationCentreId = 1;
+            s1.ExpirationDate = DateTime.Today.AddDays(34);
+
+            StockTaking s2 = new StockTaking();
+            s2.PackageId = 3;
+            s2.PackageTypeId = 6;
+            s2.PackageTypeDescription = "some type";
+            s2.BarCode = "43634545345345345";
+            s2.CostPerPackage = 25;
+            s2.CurrentLocationCentreId = 2;
+            s2.ExpirationDate = DateTime.Today.AddDays(24);
+
+            StockTaking s3 = new StockTaking();
+            s3.PackageId = 4;
+            s3.PackageTypeId = 2;
+            s3.PackageTypeDescription = "some type";
+            s3.BarCode = "345445344663466346";
+            s3.CostPerPackage = 85;
+            s3.CurrentLocationCentreId = 1;
+            s3.ExpirationDate = DateTime.Today.AddDays(12);
+
+            StockTaking s4 = new StockTaking();
+            s4.PackageId = 5;
+            s4.PackageTypeId = 7;
+            s4.PackageTypeDescription = "some type";
+            s4.BarCode = "34534523423234";
+            s4.CostPerPackage = 15;
+            s4.CurrentLocationCentreId = 2;
+            s4.ExpirationDate = DateTime.Today.AddDays(2);
+
+            StockTaking s5 = new StockTaking();
+            s5.PackageId = 6;
+            s5.PackageTypeId = 3;
+            s5.PackageTypeDescription = "some type";
+            s5.BarCode = "45345345234234";
+            s5.CostPerPackage = 15;
+            s5.CurrentLocationCentreId = 2;
+            s5.ExpirationDate = DateTime.Today.AddDays(-14);
+
+            stockList.Add(s1); stockList.Add(s2); stockList.Add(s3); stockList.Add(s4); stockList.Add(s5);
+            return stockList;
+        }
+
 
     }
 }
