@@ -4,6 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ENetCareMVC.Web.Controllers;
 using System.Web.Mvc;
 using ENetCareMVC.Web.Models;
+using ENetCareMVC.Repository.Repository;
 
 namespace ENetCareMVC.UnitTest.Controllers
 {
@@ -13,21 +14,44 @@ namespace ENetCareMVC.UnitTest.Controllers
         [TestInitialize]
         public void TestInitialize()
         {           
-            AppDomain.CurrentDomain.SetData("DataDirectory", System.IO.Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory + "../../App_Data"));
-            // rest of initialize implementation ...
         }
         
         [TestMethod]
-        public void TestRegister()
+        public void TestInitialRegisterPage()
         {
-            var controller = new PackageController();
+            IPackageRepository packageRepository = new MockPackageRepository();
+            IEmployeeRepository employeeRepository = new MockEmployeeRepository();
+            var controller = new PackageController(employeeRepository, packageRepository); 
 
             var result = controller.Register() as ViewResult;
 
             var model = result.Model as PackageRegisterViewModel;
 
-            Assert.AreEqual("Register", result.ViewName);
+            Assert.AreEqual(string.Empty, result.ViewName);
             Assert.IsTrue(model.StandardPackageTypes.Any());
+        }
+
+        [TestMethod]
+        public void TestPostBackRegisterPage()
+        {
+            IPackageRepository packageRepository = new MockPackageRepository();
+            IEmployeeRepository employeeRepository = new MockEmployeeRepository();
+            var controller = new PackageController(employeeRepository, packageRepository);
+            var model = new PackageRegisterViewModel()
+            {
+                StandardPackageTypeId = 3,
+                LocationCentreId = 1,
+                ExpirationDate = new DateTime(2015, 6, 20)
+            };
+
+            var result = controller.Register(model) as ViewResult;
+
+            var modelReturned = result.Model as PackageRegisterViewModel;
+
+            string compareStartOfBarCode = string.Format("{0:D5}{1:yyMMdd}", model.StandardPackageTypeId, model.ExpirationDate);
+
+            Assert.AreEqual("RegisterComplete", result.ViewName);
+            Assert.IsTrue(modelReturned.BarCode.StartsWith(compareStartOfBarCode));
         }
     }
 }

@@ -14,7 +14,21 @@ namespace ENetCareMVC.Web.Controllers
 {
     public class PackageController : Controller
     {
-        // GET: Package
+        private IPackageRepository _packageRepository;
+        private IEmployeeRepository _employeeRepository;
+        public PackageController()
+        {
+         _packageRepository = new PackageRepository(ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString);
+         _employeeRepository = new EmployeeRepository(ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString);
+        }
+        
+        public PackageController(IEmployeeRepository employeeRepository, IPackageRepository packageRepository)
+        {
+         _packageRepository = packageRepository;
+         _employeeRepository = employeeRepository;
+        }
+        
+        // Register a new Package
         [Authorize(Roles = "Agent, Doctor")]
         public ActionResult Register()
         {
@@ -250,14 +264,12 @@ namespace ENetCareMVC.Web.Controllers
 
         private PackageService GetPackageService()
         {
-            IPackageRepository packageRepository = new PackageRepository(ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString);
-            return new PackageService(packageRepository);
+            return new PackageService(_packageRepository);
         }
 
         private EmployeeService GetEmployeeService()
         {
-            IEmployeeRepository repository = new EmployeeRepository(ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString);
-            return new EmployeeService(repository);
+            return new EmployeeService(_employeeRepository);
         }
     }
 }

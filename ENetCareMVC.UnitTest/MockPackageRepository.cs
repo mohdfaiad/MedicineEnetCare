@@ -50,9 +50,8 @@ namespace ENetCareMVC.UnitTest
         }
 
         public StandardPackageType GetStandardPackageType(int packageTypeId)
-        {
-            StandardPackageType stp = null;
-            return stp;
+        {            
+            return MockDataAccess.GetPackageType(packageTypeId);
         }
 
         public List<StandardPackageType> GetAllStandardPackageTypes()       // (P. 05-04-2015)
