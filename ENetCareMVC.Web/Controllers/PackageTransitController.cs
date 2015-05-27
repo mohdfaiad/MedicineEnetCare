@@ -83,17 +83,13 @@ namespace ENetCareMVC.Web.Controllers
             var employeeService = GetEmployeeService();
             var employee = GetCurrentEmployee();
 
-            //Package tempPackage = packageService.Retrieve(model.BarCode);
-            ///DistributionCentre senderCentre = tempPackage.CurrentLocation;
-            //DistributionCentre recieverCentre1 = employeeService.GetDistributionCentre(model.DestinationCentreId);
-            //DistributionCentre senderCentre1 = employeeService.GetDistributionCentre(employee.LocationCentreId);
+            DistributionCentre recieverCentre = employeeService.GetDistributionCentre(model.DestinationCentreId);
+            DistributionCentre senderCentre = employeeService.GetDistributionCentre(employee.LocationCentreId);
 
             if (ModelState.IsValid)
             {
                 foreach (var package in model.SelectedPackages)
                 {
-                    DistributionCentre recieverCentre = employeeService.GetDistributionCentre(model.DestinationCentreId);
-                    DistributionCentre senderCentre = employeeService.GetDistributionCentre(employee.LocationCentreId);
                     Package tempPack = packageService.Retrieve(package.BarCode);
                     Result result = packageService.Send(tempPack, senderCentre, recieverCentre, model.SendDate);
                     if (result.Success)
@@ -126,6 +122,7 @@ namespace ENetCareMVC.Web.Controllers
         {
             PackageTransitReceiveViewModel model = new PackageTransitReceiveViewModel();
             model.SelectedPackages = new List<SelectedPackage>();
+            model.ReceiveDate = DateTime.Today;
 
             return View(model);
         }
@@ -164,13 +161,13 @@ namespace ENetCareMVC.Web.Controllers
             var packageService = GetPackageService();
             var employeeService = GetEmployeeService();
             var employee = GetCurrentEmployee();
-            model.ReceiveDate = DateTime.Today;
+            
+            DistributionCentre locationCentre = employeeService.GetDistributionCentre(employee.LocationCentreId);
 
             if (ModelState.IsValid)
             {
                 foreach (var package in model.SelectedPackages)
                 {
-                    DistributionCentre locationCentre = employeeService.GetDistributionCentre(employee.LocationCentreId);
                     Result result = packageService.Receive(package.BarCode, locationCentre, model.ReceiveDate);
                     if (result.Success)
                     {
@@ -178,7 +175,7 @@ namespace ENetCareMVC.Web.Controllers
                     }
                     else
                     {
-                        package.ProcessResultMessage = "Not Successful!";
+                        package.ProcessResultMessage = result.ErrorMessage;
                     }
                 }
 
