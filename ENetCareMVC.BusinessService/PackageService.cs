@@ -213,7 +213,7 @@ namespace ENetCareMVC.BusinessService
         /// <param name="receiverCentre"></param>
         /// <param name="date"></param>
         /// <returns> Result object according to success or failure </returns>
-        public Result Receive(string barCode, DistributionCentre receiverCentre, DateTime date)
+        public Result Receive(string barCode, DistributionCentre receiverCentre, DateTime receiveDate)
         {                                                                 // (P. 24-03-2015)
             Result receiveResult = new Result();
             Package package = _packageRepository.GetPackageWidthBarCode(barCode);
@@ -236,7 +236,7 @@ namespace ENetCareMVC.BusinessService
             // Even if there is no transit record the receive should still work
             if (activeTransit != null)
             {
-                if (date < activeTransit.DateSent)
+                if (receiveDate < activeTransit.DateSent)
                 {
                     receiveResult.Success = false;
                     receiveResult.ErrorMessage = PackageResult.ReceiveDateCannotBeEarlierThanSend;
@@ -244,9 +244,9 @@ namespace ENetCareMVC.BusinessService
                 }
 
                 if (activeTransit.ReceiverCentreId == receiverCentre.CentreId)
-                    activeTransit.DateReceived = date;
+                    activeTransit.DateReceived = receiveDate;
                 else
-                    activeTransit.DateCancelled = date; // something went wrong with the transit so just cancel it
+                    activeTransit.DateCancelled = receiveDate; // something went wrong with the transit so just cancel it
 
                 _packageRepository.UpdateTransit(activeTransit);
             }
