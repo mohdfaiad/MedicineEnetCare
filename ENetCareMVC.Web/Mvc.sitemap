@@ -19,13 +19,6 @@
       <mvcSiteMapNode title="Centre stock"      controller="Report" action="DistributionCentreStock" />
       <mvcSiteMapNode title="Value in transit"  controller="Report" action="ValueInTransit" />   
       <mvcSiteMapNode title="Stock take"        controller="Report" action="Stocktaking" />
-      <mvcSiteMapNode title="________________________" controller="Report" action="CentreLossesTwo" />
-      <mvcSiteMapNode title="Centre losses Mocked"     controller="Report" action="CentreLossesTwo" />
-      <mvcSiteMapNode title="Doctor activity Mocked"   controller="Report" action="DoctorActivityTwo" />
-      <mvcSiteMapNode title="Global stock Mocked"      controller="Report" action="GlobalStockTwo" />
-      <mvcSiteMapNode title="Centre stock Mocked"      controller="Report" action="DistributionCentreStockTwo" />
-      <mvcSiteMapNode title="Value in transit Mocked"  controller="Report" action="ValueInTransitTwo" />        
-      <mvcSiteMapNode title="Stock take Mocked"        controller="Report" action="StocktakingTwo" />
     </mvcSiteMapNode>
     <mvcSiteMapNode title="Account" clickable="false">
       <mvcSiteMapNode title="Register" controller="Account" action="Register" />

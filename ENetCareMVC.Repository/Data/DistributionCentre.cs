@@ -34,6 +34,5 @@ namespace ENetCareMVC.Repository.Data
         public virtual ICollection<PackageTransit> PackageTransit1 { get; set; }
         public virtual ICollection<Employee> Employee { get; set; }
         public virtual ICollection<Package> Package { get; set; }
-        public override string ToString() { return "Id:" + CentreId + " / " + Name + " / " + Address; }
     }
 }

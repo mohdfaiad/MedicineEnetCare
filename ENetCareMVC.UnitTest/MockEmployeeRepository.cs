@@ -27,6 +27,12 @@ namespace ENetCareMVC.UnitTest
             return MockDataAccess.GetAllDistibutionCentres();
         }
 
+        public List<Employee> GetAllEmployees()     // (P. 28-05-2015)
+        {
+            return MockDataAccess.GetAllEmployees();
+        }
+
+
         public Repository.Data.DistributionCentre GetDistributionCentre(int centreId)       // (P. 04-04-2015)
         {
             return MockDataAccess.GetDistributionCentre(centreId);

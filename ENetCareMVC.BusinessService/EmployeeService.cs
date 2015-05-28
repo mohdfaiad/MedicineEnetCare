@@ -141,5 +141,13 @@ namespace ENetCareMVC.BusinessService
         {
             return _employeeRepository.GetDistributionCentre(centreid);
         }
+
+        public List<Employee> GetAllEmployees()
+        {
+            return _employeeRepository.GetAllEmployees();
+        }
+
+
+
     }
 }

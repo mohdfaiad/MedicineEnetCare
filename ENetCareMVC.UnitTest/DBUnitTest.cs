@@ -57,15 +57,26 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
             Assert.IsTrue(howMany > 0);
         }
 
-
-  */ 
         [TestMethod]
-        public void TestDbAccess_GetEmployees()                   // (P. 04-04-2015)  
+        public void TestDbAccess_GetEmployeesZ()                   // (P. 04-04-2015)  
         {
             //enetConnection.Open();
             List<Employee> employeeList = DataAccess.GetAllEmployees(_connectionString);
             //enetConnection.Close();
             int howMany = employeeList.Count();
+            Debug.WriteLine(howMany + " employees found.");
+            Assert.IsTrue(howMany > 0);
+        }
+*/
+
+        [TestMethod]
+        public void TestDbAccess_GetEmployees()                   // (P. 28-05-2015)  
+        {
+            IEmployeeRepository empRepository = new EmployeeRepository(_connectionString);
+            EmployeeService empService = new EmployeeService(empRepository);
+            List<Employee> empList = empService.GetAllEmployees();  
+
+            int howMany = empList.Count();
             Debug.WriteLine(howMany + " employees found.");
             Assert.IsTrue(howMany > 0);
         }

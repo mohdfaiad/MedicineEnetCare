@@ -31,6 +31,5 @@ namespace ENetCareMVC.Repository.Data
         public virtual ICollection<Audit> Audit { get; set; }
         public virtual DistributionCentre Location { get; set; }
         public virtual ICollection<Package> Package { get; set; }
-        public override string ToString() { return "Id:" + EmployeeId + " / " + FullName + " (" + UserName + ") / " + EmailAddress + " / Location:" + LocationCentreId; }
     }
 }

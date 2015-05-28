@@ -14,7 +14,7 @@ namespace ENetCareMVC.Repository.Repository
         Employee Get(int? employeeId, string username);
 
         List<DistributionCentre> GetAllDistributionCentres();
-
+        List<Employee> GetAllEmployees();
         DistributionCentre GetDistributionCentre(int centreid);
 
 

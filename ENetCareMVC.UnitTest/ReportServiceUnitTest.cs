@@ -48,15 +48,25 @@ namespace ENetCareMVC.UnitTest
             Assert.AreEqual<int>(15, lossesList[0].LossRatioDenominator.Value);
         }
 
+        /*
         [TestMethod]
         public void TestReport_Mock_GetStocktaking()
         {
-            MockReportRepository repo = new MockReportRepository();
-            ReportService _reportService = new ReportService(repo);
-            List<StockTaking> spList = _reportService.GetStocktaking(4);
+            IReportRepository reportRepository = new MockReportRepository();
+            ReportService reportService = new ReportService(reportRepository);
+            var spList = reportService.GetStocktaking(1); 
+
+            //MockReportRepository repo = new MockReportRepository();
+            //ReportService _reportService = new ReportService(repo);
+            //List<StockTaking> spList = _reportService.GetStocktaking(4);
+
             foreach (StockTaking p in spList) Debug.WriteLine(p.ToString());
             Debug.WriteLine("Number of items: " + spList.Count());
             Assert.IsTrue(spList.Count() > 0); 
         }
+        */
+
+
+
     }
 }

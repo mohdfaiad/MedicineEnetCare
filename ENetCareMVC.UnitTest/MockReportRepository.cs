@@ -6,11 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using ENetCareMVC.Repository;
 using ENetCareMVC.Repository.Data;
+using ENetCareMVC.BusinessService;
 
 namespace ENetCareMVC.UnitTest
 {
     public class MockReportRepository : IReportRepository
     {
+
 
         public MockReportRepository()          // Constructor              (P. 05-04-2015)
         {
@@ -53,12 +55,12 @@ namespace ENetCareMVC.UnitTest
 
         public List<DoctorActivity> GetDoctorActivity()
         {
-            throw new NotImplementedException();
+            return MockDataAccess.getMockedActivity();
         }
 
         public List<GlobalStock> GetGlobalStock()
         {
-            throw new NotImplementedException();
+            return MockDataAccess.getMockedGlobalStock();
         }
 
         public List<StockTaking> GetStocktaking(int CentreId)
@@ -79,9 +81,11 @@ namespace ENetCareMVC.UnitTest
             return sList;
         }
 
+        
+
         public List<ValueInTransit> GetValueInTransit()
         {
-            throw new NotImplementedException();
+            return MockDataAccess.getMockedValueInTransit();
         }
 
         public List<ReconciledPackage> GetReconciledPackages(Repository.Data.DistributionCentre currentLocation, Repository.Data.StandardPackageType packageType, List<string> barCodeList)

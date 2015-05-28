@@ -46,7 +46,7 @@ namespace ENetCareMVC.Repository.Repository
             return centre;
         }
 
-        public List<Employee> getAllEmployees()
+        public List<Employee> GetAllEmployees()
         {                                                             //  (P. 04-04-2015)
             List<Employee> eList = DataAccess.GetAllEmployees(_connectionString);
             return eList;

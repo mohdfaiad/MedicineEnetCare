@@ -26,6 +26,5 @@ namespace ENetCareMVC.Repository.Data
         public virtual DistributionCentre SenderCentre { get; set; }
         public virtual Package Package { get; set; }
 
-        public override string ToString() { return "Id:" + TransitId + " / PId:" + PackageId + " / from:" + SenderCentreId + " / to:" + ReceiverCentreId; }
     }
 }
