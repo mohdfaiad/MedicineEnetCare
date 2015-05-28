@@ -85,8 +85,13 @@ namespace ENetCareMVC.Web.Models
 
     public class EditEmployeeViewModel
     {
+        [Display(Name = "Username")]
+        public string Username { get; set; }
+
         [Display(Name = "Email")]
-        public string Email { get; set; }
+        [EmailAddress]
+        [Required]
+        public string EmailAddress { get; set; }
 
         [Required]
         [Display(Name = "Full name")]
@@ -103,11 +108,6 @@ namespace ENetCareMVC.Web.Models
 
     public class ResetPasswordViewModel
     {
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
-
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]

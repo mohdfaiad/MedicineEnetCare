@@ -31,6 +31,7 @@
       <mvcSiteMapNode title="Register" controller="Account" action="Register" />
       <mvcSiteMapNode title="Login" controller="Account" action="Login" />
       <mvcSiteMapNode title="Edit Employee" controller="Account" action="EditEmployee" />
+      <mvcSiteMapNode title="Reset Password" controller="Account" action="ResetPassword" />
     </mvcSiteMapNode>
     <mvcSiteMapNode title="About" controller="Home" action="About"/>
   </mvcSiteMapNode>
