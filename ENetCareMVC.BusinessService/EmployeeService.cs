@@ -123,8 +123,7 @@ namespace ENetCareMVC.BusinessService
             }
 
             employee.FullName = fullName;
-            employee.EmailAddress = emailAddress;
-            employee.Location = locationCentre;
+            employee.EmailAddress = emailAddress;            
             employee.LocationCentreId = locationCentre.CentreId;
             employee.EmployeeType = employeeType;
 

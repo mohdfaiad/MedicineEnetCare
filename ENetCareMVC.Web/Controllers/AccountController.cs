@@ -164,7 +164,8 @@ namespace ENetCareMVC.Web.Controllers
 
             var model = new EditEmployeeViewModel();
 
-            model.Email = employee.UserName;
+            model.Username = employee.UserName;
+            model.EmailAddress = employee.EmailAddress;
             model.FullName = employee.FullName;
             model.EmployeeType = employee.EmployeeType;
             model.LocationCentreId = employee.LocationCentreId;
@@ -197,7 +198,7 @@ namespace ENetCareMVC.Web.Controllers
                 {
                     var employeeResult = employeeService.Update(employee.UserName,
                         model.FullName,
-                        employee.EmailAddress,
+                        model.EmailAddress,
                         locationCentre,
                         employee.EmployeeType);
 
@@ -285,57 +286,50 @@ namespace ENetCareMVC.Web.Controllers
         {
             return View();
         }
-	
+
         //
         // GET: /Account/ResetPassword
-        [AllowAnonymous]
-        public ActionResult ResetPassword(string code)
+        public ActionResult ResetPassword()
         {
-            if (code == null) 
-            {
-                return View("Error");
-            }
             return View();
         }
 
         //
         // POST: /Account/ResetPassword
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null)
-                {
-                    ModelState.AddModelError("", "No user found.");
-                    return View();
-                }
-                IdentityResult result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("ResetPasswordConfirmation", "Account");
-                }
-                else
-                {
-                    AddErrors(result);
-                    return View();
-                }
+                return View(model);
             }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            var user = await UserManager.FindByNameAsync(User.Identity.Name);
+            if (user == null)
+            {
+                // Don't reveal that the user does not exist
+                return RedirectToAction("ResetPasswordConfirmation", "Account");
+            }
+
+            var token = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+
+            var result = await UserManager.ResetPasswordAsync(user.Id, token, model.Password);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("ResetPasswordConfirmation", "Account");
+            }
+            AddErrors(result);
+            return View();
         }
 
         //
         // GET: /Account/ResetPasswordConfirmation
-        [AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
         {
             return View();
         }
+
 
         //
         // POST: /Account/Disassociate
