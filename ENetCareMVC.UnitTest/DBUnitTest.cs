@@ -18,12 +18,24 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
 
     [TestClass]
     public class DBUnitTest
-    {   
-        //static string _connectionString = ConfigurationManager.ConnectionStrings["EnetCare"].ConnectionString;
-        static string _connectionString = "metadata=res://*;provider=System.Data.SqlClient;provider connection string='Data Source=(LocalDb)\\v11.0;AttachDbFilename=|DataDirectory|\\ENetCareMVCDiff.mdf;Initial Catalog=ENetCareMVCDiff;Integrated Security=True'";
-        SqlConnection enetConnection = new SqlConnection(_connectionString);
+    {
+
+        //static string myConnection = ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString;
+        //static IReportRepository repRepository = new ReportRepository(_connectionString);
+        //static ReportService reportService = new ReportService(repRepository);
+
+        //  OLD static string _connectionString = ConfigurationManager.ConnectionStrings["EnetCare"].ConnectionString;
+        // <add name="ENetCare" connectionString="Data Source=(LocalDb)\v11.0;AttachDbFilename=|DataDirectory|\ENetCareMVC.mdf;Initial Catalog=ENetCareMVC;Integrated Security=True" providerName="System.Data.SqlClient" />
+        // <add name="ENetCareLiveAll" connectionString="metadata=res://*;provider=System.Data.SqlClient;provider connection string='Data Source=(LocalDb)\v11.0;AttachDbFilename=|DataDirectory|\ENetCareMVC.mdf;Initial Catalog=ENetCareMVC;Integrated Security=True'" providerName="System.Data.SqlClient" />
+        //                                             ="metadata=res://*;provider=System.Data.SqlClient;provider connection string='Data Source=(LocalDb)\v11.0;AttachDbFilename=|DataDirectory|\ENetCareMVC.mdf;Initial Catalog=ENetCareMVC;Integrated Security=True'";
         
- 
+        //static string _connectionString = "metadata=res://*;provider=System.Data.SqlClient;provider connection string='Data Source=(LocalDb)\\v11.0;AttachDbFilename=|DataDirectory|\\ENetCareMVCDiff.mdf;Initial Catalog=ENetCareMVCDiff;Integrated Security=True'";
+        static string _connectionString = ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString;
+        //SqlConnection enetConnection = new SqlConnection(_connectionString);
+
+
+
+ /*
         [TestMethod]
         public void TestDbAccess_Connection()        // Assertion is true if connection was opened 
         {
@@ -37,29 +49,33 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
         [TestMethod]
         public void TestDbAccess_GetDistCentres()                           // (P. 04-04-2015) 
         {
-            enetConnection.Open();
+            //enetConnection.Open();
             List<DistributionCentre> centresList = DataAccess.GetAllDistributionCentres(_connectionString);
-            enetConnection.Close();
+            //enetConnection.Close();
             int howMany = centresList.Count();
             Debug.WriteLine(howMany + " centres found.");
             Assert.IsTrue(howMany > 0);
         }
 
+
+  */ 
         [TestMethod]
         public void TestDbAccess_GetEmployees()                   // (P. 04-04-2015)  
         {
-            enetConnection.Open();
+            //enetConnection.Open();
             List<Employee> employeeList = DataAccess.GetAllEmployees(_connectionString);
-            enetConnection.Close();
+            //enetConnection.Close();
             int howMany = employeeList.Count();
             Debug.WriteLine(howMany + " employees found.");
             Assert.IsTrue(howMany > 0);
         }
 
+ /* 
+ 
         [TestMethod]
         public void TestDb_ShowAllTables()
         {
-            enetConnection.Open();
+            //enetConnection.Open();
             List<DistributionCentre> distList = DataAccess.GetAllDistributionCentres(_connectionString);
             Debug.WriteLine("DISTRIBUTION CENTRES : ");
             foreach (DistributionCentre centre in distList) Debug.WriteLine(centre);
@@ -79,10 +95,11 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
             List<PackageTransit> transitList = DataAccess.GetAllPackageTransits(_connectionString);
             Debug.WriteLine("\n\n PACKAGE TRANSITS : ");
             foreach (PackageTransit t in transitList) Debug.WriteLine(t);
-            enetConnection.Close();
+            //enetConnection.Close();
             Assert.IsNotNull(employeeList);
         }
 
+/*
 
         [TestMethod]
         public void TestDbAccess_GetPackages()                            // (P. 04-04-2015)  
@@ -96,18 +113,7 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
         }
 
 
-        /*
-        [TestMethod]
-        public void TestDbAccess_GetTransits()                            // (P. 04-04-2015)  
-        {
-            enetConnection.Open();
-            List<PackageTransit> transitList = DataAccess.getAllPackageTransits(enetConnection);
-            enetConnection.Close();
-            int howMany = transitList.Count();
-            Debug.WriteLine(howMany + " transits found.");
-            Assert.IsTrue(howMany > 0);
-        }
-         */ 
+      
          
 
         [TestMethod]
@@ -155,6 +161,7 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
             }
         }
 
+ */ 
 
     }
 }

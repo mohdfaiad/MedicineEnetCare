@@ -30,5 +30,7 @@ namespace ENetCareMVC.Repository.Data
     
         public virtual ICollection<Audit> Audit { get; set; }
         public virtual ICollection<Package> Package { get; set; }
+        public override string ToString() { return "Id:" + PackageTypeId + " / " + Description + " / #:" + NumberOfMedications + " / Life:" + ShelfLifeUnits + ShelfLifeUnitType + " / Val:" + Value; }
+
     }
 }
