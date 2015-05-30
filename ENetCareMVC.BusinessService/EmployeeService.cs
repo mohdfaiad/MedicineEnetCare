@@ -147,6 +147,11 @@ namespace ENetCareMVC.BusinessService
             return _employeeRepository.GetAllEmployees();
         }
 
+        public Employee GetEmployeeByUserName(string userName)
+        {
+            return _employeeRepository.Get(null, userName);
+        }
+
 
 
     }

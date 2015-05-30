@@ -21,6 +21,7 @@
         {
             <tr>
                 <td>
+                    <input id="@string.Format("SelectedPackages_{0}__CurrentEmployeeUserName", i)" name="@string.Format("SelectedPackages[{0}].CurrentEmployeeUserName", i)" type="hidden" value="@Model.SelectedPackages[i].CurrentEmployeeUserName" />
                     <input id="@string.Format("SelectedPackages_{0}__CentreId", i)" name="@string.Format("SelectedPackages[{0}].CentreId", i)" type="hidden" value="@Model.SelectedPackages[i].CentreId" />
                     <input id="@string.Format("SelectedPackages_{0}__PackageTypeId", i)" name="@string.Format("SelectedPackages[{0}].PackageTypeId", i)" type="hidden" value="@Model.SelectedPackages[i].PackageTypeId" />
                     <input id="@string.Format("SelectedPackages_{0}__PackageId", i)" name="@string.Format("SelectedPackages[{0}].PackageId", i)" type="hidden" value="@Model.SelectedPackages[i].PackageId" />

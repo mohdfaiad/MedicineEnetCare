@@ -30,6 +30,7 @@ namespace ENetCareMVC.Web.SelectBarCodesOperations
 
             var packageService = GetPackageService();
             var package = packageService.Retrieve(model.BarCode);
+            var currentEmployee = GetCurrentEmployee();
 
             if (package == null)
             {
@@ -55,7 +56,8 @@ namespace ENetCareMVC.Web.SelectBarCodesOperations
                     PackageId = package.PackageId,
                     PackageTypeDescription = package.PackageType.Description,
                     PackageTypeId = package.PackageTypeId,
-                    CentreId = package.CurrentLocation == null ? 0 : package.CurrentLocation.CentreId
+                    CentreId = package.CurrentLocation == null ? 0 : package.CurrentLocation.CentreId,
+                    CurrentEmployeeUserName = currentEmployee.UserName
                 };
 
                 model.SelectedPackages.Add(selectedPackage);

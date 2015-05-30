@@ -142,9 +142,6 @@ namespace ENetCareMVC.Web.Controllers
             var packageService = GetPackageService();
             var employeeService = GetEmployeeService();
 
-            string userId = HttpContext.User.Identity.Name;
-
-            Employee employee = employeeService.Retrieve(userId);
             Result result = new Result();
 
             if (ModelState.IsValid)
@@ -153,6 +150,7 @@ namespace ENetCareMVC.Web.Controllers
                 {
                     DistributionCentre selectedCentre = employeeService.GetDistributionCentre(package.CentreId);
                     StandardPackageType spt = packageService.GetStandardPackageType(package.PackageTypeId);
+                    Employee employee = employeeService.GetEmployeeByUserName(package.CurrentEmployeeUserName);
 
                     result = packageService.Discard(package.BarCode, selectedCentre, employee, package.ExpirationDate, spt, package.PackageId);
                     if (result.Success)
@@ -221,9 +219,6 @@ namespace ENetCareMVC.Web.Controllers
             var packageService = GetPackageService();
             var employeeService = GetEmployeeService();
 
-            string userId = HttpContext.User.Identity.Name;                        
-
-            Employee employee = employeeService.Retrieve(userId);
             Result result = new Result();
 
             if (ModelState.IsValid)
@@ -232,6 +227,7 @@ namespace ENetCareMVC.Web.Controllers
                 {
                     DistributionCentre selectedCentre = employeeService.GetDistributionCentre(package.CentreId);
                     StandardPackageType spt = packageService.GetStandardPackageType(package.PackageTypeId);
+                    Employee employee = employeeService.GetEmployeeByUserName(package.CurrentEmployeeUserName);
 
                     result = packageService.Distribute(package.BarCode, selectedCentre, employee, package.ExpirationDate, spt, package.PackageId);
                     if (result.Success)

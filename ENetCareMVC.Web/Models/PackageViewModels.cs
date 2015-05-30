@@ -40,6 +40,7 @@ namespace ENetCareMVC.Web.Models
         public string BarCode { get; set; }
 
         public List<SelectedPackage> SelectedPackages { get; set; }
+
     }
 
 

@@ -324,7 +324,7 @@ namespace ENetCareMVC.BusinessService
                 return result;
             }
 
-            if (employee.Location != package.CurrentLocation)
+            if (employee.Location.CentreId != package.CurrentLocation.CentreId)
             {
                 result.Success = false;
                 result.ErrorMessage = PackageResult.PackageElsewhere;
@@ -390,7 +390,7 @@ namespace ENetCareMVC.BusinessService
                 return result;
             }
 
-            if (employee.Location != package.CurrentLocation)
+            if (employee.Location.CentreId != package.CurrentLocation.CentreId)
             {
                 result.Success = false;
                 result.ErrorMessage = PackageResult.PackageElsewhere;

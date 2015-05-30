@@ -34,6 +34,8 @@ namespace ENetCareMVC.Web.Models
         public int PackageTypeId { get; set; }
         public int CentreId { get; set; }
 
+        public string CurrentEmployeeUserName { get; set; }
+
     }
 
     public interface ISelectedBarCodesViewModel
