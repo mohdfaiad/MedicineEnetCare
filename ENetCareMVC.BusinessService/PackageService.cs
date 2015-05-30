@@ -315,6 +315,8 @@ namespace ENetCareMVC.BusinessService
                 Success = true
             };
 
+            Package package = _packageRepository.GetPackageWidthBarCode(barCode);
+
             if (employee.EmployeeType == EmployeeType.Manager)
             {
                 result.Success = false;
@@ -322,11 +324,24 @@ namespace ENetCareMVC.BusinessService
                 return result;
             }
 
-            Package package = _packageRepository.GetPackageWidthBarCode(barCode);
+            if (employee.Location != package.CurrentLocation)
+            {
+                result.Success = false;
+                result.ErrorMessage = PackageResult.PackageElsewhere;
+                return result;
+            }
+
             if (package.CurrentStatus == PackageStatus.Distributed)
             {
                 result.Success = false;
                 result.ErrorMessage = PackageResult.PackageAlreadyDistributed;
+                return result;
+            }
+
+            if (package.ExpirationDate < DateTime.Today)
+            {
+                result.Success = false;
+                result.ErrorMessage = PackageResult.PackageHasExpired;
                 return result;
             }
 
@@ -349,7 +364,7 @@ namespace ENetCareMVC.BusinessService
         }
 
         /// <summary>
-        /// Attempts to update package with "packageId" to discard it, if currently logged employee is autorized
+        /// Attempts to update package with "packageId" to discard it, if currently logged employee is authorized
         /// Sets package's status as discarded
         /// </summary>
         /// <param name="barCode"></param>
@@ -366,14 +381,37 @@ namespace ENetCareMVC.BusinessService
                 Success = true
             };
 
+            Package package = _packageRepository.GetPackageWidthBarCode(barCode);
+
             if (employee.EmployeeType == EmployeeType.Manager)
             {
                 result.Success = false;
-                result.ErrorMessage = PackageResult.EmployeeNotAuthorized;
+                result.ErrorMessage = PackageResult.EmployeeNotAuthorizedDiscard;
                 return result;
             }
 
-            Package package = new Package
+            if (employee.Location != package.CurrentLocation)
+            {
+                result.Success = false;
+                result.ErrorMessage = PackageResult.PackageElsewhere;
+                return result;
+            }
+
+            if (package.CurrentStatus != PackageStatus.InStock)
+            {
+                result.Success = false;
+                result.ErrorMessage = PackageResult.PackageIsNotInStock;
+                return result;
+            }
+
+            if (package.ExpirationDate >= DateTime.Today)
+            {
+                result.Success = false;
+                result.ErrorMessage = PackageResult.PackageNotExpired + package.ExpirationDate;
+                return result;
+            }
+
+            Package package2 = new Package
             {
                 PackageTypeId = packageType.PackageTypeId,
                 CurrentLocationCentreId = distributionCentre.CentreId,
@@ -384,9 +422,9 @@ namespace ENetCareMVC.BusinessService
                 BarCode = barCode
             };
 
-            _packageRepository.Update(package);
+            _packageRepository.Update(package2);
 
-            result.Id = package.PackageId;
+            result.Id = package2.PackageId;
 
             return result;
         }
