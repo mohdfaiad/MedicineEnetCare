@@ -73,66 +73,97 @@ namespace ENetCare.UnitTest
             Assert.AreEqual<string>(result.ErrorMessage, PackageResult.ExpirationDateCannotBeEarlierThanToday);
         }
 
+        private Result DiscardPackage(int currentCentreId, string userName, string barCode)
+        {
+            MockPackageRepository packageRepository = new MockPackageRepository();
+            PackageService _packageService = new PackageService(packageRepository);
+            Employee employee = MockDataAccess.GetEmployee(userName);
+            Package package = MockDataAccess.GetPackage(barCode);
+            package.CurrentLocation = MockDataAccess.GetDistributionCentre(currentCentreId);
+            StandardPackageType spt2 = _packageService.GetStandardPackageType(package.PackageType.PackageTypeId);
+            return _packageService.Discard(package.BarCode, employee.Location, employee, package.ExpirationDate, spt2, package.PackageId);
+        }
+
         [TestMethod]
         public void TestDiscard_HandleCentreNullReference()
         {
-            DistributionCentre centre = new DistributionCentre();
-            centre = null;
-            MockPackageRepository packageRepository = new MockPackageRepository();
-            PackageService _packageService = new PackageService(packageRepository);
-            MockEmployeeRepository repository = new MockEmployeeRepository();
-            var employeeService = new EmployeeService(repository);
-            Employee authEmployee = employeeService.Retrieve("rsmith");
-            DateTime expirationDate = DateTime.Now;
-            Package package = _packageService.Retrieve("1232655456");
-            StandardPackageType spt2 = _packageService.GetStandardPackageType(package.PackageType.PackageTypeId);
-            var result = _packageService.Discard(package.BarCode, centre, authEmployee, expirationDate, spt2, package.PackageId);
+            var result = DiscardPackage(4, "rsmith@hotmail.com", "1232655456");
             Assert.IsNotNull(result);
         }
-            
+
+        [TestMethod]
+        public void TestDiscard_PackageNotExpired()
+        {
+            //"ihab" works in centre 4 and package "04983238436" has not expired
+            var result = DiscardPackage(4, "ihab@enetcare.com", "04983238436");
+            Assert.IsFalse(result.Success);
+        }
+
+        [TestMethod]
+        public void TestDiscard_DiscardByManager()
+        {
+            //"rsmith" is a manager who works in centre 4 and so he should not be able to discard packages
+            var result = DiscardPackage(4, "rsmith@hotmail.com", "96854278434");
+            Assert.AreEqual("You are not authorized to discard packages", result.ErrorMessage);
+        }
+
+        [TestMethod]
+        public void TestDiscard_PackageDistributedButTimeExpired()
+        {
+            //"ihab" works in centre 4 and package "01298475141" has been distributed already but the date has passed long after distribution
+            var result = DiscardPackage(4, "ihab@enetcare.com", "01298475141");
+            Assert.IsFalse(result.Success);
+        }
+        
         private Result DistributePackage(int currentCentreId, string userName, string barCode)
         {
-            DistributionCentre centre = new DistributionCentre();
-            centre.CentreId = currentCentreId;
             MockPackageRepository packageRepository = new MockPackageRepository();
             PackageService _packageService = new PackageService(packageRepository);
-            MockEmployeeRepository repository = new MockEmployeeRepository();
-            var employeeService = new EmployeeService(repository);
-            Employee authEmployee = employeeService.Retrieve(userName);
-            DateTime expirationDate = DateTime.Now;
-            Package package = _packageService.Retrieve(barCode);
+            Employee employee = MockDataAccess.GetEmployee(userName);
+            Package package = MockDataAccess.GetPackage(barCode);
+            package.CurrentLocation = MockDataAccess.GetDistributionCentre(currentCentreId);
             StandardPackageType spt2 = _packageService.GetStandardPackageType(package.PackageType.PackageTypeId);
-            return _packageService.Distribute(package.BarCode, centre, authEmployee, expirationDate, spt2, package.PackageId);
+            return _packageService.Distribute(package.BarCode, employee.Location, employee, package.ExpirationDate, spt2, package.PackageId);
         }
 
         [TestMethod]
         public void TestDistribute_EmployeeNotAuthorizedError()
         {
-            //"rsmith" is a manager who works in centre 4 and so he cannot distribute
-            var result = DistributePackage(4, "rsmith", "96854278434");
+            //"rsmith" is a manager who works in centre 4 and so he should not be able to distribute
+            var result = DistributePackage(4, "rsmith@hotmail.com", "96854278434");
             Assert.AreEqual("You are not authorized to distribute packages", result.ErrorMessage);
+        }
+
+        [TestMethod]
+        public void TestDistribute_PackageAlreadyDistributed()
+        {
+            //"ihab" works at centre 4 and the package "04334278430" has already been distributed
+            var result = DistributePackage(4, "ihab@enetcare.com", "04334278430");
+            Assert.AreEqual("That Package has already been distributed", result.ErrorMessage);
+        }
+
+        [TestMethod]
+        public void TestDistribute_DistributeExpiredPackages()
+        {
+            //"ihab" works in centre 4 and the package "65985438786" has expired
+            var result = DistributePackage(4, "ihab@enetcare.com", "65985438786");
+            Assert.AreEqual("That package has expired, cannot distribute an expired package", result.ErrorMessage);
         }
 
         [TestMethod]
         public void TestDistribute_InStockCurrentLocationUpdate()
         {
             //"ihab" works in centre 4 and the package "12344278431" is also in centre 4
-            var result = DistributePackage(4, "ihab", "04983238436");
+            var result = DistributePackage(4, "ihab@enetcare.com", "04983238436");
             Assert.AreEqual(null, result.ErrorMessage);
         }
 
         [TestMethod]
-        public void TestDistribute_DistributedCurrentLocationError()
+        public void TestDistribute_DistributePackageFromDifferentLocation()
         {
-            MockPackageRepository packageRepository = new MockPackageRepository();
-            PackageService _packageService = new PackageService(packageRepository);
-            Employee emp = MockDataAccess.GetEmployee(2);
-            Package p = MockDataAccess.GetPackage(3);
-            p.CurrentStatus = PackageStatus.Distributed;
-            p.CurrentLocation = MockDataAccess.GetDistributionCentre(4);
-            Result result = _packageService.Distribute(p.BarCode, p.CurrentLocation, emp, p.ExpirationDate, p.PackageType, p.PackageId);
+            //"ihab" works in centre 4 and the package "96854278434" is in centre 2
+            var result = DistributePackage(2, "ihab@enetcare.com", "96854278434");
             Assert.AreEqual(false, result.Success);
-            //Assert.AreEqual("Package has been already distributed: " + barCode, result.ErrorMessage);
         }
 
         [TestMethod]

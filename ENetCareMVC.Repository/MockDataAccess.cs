@@ -29,6 +29,18 @@ namespace ENetCareMVC.Repository
         public  static Package GetPackage(int id)
         { return mockPackageDb[id]; }
 
+        public static Package GetPackage(string barCode)
+        {
+            for (int i = 0; i < mockPackageDb.Count; i++)
+            {
+                if (mockPackageDb[i].BarCode == barCode)
+                {
+                    return mockPackageDb[i];
+                }
+            }
+            return null;
+        }
+
         public  static StandardPackageType GetPackageType(int id)
         { return mockPackageTypeDb[id]; }
         
@@ -37,6 +49,15 @@ namespace ENetCareMVC.Repository
 
         public  static Employee GetEmployee(int id)
         { return mockEmployeeDb[id]; }
+
+        public static Employee GetEmployee(string userName)
+        { 
+            for (int i = 0; i < mockEmployeeDb.Count; i++) {
+                if (mockEmployeeDb[i].EmailAddress == userName) 
+                    return mockEmployeeDb[i]; 
+            }
+            return null;
+        }
 
         // *********************************************************************
 
@@ -193,7 +214,7 @@ namespace ENetCareMVC.Repository
             DistributionCentre centreTwo = GetDistributionCentre(2);
             DistributionCentre centreThree = GetDistributionCentre(3);
             AddEmployee("Benjamin", "ben@hotmail.com", mainCentre, EmployeeType.Agent, "ben", Guid.NewGuid());
-            AddEmployee("Ihab", "ihab@hotmail.com", mainCentre, EmployeeType.Agent, "ihab", Guid.NewGuid());
+            AddEmployee("Ihab", "ihab@enetcare.com", mainCentre, EmployeeType.Agent, "ihab", Guid.NewGuid());
             AddEmployee("Ramin", "ramin@hotmail.com", mainCentre, EmployeeType.Agent, "ramin", Guid.NewGuid());
             AddEmployee("Pablo", "pablo@hotmail.com", mainCentre, EmployeeType.Agent, "pablo", Guid.NewGuid());
             AddEmployee("Robert Smith", "rsmith@hotmail.com", mainCentre, EmployeeType.Manager, "rsmith", Guid.NewGuid());
@@ -236,6 +257,9 @@ namespace ENetCareMVC.Repository
             AddPackage(type4, "9875400000", mainCentre, PackageStatus.InStock, DateTime.Parse("25/04/2016"));
             AddPackage(type4, "0000215488", mainCentre, PackageStatus.InStock, DateTime.Parse("25/04/2016"));
             AddPackage(type2, "0000000000", mainCentre, PackageStatus.InStock, DateTime.Parse("25/04/2016"));
+
+            AddPackage(type2, "65985438786", centreThree, PackageStatus.InStock, DateTime.Parse("25/04/2015"));
+            AddPackage(type2, "01298475141", centreThree, PackageStatus.Distributed, DateTime.Parse("25/04/2015"));
         }
 
 
