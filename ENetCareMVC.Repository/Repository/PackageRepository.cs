@@ -96,6 +96,18 @@ namespace ENetCareMVC.Repository.Repository
             return packageTransit;
         }
 
+        public PackageTransit GetOpenTransit(Package package)
+        {
+            PackageTransit packageTransit = null;
+
+            packageTransit = DataAccess.GetPackageTransit(_connectionString, package);
+
+            if (packageTransit == null)
+                return null;
+
+            return packageTransit;
+        }
+
         public DistributionCentre GetHeadOffice()
         {                                                               // (P. 05-04-2015)
 

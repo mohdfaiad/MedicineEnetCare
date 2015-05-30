@@ -19,22 +19,22 @@ namespace ENetCareMVC.Web.SelectBarCodesOperations
                 result.Succeeded = false;
                 result.ErrorMessage = " You can not distribute discarded package";
             }
-            if (package.CurrentStatus == PackageStatus.InTransit)
+            else if (package.CurrentStatus == PackageStatus.InTransit)
             {
                 result.Succeeded = false;
                 result.ErrorMessage = "Package is in transit";
             }
-            if (package.CurrentStatus == PackageStatus.Distributed)
+            else if (package.CurrentStatus == PackageStatus.Distributed)
             {
                 result.Succeeded = false;
                 result.ErrorMessage = "Package is distributed before.";
             }
-            //if (package.CurrentStatus != PackageStatus.InStock)
-            //{
-            //    result.Succeeded = false;
-            //    result.ErrorMessage = "Package not in stock";
-            //}
-            if (package.CurrentLocation.CentreId != employee.LocationCentreId)
+            else if (package.CurrentStatus == PackageStatus.Lost)
+            {
+                result.Succeeded = false;
+                result.ErrorMessage = "Package is lost";
+            }
+            else if (package.CurrentLocation.CentreId != employee.LocationCentreId)
             {
                 result.Succeeded = false;
                 result.ErrorMessage = "The package is not in your location";

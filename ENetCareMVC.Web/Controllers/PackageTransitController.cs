@@ -30,11 +30,9 @@ namespace ENetCareMVC.Web.Controllers
             model.SendDate = DateTime.Today;
 
             //Result result = packageService.Send()
+            var employeeService = GetEmployeeService();
 
-            string connectionString = ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString;
-            Entities context = new Entities(connectionString);
-
-            model.DistributionCentres = context.DistributionCentre;
+            model.DistributionCentres = employeeService.GetAllDistributionCentres();
 
             return View(model);
         }
@@ -43,11 +41,9 @@ namespace ENetCareMVC.Web.Controllers
         [MultiButton(Path = "/PackageTransit/Send", MatchFormKey = "action", MatchFormValue = "Add")]
         public ActionResult SendAdd(PackageTransitSendViewModel model)
         {
+            var employeeService = GetEmployeeService();
 
-            string connectionString = ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString;
-            Entities context = new Entities(connectionString);
-
-            model.DistributionCentres = context.DistributionCentre;
+            model.DistributionCentres = employeeService.GetAllDistributionCentres();
 
             var operations = new SendSelectedBarCodesOperations();
 
@@ -62,10 +58,9 @@ namespace ENetCareMVC.Web.Controllers
         [MultiButton(Path = "/PackageTransit/Send", MatchFormKey = "action", MatchFormValue = "Remove")]
         public ActionResult SendRemove(PackageTransitSendViewModel model)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString;
-            Entities context = new Entities(connectionString);
+            var employeeService = GetEmployeeService();
 
-            model.DistributionCentres = context.DistributionCentre;
+            model.DistributionCentres = employeeService.GetAllDistributionCentres();
 
             var operations = new SendSelectedBarCodesOperations();
             string buttonValue = HttpContext.Request["action"];
@@ -106,6 +101,7 @@ namespace ENetCareMVC.Web.Controllers
             }
             else
             {
+                model.DistributionCentres = employeeService.GetAllDistributionCentres();
                 return View("Send", model);
             }
         }
@@ -129,7 +125,7 @@ namespace ENetCareMVC.Web.Controllers
 
         [HttpPost]
         [MultiButton(Path = "/PackageTransit/Receive", MatchFormKey = "action", MatchFormValue = "Add")]
-        public ActionResult RevieveAdd(PackageTransitReceiveViewModel model)
+        public ActionResult ReceiveAdd(PackageTransitReceiveViewModel model)
         {
             var operations = new ReceiveSelectedBarCodesOperations();
 

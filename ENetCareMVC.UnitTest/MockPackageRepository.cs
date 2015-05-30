@@ -104,6 +104,17 @@ namespace ENetCareMVC.UnitTest
             return null;
         }
 
+        public PackageTransit GetOpenTransit(Package Package) 
+        {
+            foreach (PackageTransit t in MockDataAccess.GetAllPackageTransits())
+                if (t.Package == Package &&                    
+                    t.DateReceived == null &&
+                    t.DateCancelled == null)
+                    return t;
+
+            return null;
+        }
+
         public List<PackageTransit> GetActiveTransitsByPackage(Package xPackage)
         { 
             List<PackageTransit> filteredList = new List<PackageTransit>();

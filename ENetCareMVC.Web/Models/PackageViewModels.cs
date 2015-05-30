@@ -29,16 +29,14 @@ namespace ENetCareMVC.Web.Models
     }
 
     public class PackageDiscardViewModel : ISelectedBarCodesViewModel
-    {
-        [Required]
+    {        
         public string BarCode { get; set; }
 
         public List<SelectedPackage> SelectedPackages { get; set; }
     }
 
     public class PackageDistributeViewModel : ISelectedBarCodesViewModel
-    {
-        [Required]
+    {       
         public string BarCode { get; set; }
 
         public List<SelectedPackage> SelectedPackages { get; set; }

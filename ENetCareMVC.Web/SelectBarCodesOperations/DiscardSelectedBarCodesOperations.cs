@@ -23,7 +23,7 @@ namespace ENetCareMVC.Web.SelectBarCodesOperations
             else if (package.ExpirationDate > DateTime.Today)
             {
                 result.Succeeded = false;
-                result.ErrorMessage = "That package has not expired yet, it will expire on " + package.ExpirationDate;
+                result.ErrorMessage = "That package has not expired yet, it will expire on " + package.ExpirationDate.ToString("d");
             }
             else if (package.CurrentLocationCentreId != employee.LocationCentreId)
             {

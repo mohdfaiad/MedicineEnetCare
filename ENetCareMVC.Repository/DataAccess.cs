@@ -231,6 +231,25 @@ namespace ENetCareMVC.Repository
             return packageTransit;
         }
 
+        public static PackageTransit GetPackageTransit(string connectionString, Package package)
+        {
+            PackageTransit packageTransit = null;
+            // Define Update Query with Parameter
+
+            using (var ctx = new Entities(connectionString))
+            {
+                var packageTransitRecord = (from e in ctx.PackageTransit
+                                            where e.PackageId == package.PackageId                                            
+                                            && e.DateReceived == null
+                                            && e.DateCancelled == null
+                                            select e).FirstOrDefault();
+
+                packageTransit = packageTransitRecord;
+            }
+
+            return packageTransit;
+        }
+
         public static int InsertAudit(string connectionString, Employee employee, StandardPackageType packageType)
         {            // define INSERT query with parameters 
             using (var ctx = new Entities(connectionString))

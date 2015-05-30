@@ -2,8 +2,9 @@
 
 <div class="form-group">
     @Html.LabelFor(m => m.BarCode, new { @class = "col-md-2 control-label" })
-    <div class="col-md-10">
-        @Html.TextBoxFor(m => m.BarCode, new { @class = "form-control" })
+    <div class="col-md-10">        
+        <input class="form-control" id="BarCode" name="BarCode" type="text" value="@Model.BarCode" />
+
         <input type="submit" value="Add" name="action" />
     </div>
 </div>

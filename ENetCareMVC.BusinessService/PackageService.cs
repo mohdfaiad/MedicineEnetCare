@@ -231,6 +231,11 @@ namespace ENetCareMVC.BusinessService
             }
 
             PackageTransit activeTransit = _packageRepository.GetTransit(package, receiverCentre);
+            if (activeTransit == null)
+            {
+                // Maybe the open transit has a different destination
+                activeTransit = _packageRepository.GetOpenTransit(package);
+            }
 
             // If there is an active transit set Date Received or Date Cancelled and update
             // Even if there is no transit record the receive should still work
@@ -327,18 +332,18 @@ namespace ENetCareMVC.BusinessService
 
             Package package2 = new Package
             {
-                PackageType = packageType,
-                CurrentLocation = distributionCentre,
+                PackageTypeId = packageType.PackageTypeId,
+                CurrentLocationCentreId = distributionCentre.CentreId,
                 CurrentStatus = PackageStatus.Distributed,
                 PackageId = packageId,
                 ExpirationDate = expirationDate,
-                DistributedBy = employee,
+                DistributedByEmployeeId = employee.EmployeeId,
                 BarCode = barCode
             };
 
             _packageRepository.Update(package2);
 
-            result.Id = package.PackageId;
+            result.Id = package2.PackageId;
 
             return result;
         }
@@ -370,8 +375,8 @@ namespace ENetCareMVC.BusinessService
 
             Package package = new Package
             {
-                PackageType = packageType,
-                CurrentLocation = distributionCentre,
+                PackageTypeId = packageType.PackageTypeId,
+                CurrentLocationCentreId = distributionCentre.CentreId,
                 CurrentStatus = PackageStatus.Discarded,
                 PackageId = packageId,
                 ExpirationDate = expirationDate,

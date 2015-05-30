@@ -20,32 +20,38 @@ namespace ENetCareMVC.Web.Controllers
         static IReportRepository repRepository = new ReportRepository(myConnection);
         static ReportService reportService = new ReportService(repRepository);
 
-  
+
+        [Authorize(Roles = "Manager")]
         public ActionResult CentreLosses()
         {
             return View(reportService.GetDistributionCentreLosses());
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult DoctorActivity()
         {
              return View(reportService.GetDoctorActivity());
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult GlobalStock()
         {
               return View(reportService.GetGlobalStock());
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult DistributionCentreStock()
         {
              return View(reportService.GetDistributionCentreStock());
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult ValueInTransit()
         {
             return View(reportService.GetValueInTransit());
         }
 
+        [Authorize(Roles = "Agent, Doctor, Manager")]
         public ActionResult Stocktaking()
         {
             var employee = GetCurrentEmployee();

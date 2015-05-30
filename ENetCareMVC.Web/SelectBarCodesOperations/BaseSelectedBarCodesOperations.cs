@@ -59,6 +59,8 @@ namespace ENetCareMVC.Web.SelectBarCodesOperations
                 };
 
                 model.SelectedPackages.Add(selectedPackage);
+
+                model.BarCode = string.Empty;
             }
 
             return result;

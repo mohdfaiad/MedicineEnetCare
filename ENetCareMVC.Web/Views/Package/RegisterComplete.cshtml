@@ -10,6 +10,14 @@
 
 <br/>
 
+Bar Code: @Model.BarCode
 
+<br />
+<br />
 
-
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="button" class="btn btn-default" value="Next" onclick="location.href = '@Url.Action("Register", "Package")';" />
+        <input type="button" class="btn btn-default" value="Close" onclick="location.href = '@Url.Action("Index", "Home")';" />
+    </div>
+</div>

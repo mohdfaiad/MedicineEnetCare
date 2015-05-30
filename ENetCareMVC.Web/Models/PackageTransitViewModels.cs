@@ -7,8 +7,7 @@ using ENetCareMVC.Repository.Data;
 namespace ENetCareMVC.Web.Models
 {
     public class PackageTransitSendViewModel : ISelectedBarCodesViewModel
-    {
-        [Required]
+    {        
         [Display(Name = "BarCode")]
         public string BarCode { get; set; }
 
