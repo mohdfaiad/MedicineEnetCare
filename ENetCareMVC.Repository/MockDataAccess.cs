@@ -53,7 +53,7 @@ namespace ENetCareMVC.Repository
         public static Employee GetEmployee(string userName)
         { 
             for (int i = 0; i < mockEmployeeDb.Count; i++) {
-                if (mockEmployeeDb[i].EmailAddress == userName) 
+                if (mockEmployeeDb[i].UserName == userName) 
                     return mockEmployeeDb[i]; 
             }
             return null;
@@ -213,15 +213,15 @@ namespace ENetCareMVC.Repository
             DistributionCentre mainCentre = GetHeadOffice();
             DistributionCentre centreTwo = GetDistributionCentre(2);
             DistributionCentre centreThree = GetDistributionCentre(3);
-            AddEmployee("Benjamin", "ben@hotmail.com", mainCentre, EmployeeType.Agent, "ben", Guid.NewGuid());
-            AddEmployee("Ihab", "ihab@enetcare.com", mainCentre, EmployeeType.Agent, "ihab", Guid.NewGuid());
-            AddEmployee("Ramin", "ramin@hotmail.com", mainCentre, EmployeeType.Agent, "ramin", Guid.NewGuid());
-            AddEmployee("Pablo", "pablo@hotmail.com", mainCentre, EmployeeType.Agent, "pablo", Guid.NewGuid());
-            AddEmployee("Robert Smith", "rsmith@hotmail.com", mainCentre, EmployeeType.Manager, "rsmith", Guid.NewGuid());
-            AddEmployee("Dr Hell", "drh@hotmail.com", centreTwo, EmployeeType.Doctor, "drhell", Guid.NewGuid());
-            AddEmployee("Dr Love", "drl@hotmail.com", centreTwo, EmployeeType.Doctor, "drlove", Guid.NewGuid());
-            AddEmployee("Dr Fishy", "drf@hotmail.com", centreTwo, EmployeeType.Doctor, "drfishy", Guid.NewGuid());
-            AddEmployee("Dr Smith", "fsmith@hotmail.com", centreTwo, EmployeeType.Doctor, "fsmith", Guid.NewGuid());
+            AddEmployee("Benjamin", "ben@hotmail.com", mainCentre, EmployeeType.Agent, "ben@hotmail.com", Guid.NewGuid());
+            AddEmployee("Ihab", "ihab@enetcare.com", mainCentre, EmployeeType.Agent, "ihab@enetcare.com", Guid.NewGuid());
+            AddEmployee("Ramin", "ramin@hotmail.com", mainCentre, EmployeeType.Agent, "ramin@hotmail.com", Guid.NewGuid());
+            AddEmployee("Pablo", "pablo@hotmail.com", mainCentre, EmployeeType.Agent, "pablo@hotmail.com", Guid.NewGuid());
+            AddEmployee("Robert Smith", "rsmith@hotmail.com", mainCentre, EmployeeType.Manager, "rsmith@hotmail.com", Guid.NewGuid());
+            AddEmployee("Dr Hell", "drh@hotmail.com", centreTwo, EmployeeType.Doctor, "drh@hotmail.com", Guid.NewGuid());
+            AddEmployee("Dr Love", "drl@hotmail.com", centreTwo, EmployeeType.Doctor, "drl@hotmail.com", Guid.NewGuid());
+            AddEmployee("Dr Fishy", "drf@hotmail.com", centreTwo, EmployeeType.Doctor, "drf@hotmail.com", Guid.NewGuid());
+            AddEmployee("Dr Smith", "fsmith@hotmail.com", centreTwo, EmployeeType.Doctor, "fsmith@hotmail.com", Guid.NewGuid());
 
             AddPackageType("Xophinol", 100, 5, ShelfLifeUnitType.Month, 200);
             AddPackageType("Utshol", 200, 5, ShelfLifeUnitType.Month, 400);
@@ -239,7 +239,7 @@ namespace ENetCareMVC.Repository
             AddPackage(type3, "05548478000", mainCentre, PackageStatus.InTransit, DateTime.Parse("12/12/2016"));
             AddPackage(type4, "11623542734", mainCentre, PackageStatus.Distributed, DateTime.Parse("12/12/2016"));
             AddPackage(type3, "04983238436", mainCentre, PackageStatus.InStock, DateTime.Parse("12/12/2016"));
-
+  
             AddPackage(type4, "13154242431", centreTwo, PackageStatus.InTransit, DateTime.Parse("12/11/2016"));
             AddPackage(type2, "96854278434", centreTwo, PackageStatus.InStock, DateTime.Parse("12/09/2016"));
             AddPackage(type3, "75634278434", centreTwo, PackageStatus.Distributed, DateTime.Parse("12/08/2016"));
@@ -260,6 +260,8 @@ namespace ENetCareMVC.Repository
 
             AddPackage(type2, "65985438786", mainCentre, PackageStatus.InStock, DateTime.Parse("25/04/2015"));
             AddPackage(type2, "01298475141", mainCentre, PackageStatus.Distributed, DateTime.Parse("25/04/2015"));
+
+            AddPackage(type3, "04983238437", mainCentre, PackageStatus.InStock, DateTime.Parse("12/12/2016"));
         }
 
 

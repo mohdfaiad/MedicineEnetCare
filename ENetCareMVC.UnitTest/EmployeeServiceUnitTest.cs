@@ -33,7 +33,7 @@ namespace ENetCareMVC.UnitTest
                 Name = "North Centre"
             };
 
-            var result = employeeService.Update("fsmith", "Fred Smith", "fsmith@a.com", locationCentre, EmployeeType.Doctor);
+            var result = employeeService.Update("fsmith@hotmail.com", "Fred Smith", "fsmith@a.com", locationCentre, EmployeeType.Doctor);
 
             Assert.AreEqual<bool>(true, result.Success);
         }
@@ -86,7 +86,7 @@ namespace ENetCareMVC.UnitTest
                 Name = "North Centre"
             };
 
-            var result = employeeService.Update("fsmith", string.Empty, "fsmith@a.com", locationCentre, EmployeeType.Doctor);
+            var result = employeeService.Update("fsmith@hotmail.com", string.Empty, "fsmith@a.com", locationCentre, EmployeeType.Doctor);
 
             Assert.AreEqual<bool>(false, result.Success);
             Assert.AreEqual<string>(EmployeeResult.FullNameCannotByEmpty, result.ErrorMessage);
@@ -104,7 +104,7 @@ namespace ENetCareMVC.UnitTest
                 Name = "North Centre"
             };
 
-            var result = employeeService.Update("fsmith", "Fred Smith", string.Empty, locationCentre, EmployeeType.Doctor);
+            var result = employeeService.Update("fsmith@hotmail.com", "Fred Smith", string.Empty, locationCentre, EmployeeType.Doctor);
 
             Assert.AreEqual<bool>(false, result.Success);
             Assert.AreEqual<string>(EmployeeResult.EmailAddressCannotByEmpty, result.ErrorMessage);
@@ -122,7 +122,7 @@ namespace ENetCareMVC.UnitTest
                 Name = "North Centre"
             };
 
-            var result = employeeService.Update("fsmith", "Fred Smith", "fsmith@a.com", null, EmployeeType.Doctor);
+            var result = employeeService.Update("fsmith@hotmail.com", "Fred Smith", "fsmith@a.com", null, EmployeeType.Doctor);
 
             Assert.AreEqual<bool>(false, result.Success);
             Assert.AreEqual<string>(EmployeeResult.LocationCentreCannotByEmpty, result.ErrorMessage);

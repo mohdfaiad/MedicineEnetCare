@@ -44,7 +44,7 @@ namespace ENetCareMVC.UnitTest
 
             for (int i = 0; i < employees.Count; i++)
             {
-                if (employees[i].EmailAddress == username)
+                if (employees[i].UserName == username)
                 {
                     return employees[i];
                 }

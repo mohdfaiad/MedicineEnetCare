@@ -94,8 +94,8 @@ namespace ENetCare.UnitTest
         [TestMethod]
         public void TestDiscard_PackageNotExpired()
         {
-            //"ihab" works in centre 4 and package "04983238436" has not expired
-            var result = DiscardPackage(4, "ihab@enetcare.com", "04983238436");
+            //"ihab" works in centre 4 and package "04983238437" has not expired
+            var result = DiscardPackage(4, "ihab@enetcare.com", "04983238437");
             Assert.IsFalse(result.Success);
         }
 
