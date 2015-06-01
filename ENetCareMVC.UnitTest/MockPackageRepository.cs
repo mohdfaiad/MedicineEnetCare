@@ -73,18 +73,23 @@ namespace ENetCareMVC.UnitTest
         return null;
         }
 
+        //public int InsertTransit(PackageTransit PackageTransit)
+        //{
+        //    Package tempPackage = new Package();
+        //    tempPackage.PackageId = 1;
+        //    tempPackage.BarCode = "012365423";
+        //    DateTime dateTemp = new DateTime(2015, 05, 20);
+        //    tempPackage.ExpirationDate = dateTemp;
+        //    tempPackage.PackageType.PackageTypeId = 1;
+        //    tempPackage.CurrentLocation.CentreId = 1;
+        //    tempPackage.CurrentStatus = PackageStatus.InStock;
+        //    // need more work to complete!
+        //    return 1;
+        //}
         public int InsertTransit(PackageTransit PackageTransit)
         {
-            Package tempPackage = new Package();
-            tempPackage.PackageId = 1;
-            tempPackage.BarCode = "012365423";
-            DateTime dateTemp = new DateTime(2015, 05, 20);
-            tempPackage.ExpirationDate = dateTemp;
-            tempPackage.PackageType.PackageTypeId = 1;
-            tempPackage.CurrentLocation.CentreId = 1;
-            tempPackage.CurrentStatus = PackageStatus.InStock;
-            // need more work to complete!
-            return 1;
+            int transitId = MockDataAccess.InsertPackageTransit(PackageTransit);
+            return transitId;
         }
 
         public void UpdateTransit(PackageTransit pt)
