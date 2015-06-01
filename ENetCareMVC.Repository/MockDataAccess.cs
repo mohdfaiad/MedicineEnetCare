@@ -157,6 +157,7 @@ namespace ENetCareMVC.Repository
             newPackage.CurrentStatus = Status;
             newPackage.ExpirationDate = Expiration;
             newPackage.PackageType = Type;
+            newPackage.CurrentLocation = Location;
             return InsertPackage(newPackage);
         }
 

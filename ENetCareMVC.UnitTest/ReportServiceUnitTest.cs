@@ -64,6 +64,58 @@ namespace ENetCareMVC.UnitTest
             Debug.WriteLine("Number of items: " + spList.Count());
             Assert.IsTrue(spList.Count() > 0); 
         }
+         
+         
+
+        [TestMethod]
+        public void TestReportValueInTransitView()
+        {
+            ReportController controller = new ReportController();
+            ViewResult result = controller.ValueInTransit() as ViewResult;
+            Assert.AreEqual("ValueInTransit", result.ViewBag.Message);
+        }
+
+        [TestMethod]
+        public void TestReportDistriCentreLossesView()
+        {
+            ReportController controller = new ReportController();
+            ViewResult result = controller.CentreLosses() as ViewResult;
+            Assert.AreEqual("CentreLosses", result.ViewBag.Message);
+        }
+
+        [TestMethod]
+        public void TestReportDistriCentreStockView()
+        {
+            ReportController controller = new ReportController();
+            ViewResult result = controller.DistributionCentreStock() as ViewResult;
+            Assert.AreEqual("ValueInTransit", result.ViewBag.Message);
+        }
+
+        [TestMethod]
+        public void TestReportDoctorActivityView()
+        {
+            ReportController controller = new ReportController();
+            ViewResult result = controller.DoctorActivity() as ViewResult;
+            Assert.AreEqual("DoctorsActivity", result.ViewBag.Message);
+        }
+
+        [TestMethod]
+        public void TestReportGlobalStockView()
+        {
+            ReportController controller = new ReportController();
+            ViewResult result = controller.GlobalStock() as ViewResult;
+            Assert.AreEqual("GlobalStock", result.ViewBag.Message);
+        }
+
+        [TestMethod]
+        public void TestReportStocktakingView()
+        {
+            ReportController controller = new ReportController();
+            ViewResult result = controller.Stocktaking() as ViewResult;
+            Assert.AreEqual("Stocktaking", result.ViewBag.Message);
+        }
+
+         
         */
 
 
