@@ -404,7 +404,7 @@ namespace ENetCareMVC.BusinessService
                 return result;
             }
 
-            if (package.ExpirationDate >= DateTime.Today)
+            if (package.ExpirationDate > DateTime.Today)
             {
                 result.Success = false;
                 result.ErrorMessage = PackageResult.PackageNotExpired + package.ExpirationDate;
