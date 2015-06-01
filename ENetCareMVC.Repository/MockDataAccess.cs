@@ -262,6 +262,9 @@ namespace ENetCareMVC.Repository
             AddPackage(type2, "01298475141", mainCentre, PackageStatus.Distributed, DateTime.Parse("25/04/2015"));
 
             AddPackage(type3, "04983238437", mainCentre, PackageStatus.InStock, DateTime.Parse("12/12/2016"));
+            AddPackage(type2, "04983238777", mainCentre, PackageStatus.InStock, DateTime.Parse("12/12/2016"));
+            AddPackage(type2, "04983238778", mainCentre, PackageStatus.InStock, DateTime.Parse("12/12/2016"));
+            AddPackage(type2, "04983238779", mainCentre, PackageStatus.Discarded, DateTime.Parse("12/12/2016"));
         }
 
 
