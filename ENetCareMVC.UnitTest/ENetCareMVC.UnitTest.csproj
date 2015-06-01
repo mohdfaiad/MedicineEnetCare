@@ -90,8 +90,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\PackageControllerTest.cs" />
+    <Compile Include="Controllers\PackageTransitControllerTest.cs" />
     <Compile Include="DBUnitTest.cs" />
     <Compile Include="EmployeeServiceUnitTest.cs" />
+    <Compile Include="FakeClasses.cs" />
     <Compile Include="MockEmployeeRepository.cs" />
     <Compile Include="MockPackageRepository.cs" />
     <Compile Include="MockReportRepository.cs" />
