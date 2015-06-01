@@ -68,7 +68,7 @@ namespace ENetCareMVC.UnitTest
             List<StockTaking> sList = new List<StockTaking>();
             List<Package> pList = MockDataAccess.GetAllPackages();
             foreach(Package p in pList)
-                if(p.CurrentLocation.CentreId==CentreId) {
+                if(p.CurrentLocation!=null && p.CurrentLocation.CentreId==CentreId) {
                     StockTaking sP=new StockTaking();            
                     sP.PackageTypeId=p.PackageType.PackageTypeId;
                     sP.PackageTypeDescription = p.PackageType.Description;
