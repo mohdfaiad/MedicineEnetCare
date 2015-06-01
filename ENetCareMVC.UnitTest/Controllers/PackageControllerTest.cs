@@ -7,6 +7,7 @@ using ENetCareMVC.Web.Models;
 using ENetCareMVC.Repository.Repository;
 using ENetCareMVC.Repository.Data;
 using System.Collections.Generic;
+using ENetCareMVC.BusinessService;
 
 namespace ENetCareMVC.UnitTest.Controllers
 {
@@ -87,7 +88,7 @@ namespace ENetCareMVC.UnitTest.Controllers
             var modelReturned = result.Model as PackageDistributeViewModel;
 
             Assert.AreEqual("DistributeComplete", result.ViewName);
-            Assert.AreEqual("You are not authorized to distribute packages", modelReturned.SelectedPackages[0].ProcessResultMessage);
+            Assert.AreEqual(PackageResult.EmployeeNotAuthorized, modelReturned.SelectedPackages[0].ProcessResultMessage);
         }
 
         [TestMethod]
@@ -121,7 +122,7 @@ namespace ENetCareMVC.UnitTest.Controllers
             var modelReturned = result.Model as PackageDistributeViewModel;
 
             Assert.AreEqual("DistributeComplete", result.ViewName);
-            Assert.AreEqual("That package has expired, cannot distribute an expired package", modelReturned.SelectedPackages[0].ProcessResultMessage);
+            Assert.AreEqual(PackageResult.PackageHasExpired, modelReturned.SelectedPackages[0].ProcessResultMessage);
         }
 
 
@@ -156,7 +157,7 @@ namespace ENetCareMVC.UnitTest.Controllers
             var modelReturned = result.Model as PackageDiscardViewModel;
 
             Assert.AreEqual("DiscardComplete", result.ViewName);
-            Assert.AreEqual("That Package is Not in Stock", modelReturned.SelectedPackages[0].ProcessResultMessage);
+            Assert.AreEqual(PackageResult.PackageIsNotInStock, modelReturned.SelectedPackages[0].ProcessResultMessage);
         }
 
         [TestMethod]
