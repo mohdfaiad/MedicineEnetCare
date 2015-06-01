@@ -96,7 +96,7 @@ namespace ENetCareMVC.Web.Controllers
             DistributionCentre recieverCentre = employeeService.GetDistributionCentre(model.DestinationCentreId);
             DistributionCentre senderCentre = employeeService.GetDistributionCentre(employee.Location.CentreId);
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && model.SelectedPackages != null && model.SelectedPackages.Any())
             {
                 foreach (var package in model.SelectedPackages)
                 {
@@ -116,6 +116,12 @@ namespace ENetCareMVC.Web.Controllers
             }
             else
             {
+                if (model.SelectedPackages == null || !model.SelectedPackages.Any())
+                {
+                    model.SelectedPackages = new List<SelectedPackage>();
+                    ModelState.AddModelError("", PackageResult.NoBarCodesSelected);
+                }
+
                 model.DistributionCentres = employeeService.GetAllDistributionCentres();
                 return View("Send", model);
             }
@@ -175,7 +181,7 @@ namespace ENetCareMVC.Web.Controllers
             
             DistributionCentre locationCentre = employeeService.GetDistributionCentre(employee.LocationCentreId);
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && model.SelectedPackages != null && model.SelectedPackages.Any())
             {
                 foreach (var package in model.SelectedPackages)
                 {
@@ -194,16 +200,13 @@ namespace ENetCareMVC.Web.Controllers
             }
             else
             {
+                if (model.SelectedPackages == null || !model.SelectedPackages.Any())
+                {
+                    model.SelectedPackages = new List<SelectedPackage>();
+                    ModelState.AddModelError("", PackageResult.NoBarCodesSelected);
+                }                
                 return View("Receive", model);
             }
-            //if (ModelState.IsValid)
-            //{
-            //    return View("ReceiveComplete", model);
-            //}
-            //else
-            //{
-            //    return View("Receive", model);
-            //}
         }
 
         [HttpPost]

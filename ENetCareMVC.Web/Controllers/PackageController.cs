@@ -144,7 +144,7 @@ namespace ENetCareMVC.Web.Controllers
 
             Result result = new Result();
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && model.SelectedPackages != null && model.SelectedPackages.Any())
             {
                 foreach (var package in model.SelectedPackages)
                 {
@@ -167,6 +167,11 @@ namespace ENetCareMVC.Web.Controllers
                 return View("DiscardComplete", model);
             }
 
+            if (model.SelectedPackages == null || !model.SelectedPackages.Any())
+            {
+                model.SelectedPackages = new List<SelectedPackage>();
+                ModelState.AddModelError("", PackageResult.NoBarCodesSelected);
+            }   
             return View("Discard", model);
         }
 
@@ -221,7 +226,7 @@ namespace ENetCareMVC.Web.Controllers
 
             Result result = new Result();
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && model.SelectedPackages != null && model.SelectedPackages.Any())
             {           
                 foreach (var package in model.SelectedPackages)
                 {
@@ -243,12 +248,17 @@ namespace ENetCareMVC.Web.Controllers
                 return View("DistributeComplete", model);
             }
 
+            if (model.SelectedPackages == null || !model.SelectedPackages.Any())
+            {
+                model.SelectedPackages = new List<SelectedPackage>();
+                ModelState.AddModelError("", PackageResult.NoBarCodesSelected);
+            }   
             return View("Distribute", model);
         }
 
         [HttpPost]
         [MultiButton(Path = "/Package/Distribute", MatchFormKey = "action", MatchFormValue = "Close")]
-        public ActionResult ReceiveClose(PackageDistributeViewModel model)
+        public ActionResult DistributeClose(PackageDistributeViewModel model)
         {
             return RedirectToAction("Index", "Home");
         }

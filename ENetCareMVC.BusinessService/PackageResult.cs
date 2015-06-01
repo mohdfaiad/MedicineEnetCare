@@ -9,6 +9,7 @@ namespace ENetCareMVC.BusinessService
     public class PackageResult
     {
         public const string BarCodeNotFound = "Bar Code not found";
+        public const string NoBarCodesSelected = "There are no Bar Codes selected";
         public const string PackageElsewhere = "That Package is NOT located in this distribution centre";
         public const string PackageIsNotInStock = "That Package is Not in Stock";
         public const string PackageAlreadyDistributed = "That Package has already been distributed";

@@ -52,6 +52,7 @@ namespace ENetCareMVC.Web.Models
         public List<SelectedPackage> SelectedPackages { get; set; }
         
         [Required]
+        [Display(Name = "Receive Date")]
         public DateTime ReceiveDate { get; set; }
     }
 }
