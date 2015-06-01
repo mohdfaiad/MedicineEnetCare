@@ -15,6 +15,21 @@ namespace ENetCareMVC.Web.Controllers
 {
     public class PackageTransitController : Controller
     {
+        private IPackageRepository _packageRepository;
+        private IEmployeeRepository _employeeRepository;
+        
+        public PackageTransitController()
+        {
+         _packageRepository = new PackageRepository(ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString);
+         _employeeRepository = new EmployeeRepository(ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString);
+        }
+
+        public PackageTransitController(IEmployeeRepository employeeRepository, IPackageRepository packageRepository)
+        {
+            _packageRepository = packageRepository;
+            _employeeRepository = employeeRepository;
+        }
+
         // GET: PackageTransit
         public ActionResult Index()
         {
@@ -79,7 +94,7 @@ namespace ENetCareMVC.Web.Controllers
             var employee = GetCurrentEmployee();
 
             DistributionCentre recieverCentre = employeeService.GetDistributionCentre(model.DestinationCentreId);
-            DistributionCentre senderCentre = employeeService.GetDistributionCentre(employee.LocationCentreId);
+            DistributionCentre senderCentre = employeeService.GetDistributionCentre(employee.Location.CentreId);
 
             if (ModelState.IsValid)
             {
@@ -200,14 +215,14 @@ namespace ENetCareMVC.Web.Controllers
 
         private PackageService GetPackageService()
         {
-            IPackageRepository packageRepository = new PackageRepository(ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString);
-            return new PackageService(packageRepository);
+            //IPackageRepository packageRepository = new PackageRepository(ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString);
+            return new PackageService(_packageRepository);
         }
 
         private EmployeeService GetEmployeeService()
         {
-            IEmployeeRepository repository = new EmployeeRepository(ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString);
-            return new EmployeeService(repository);
+            //IEmployeeRepository repository = new EmployeeRepository(ConfigurationManager.ConnectionStrings["ENetCareLiveAll"].ConnectionString);
+            return new EmployeeService(_employeeRepository);
         }
 
         private Employee GetCurrentEmployee()
