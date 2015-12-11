@@ -33,6 +33,5 @@ namespace ENetCareMVC.Repository.Data
         public virtual ICollection<PackageTransit> PackageTransit { get; set; }
         public virtual StandardPackageType PackageType { get; set; }
         public virtual DistributionCentre CurrentLocation { get; set; }
-    
     }
 }

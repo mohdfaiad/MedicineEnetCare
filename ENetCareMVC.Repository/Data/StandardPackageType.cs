@@ -30,6 +30,5 @@ namespace ENetCareMVC.Repository.Data
     
         public virtual ICollection<Audit> Audit { get; set; }
         public virtual ICollection<Package> Package { get; set; }
-
     }
 }

@@ -25,6 +25,5 @@ namespace ENetCareMVC.Repository.Data
         public virtual DistributionCentre ReceiverCentre { get; set; }
         public virtual DistributionCentre SenderCentre { get; set; }
         public virtual Package Package { get; set; }
-
     }
 }

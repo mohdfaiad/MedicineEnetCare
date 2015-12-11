@@ -11,7 +11,8 @@ namespace ENetCare.Repository.Repository
         {
 
             /*
-
+            /////// --- This package does not be in used any more.
+            /////// --- merge with Package repository
 
             private string _connectionString;
 

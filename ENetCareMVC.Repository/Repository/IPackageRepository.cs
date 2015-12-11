@@ -12,7 +12,6 @@ namespace ENetCareMVC.Repository.Repository
         int Insert(Package package);
         void Update(Package package);
         Package Get(int? packageId, string barcode);
-        //Package Get(int? packageId);
         Package GetPackageWidthBarCode(string barCode); 
         List<StandardPackageType> GetAllStandardPackageTypes();
         StandardPackageType GetStandardPackageType(int packageId);
@@ -25,9 +24,6 @@ namespace ENetCareMVC.Repository.Repository
         int UpdateInstockFromAudit(int auditId, DistributionCentre location, StandardPackageType packageType);
         int UpdateTransitReceivedFromAudit(int auditId, DistributionCentre location);
         int UpdateTransitCancelledFromAudit(int auditId, DistributionCentre location);
-    
         List<PackageTransit> GetActiveTransitsByPackage(Package xPackage);
-        //int InsertAudit(Employee employee, StandardPackageType packageType, List<string> barCodes);
-        //string getConnectionString();
     }
 }

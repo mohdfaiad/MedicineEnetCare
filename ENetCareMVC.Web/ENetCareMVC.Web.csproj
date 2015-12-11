@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -198,6 +199,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Additional Package to SQL Express 2012.txt" />
     <Content Include="App_Data\ENetCareMVC.mdf" />
     <Content Include="App_Data\ENetCareMVCUser.mdf" />
     <Content Include="App_Data\ENetCareMVCUser_log.ldf" />

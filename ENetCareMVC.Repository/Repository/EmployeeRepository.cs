@@ -60,7 +60,5 @@ namespace ENetCareMVC.Repository.Repository
 
             return null;
         }
-
-
     }
 }
