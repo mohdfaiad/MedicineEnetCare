@@ -1,14 +1,13 @@
-﻿using ENetCareMVC.BusinessService;
-using ENetCareMVC.Repository.Data;
-using ENetCareMVC.Repository.Repository;
-using ENetCareMVC.Web.Models;
-using ENetCareMVC.Web.SelectBarCodesOperations;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using System;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using System.Configuration;
+using ENetCareMVC.Web.Models;
+using System.Collections.Generic;
+using ENetCareMVC.Repository.Data;
+using ENetCareMVC.BusinessService;
+using ENetCareMVC.Repository.Repository;
+using ENetCareMVC.Web.SelectBarCodesOperations;
 
 namespace ENetCareMVC.Web.Controllers
 {

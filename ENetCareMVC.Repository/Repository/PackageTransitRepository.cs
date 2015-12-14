@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ENetCare.Repository.Repository
+﻿namespace ENetCare.Repository.Repository
 {
         public class PackageTransitRepository    // PackageTransitRepository
         {

@@ -1,10 +1,6 @@
-﻿using ENetCareMVC.Repository.Data;
+﻿using System.Collections.Generic;
+using ENetCareMVC.Repository.Data;
 using ENetCareMVC.Repository.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ENetCareMVC.BusinessService
 {
@@ -16,6 +12,7 @@ namespace ENetCareMVC.BusinessService
         {
             _employeeRepository = employeeRepository;
         }
+
 
         public Employee Retrieve(string username)
         {
@@ -48,14 +45,6 @@ namespace ENetCareMVC.BusinessService
                 return result;
             }
 
-            /*
-            if (employee.Password != currentPassword)
-            {
-                result.Success = false;
-                result.ErrorMessage = EmployeeResult.CurrentPasswordIsIncorrect;
-                return result;
-            }
-            */
             if (string.IsNullOrEmpty(newPassword))
             {
                 result.Success = false;
@@ -69,8 +58,6 @@ namespace ENetCareMVC.BusinessService
                 result.ErrorMessage = EmployeeResult.RetryPasswordNotTheSameAsTheNewPassword;
                 return result;
             }
-
-            //employee.Password = newPassword;
 
             _employeeRepository.Update(employee);
 
@@ -151,8 +138,5 @@ namespace ENetCareMVC.BusinessService
         {
             return _employeeRepository.Get(null, userName);
         }
-
-
-
     }
 }

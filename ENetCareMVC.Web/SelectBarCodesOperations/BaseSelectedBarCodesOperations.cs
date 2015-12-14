@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Web;
 using System.Linq;
-using System.Web;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
+using System.Configuration;
 using ENetCareMVC.Web.Models;
+using Microsoft.AspNet.Identity;
+using System.Collections.Generic;
 using ENetCareMVC.Repository.Data;
 using ENetCareMVC.BusinessService;
+using Microsoft.AspNet.Identity.Owin;
 using ENetCareMVC.Repository.Repository;
 
 namespace ENetCareMVC.Web.SelectBarCodesOperations

@@ -1,19 +1,14 @@
-﻿using System;
+﻿using System.Linq;
+using System.Diagnostics;
 using System.Configuration;
-using System.Data.SqlClient;                     
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ENetCareMVC.Repository.Repository;
 using ENetCareMVC.BusinessService;
 using ENetCareMVC.Repository.Data;
-using ENetCareMVC.Repository;
-using System.Diagnostics;
+using ENetCareMVC.Repository.Repository;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
-namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
+namespace ENetCareMVC.UnitTest                            
 {
 
     [TestClass]
@@ -47,7 +42,7 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
         }
 
         [TestMethod]
-        public void TestDbAccess_GetDistCentres()                           // (P. 04-04-2015) 
+        public void TestDbAccess_GetDistCentres()                          
         {
             //enetConnection.Open();
             List<DistributionCentre> centresList = DataAccess.GetAllDistributionCentres(_connectionString);
@@ -58,7 +53,7 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
         }
 
         [TestMethod]
-        public void TestDbAccess_GetEmployeesZ()                   // (P. 04-04-2015)  
+        public void TestDbAccess_GetEmployeesZ()                   
         {
             //enetConnection.Open();
             List<Employee> employeeList = DataAccess.GetAllEmployees(_connectionString);
@@ -70,7 +65,7 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
 */
 
         [TestMethod]
-        public void TestDbAccess_GetEmployees()                   // (P. 28-05-2015)  
+        public void TestDbAccess_GetEmployees()                   
         {
             IEmployeeRepository empRepository = new EmployeeRepository(_connectionString);
             EmployeeService empService = new EmployeeService(empRepository);
@@ -113,7 +108,7 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
 /*
 
         [TestMethod]
-        public void TestDbAccess_GetPackages()                            // (P. 04-04-2015)  
+        public void TestDbAccess_GetPackages()                           
         {
             enetConnection.Open();
             List<Package> packageList = DataAccess.GetAllPackages(_connectionString);
@@ -128,7 +123,7 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
          
 
         [TestMethod]
-        public void TestDbAccess_GetPackageTypes()                              // (P. 04-04-2015) 
+        public void TestDbAccess_GetPackageTypes()                             
         {
             enetConnection.Open();
             List<StandardPackageType> typeList = DataAccess.GetAllStandardPackageTypes(_connectionString);
@@ -139,7 +134,7 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
         }
 
         [TestMethod]
-        public void TestRepository_GetEmployees()                   // (P. 04-04-2015) 
+        public void TestRepository_GetEmployees()                  
         {
             EmployeeRepository eRep = new EmployeeRepository(_connectionString);
             List<Employee> employeeList = eRep.getAllEmployees();
@@ -149,7 +144,7 @@ namespace ENetCareMVC.UnitTest                             // (P. 04-04-2015)
         }
 
         [TestMethod]
-        public void TestRepository_GetPackageTypes()       // (P. 04-04-2015) 
+        public void TestRepository_GetPackageTypes()       
         {
             PackageRepository pRep = new PackageRepository(_connectionString);
             List<StandardPackageType> typeList = pRep.GetAllStandardPackageTypes();

@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using Owin;
-using ENetCareMVC.Web.Models;
-using ENetCareMVC.Repository.Data;
 using System.Configuration;
+using System.Threading.Tasks;
+using ENetCareMVC.Web.Models;
+using Microsoft.Owin.Security;
+using Microsoft.AspNet.Identity;
+using ENetCareMVC.Repository.Data;
 using ENetCareMVC.BusinessService;
+using Microsoft.AspNet.Identity.Owin;
 using ENetCareMVC.Repository.Repository;
 
 namespace ENetCareMVC.Web.Controllers

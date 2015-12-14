@@ -1,10 +1,8 @@
-﻿using ENetCareMVC.Repository.Data;
-using ENetCareMVC.Repository.Repository;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using ENetCareMVC.Repository.Data;
+using ENetCareMVC.Repository.Repository;
 
 namespace ENetCareMVC.BusinessService
 {

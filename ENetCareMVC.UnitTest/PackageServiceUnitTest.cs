@@ -1,12 +1,11 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ENetCareMVC.Repository.Repository;
+using System.Diagnostics;
+using ENetCareMVC.UnitTest;
+using ENetCareMVC.Repository;
 using ENetCareMVC.BusinessService;
 using ENetCareMVC.Repository.Data;
-using System.Diagnostics;
-using ENetCareMVC.Repository;
-using System.Configuration;
-using ENetCareMVC.UnitTest;
+using ENetCareMVC.Repository.Repository;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ENetCare.UnitTest
 {

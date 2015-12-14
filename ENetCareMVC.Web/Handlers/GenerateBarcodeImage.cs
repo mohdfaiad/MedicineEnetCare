@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Web;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Web;
 
 namespace ENetCareMVC.Web.Handlers
 {

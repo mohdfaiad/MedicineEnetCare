@@ -1,8 +1,5 @@
-﻿using ENetCareMVC.Repository.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System;
+using ENetCareMVC.Repository.Data;
 
 namespace ENetCareMVC.Web.SelectBarCodesOperations
 {

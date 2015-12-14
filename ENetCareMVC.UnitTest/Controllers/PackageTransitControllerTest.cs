@@ -1,15 +1,12 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ENetCareMVC.BusinessService;
-using ENetCareMVC.Web.Controllers;
 using System.Web.Mvc;
-using System.Web;
-using System.Security.Principal;
 using ENetCareMVC.Web.Models;
-using ENetCareMVC.Repository.Repository;
-using ENetCareMVC.Repository.Data;
 using System.Collections.Generic;
-using ENetCareMVC.UnitTest;
+using ENetCareMVC.Web.Controllers;
+using ENetCareMVC.Repository.Data;
+using ENetCareMVC.BusinessService;
+using ENetCareMVC.Repository.Repository;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ENetCareMVC.UnitTest.Controllers
 {

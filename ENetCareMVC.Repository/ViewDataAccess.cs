@@ -1,13 +1,8 @@
-﻿using ENetCareMVC.Repository.Data;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Diagnostics;
+﻿using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+using System.Diagnostics;
+using System.Collections.Generic;
+using ENetCareMVC.Repository.Data;
 
 namespace ENetCareMVC.Repository
 {

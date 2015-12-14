@@ -1,11 +1,8 @@
-﻿using ENetCareMVC.Repository;
+﻿using System;
+using ENetCareMVC.Repository;
+using System.Collections.Generic;
 using ENetCareMVC.Repository.Data;
 using ENetCareMVC.Repository.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ENetCareMVC.UnitTest
 {

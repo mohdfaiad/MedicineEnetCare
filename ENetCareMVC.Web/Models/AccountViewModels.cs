@@ -1,5 +1,5 @@
-﻿using ENetCareMVC.Repository.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using ENetCareMVC.Repository.Data;
 using System.ComponentModel.DataAnnotations;
 
 namespace ENetCareMVC.Web.Models

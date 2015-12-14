@@ -1,17 +1,11 @@
-﻿using ENetCareMVC.BusinessService;
+﻿using System.Linq;
+using System.Diagnostics;
 using ENetCareMVC.Repository;
 using ENetCareMVC.Repository.Data;
+using ENetCareMVC.BusinessService;
 using ENetCareMVC.Repository.Repository;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-//using System.Web.UI;
-//using System.Web.UI.WebControls;
+
 namespace ENetCareMVC.UnitTest
 {
     [TestClass]
